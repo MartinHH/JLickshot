@@ -27,9 +27,9 @@ FixedVelocitySound::FixedVelocitySound(const File& audioFile,
                                        double releaseTimeSecs,
                                        double maxSampleLengthSeconds,
                                        float velocity):
-    SamplerSound::SamplerSound(audioFile.getFileName(), source, midiNotes,
-                               midiNoteForNormalPitch, attackTimeSecs,
-                               releaseTimeSecs, maxSampleLengthSeconds),
+    SamplerSound(audioFile.getFileName(), source, midiNotes,
+                 midiNoteForNormalPitch, attackTimeSecs,
+                 releaseTimeSecs, maxSampleLengthSeconds),
     velocity_(velocity),
     af_(audioFile)
 {
