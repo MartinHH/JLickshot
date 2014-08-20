@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="L8rGK0" name="JLickshot" projectType="guiapp" version="0.1.0"
+              bundleIdentifier="io.github.martinhh.JLickshot" includeBinaryInAppConfig="1"
+              jucerVersion="3.1.0">
+  <MAINGROUP id="XgPXVM" name="JLickshot">
+    <GROUP id="{62EFFF26-BDD3-BA48-66A9-A516E40CC70A}" name="Source">
+      <FILE id="VK9l1B" name="Defines.h" compile="0" resource="0" file="Source/Defines.h"/>
+      <FILE id="wZbSBL" name="SampleCollectionComponent.cpp" compile="1"
+            resource="0" file="Source/SampleCollectionComponent.cpp"/>
+      <FILE id="jSejvo" name="SampleCollectionComponent.h" compile="0" resource="0"
+            file="Source/SampleCollectionComponent.h"/>
+      <FILE id="CPwePy" name="SampleChoiceComponent.cpp" compile="1" resource="0"
+            file="Source/SampleChoiceComponent.cpp"/>
+      <FILE id="WdzZ65" name="SampleChoiceComponent.h" compile="0" resource="0"
+            file="Source/SampleChoiceComponent.h"/>
+      <FILE id="HzIotr" name="SampleSynthAudioSource.cpp" compile="1" resource="0"
+            file="Source/SampleSynthAudioSource.cpp"/>
+      <FILE id="aZIMcj" name="SampleSynthAudioSource.h" compile="0" resource="0"
+            file="Source/SampleSynthAudioSource.h"/>
+      <FILE id="nCdDFd" name="SampleSynth.cpp" compile="1" resource="0" file="Source/SampleSynth.cpp"/>
+      <FILE id="hfUyxh" name="SampleSynth.h" compile="0" resource="0" file="Source/SampleSynth.h"/>
+      <FILE id="cuXWbu" name="MainController.cpp" compile="1" resource="0"
+            file="Source/MainController.cpp"/>
+      <FILE id="iUf7fi" name="MainController.h" compile="0" resource="0"
+            file="Source/MainController.h"/>
+      <FILE id="hHkQFy" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="oAAwIy" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="Mmf3Zv" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.5 SDK" osxArchitecture="64BitUniversal"
+                       isDebug="1" optimisation="1" targetName="JLickshot"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="default" osxArchitecture="default"
+                       isDebug="0" optimisation="2" targetName="JLickshot"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULES id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULES id="juce_video" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
