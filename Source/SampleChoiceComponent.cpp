@@ -31,6 +31,7 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     noteLabel_->setEditable (false, false, false);
     noteLabel_->setColour (TextEditor::textColourId, Colours::black);
     noteLabel_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    noteLabel_->setTooltip(translate("MIDI note number ") + String(noteNumber));
     
     addAndMakeVisible (nameDisplay_ = new TextEditor ("name display"));
     nameDisplay_->setMultiLine (false);
@@ -46,10 +47,12 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     velocitySlider_->setValue(0.75);
     velocitySlider_->setSliderStyle (Slider::LinearBar);
     velocitySlider_->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
+    velocitySlider_->setTooltip(translate("Individual gain for this slot"));
     velocitySlider_->addListener (this);
     
     addAndMakeVisible (fileButton_ = new TextButton ("new button"));
     fileButton_->setButtonText (translate("Select File"));
+    fileButton_->setTooltip(translate("Select an audio file for this slot"));
     fileButton_->addListener (this);
     
     setSize (500, 24);

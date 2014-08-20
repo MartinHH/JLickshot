@@ -139,6 +139,19 @@ bool SampleSynth::setSample(int noteNo, const juce::File& audioFile, float veloc
     return true;
 }
 
+void SampleSynth::clearSamples()
+{
+    const ScopedLock sl (lock);
+    
+    // clear all samples:
+    sounds.clear();
+    
+    // add new dummy sounds:
+    for(int i=0; i<NUMBER_OF_NOTES; i++){
+        addSound(new SilentSound());
+    }
+}
+
 const String& SampleSynth::getFilePath(int noteNo) const
 {
     if(noteNo < 0 || noteNo >= NUMBER_OF_NOTES){

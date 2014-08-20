@@ -118,6 +118,8 @@ bool MainController::saveState(const File& xmlDest)
 MainController::LoadResult MainController::loadState(const File& xmlSource)
 {
     LoadResult rv;
+    rv.loaded = 0;
+    rv.failed = 0;
     
     ScopedPointer<const XmlElement> xml = XmlDocument::parse(xmlSource);
     
@@ -138,10 +140,13 @@ MainController::LoadResult MainController::loadState(const File& xmlSource)
         aSourcePlayer_.setGain(gain);
     }
     
+    SampleSynth& synth = aSource_.getSynth();
+    
+    // clear synth:
+    synth.clearSamples();
     
     // load sample list:
     const XmlElement* samples = xml->getChildByName("SAMPLES");
-    SampleSynth& synth = aSource_.getSynth();
     if (samples != nullptr) {
         
         // iterate over sample elements:

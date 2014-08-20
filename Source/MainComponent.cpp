@@ -44,16 +44,19 @@ MainContentComponent::MainContentComponent(MainController* controller):
     loadButton_ = new TextButton();
     loadButton_->setButtonText(translate("LOAD"));
     loadButton_->addListener(this);
+    loadButton_->setTooltip(translate("Load a previously saved setup"));
     addAndMakeVisible(loadButton_);
     
     saveButton_ = new TextButton();
     saveButton_->setButtonText(translate("SAVE"));
     saveButton_->addListener(this);
+    saveButton_->setTooltip(translate("Save a setup"));
     addAndMakeVisible(saveButton_);
     
     settingsButton_ = new TextButton();
     settingsButton_->setButtonText(translate("SETTINGS"));
     settingsButton_->addListener(this);
+    settingsButton_->setTooltip(translate("Audio and Midi setting"));
     addAndMakeVisible(settingsButton_);
     
     addAndMakeVisible (gainSlider_ = new Slider ("gain slider"));
@@ -62,6 +65,7 @@ MainContentComponent::MainContentComponent(MainController* controller):
     gainSlider_->setSliderStyle (Slider::LinearBar);
     gainSlider_->setTextBoxStyle (Slider::NoTextBox, false, 80, 20);
     gainSlider_->setColour(Slider::backgroundColourId , Colours::white);
+    gainSlider_->setTooltip(translate("Master gain"));
     gainSlider_->addListener (this);
     
     setSize (530, 500);
@@ -109,9 +113,11 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
             // file has been chosen:
             File chosenFile = fc.getResult();
             // make controller load the settings:
-            controller_->loadState(chosenFile);
+            MainController::LoadResult rv = controller_->loadState(chosenFile);
             // update the gui to the new state:
             updateFromController();
+            // show result report:
+            popUpLoadResult(rv);
         }
     } else if(buttonThatWasClicked == saveButton_){
         // pop up a file chooser dialog:
@@ -149,4 +155,23 @@ void MainContentComponent::updateFromController()
     gainSlider_->setValue(controller_->getMasterGain());
     // update the SampleCollectionComponent:
     sampleComponent_->updateFromSynth(controller_->getSynth());
+}
+
+void MainContentComponent::popUpLoadResult(MainController::LoadResult result)
+{
+    if(result.success){
+        AlertWindow::showMessageBoxAsync(AlertWindow::InfoIcon,
+                                         "Setup loaded successfully",
+                                         String(result.loaded)
+                                         + " samples loaded.\n"
+                                         + (result.failed ? String(result.failed)
+                                            + " samples could not be loaded."
+                                            : String::empty),
+                                         "ok");
+    } else {
+        AlertWindow::showMessageBoxAsync(AlertWindow::WarningIcon,
+                                         "Loading failed",
+                                         "An error occured loading the setup file."
+                                         "ok");
+    }
 }

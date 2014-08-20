@@ -36,11 +36,13 @@ public:
     {
         mainController = new MainController();
         mainWindow = new MainWindow(mainController);
+        toolTipWindow = new TooltipWindow(mainWindow, 2000);
     }
 
     void shutdown() override
     {
-        mainWindow = nullptr; // (deletes our window)
+        toolTipWindow = nullptr;
+        mainWindow = nullptr;
         mainController = mainController;
     }
 
@@ -81,6 +83,7 @@ public:
 private:
     ScopedPointer<MainController> mainController;
     ScopedPointer<MainWindow> mainWindow;
+    ScopedPointer<TooltipWindow> toolTipWindow;
 };
 
 //==============================================================================

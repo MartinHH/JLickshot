@@ -100,6 +100,9 @@ public:
      */
     bool setSample(int noteNo, const File& audioFile, float velocity);
     
+    /** Unloads all samples. */
+    void clearSamples();
+    
     /** Returns the path of the audio file assigned to a certain note.
      *
      *  @param noteNo The note number for which the file path shall be returned.
@@ -152,7 +155,7 @@ public:
                   const bool allowTailOff) override;
     
 private:
-    
+
     AudioFormatManager formatManager_;
     
     /** Sets a new sound, replacing the sound previuosly at that index. */
