@@ -35,6 +35,8 @@ MainController::MainController():
 
 MainController::~MainController()
 {
+    adm_.removeAudioCallback(&aSourcePlayer_);
+    adm_.removeMidiInputCallback(String::empty, aSource_.getMidiCollector());
 }
 
 AudioDeviceManager& MainController::getAudioDeviceManager()
