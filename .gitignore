@@ -1,0 +1,24 @@
+#OSX-specific files:
+.DS_STORE
+
+#Build directories:
+Build/
+Builds/
+Release/
+Debug/
+
+#JUCE library code:
+JuceLibraryCode/
+
+#XCode workspace user settings:
+xcuserdata/
+
+#Visual Studio files:
+ipch/
+*.suo
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.user
