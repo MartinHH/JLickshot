@@ -155,6 +155,7 @@ private:
     
     AudioFormatManager formatManager_;
     
+    /** Sets a new sound, replacing the sound previuosly at that index. */
     void setSound (int index, const SynthesiserSound::Ptr& newSound);
 
     /**

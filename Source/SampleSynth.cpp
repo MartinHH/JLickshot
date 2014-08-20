@@ -117,6 +117,7 @@ bool SampleSynth::setSample(int noteNo, const juce::File& audioFile, float veloc
         return false;
     }
     
+    // create AudioFormatReader:
     ScopedPointer<AudioFormatReader> reader =
         formatManager_.createReaderFor(audioFile);
     
@@ -124,12 +125,15 @@ bool SampleSynth::setSample(int noteNo, const juce::File& audioFile, float veloc
         return false;
     }
     
+    // convert noteNo to BigInteger (required by upcoming constructor call):
     BigInteger note;
     note.setBit(noteNo);
-        
+    
+    // create new SynthesizerSound object:
     const SynthesiserSound::Ptr& newSound =
         new FixedVelocitySound (audioFile, *reader, note, noteNo,
                                 0.001, 0.001, 60.0, velocity);
+    // add it to Synth:
     setSound(noteNo, newSound);
     
     return true;
