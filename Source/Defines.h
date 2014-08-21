@@ -26,7 +26,7 @@
 #endif
 
 #ifndef VERSION_STRING
-#define VERSION_STRING "0.1.0 alpha"
+#define VERSION_STRING "0.1.1 alpha"
 #endif
 
 #endif  // DEFINES_H_INCLUDED
