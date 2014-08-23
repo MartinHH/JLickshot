@@ -75,6 +75,21 @@ void MainController::fileChosen(SampleChoiceComponent *sampleChoiceComponent,
     }
 }
 
+void MainController::activationStatusChanged(bool delaySetActive)
+{
+    aSource_.setDelayIsActive(delaySetActive);
+}
+
+void MainController::delayTimeChanged(float delay)
+{
+    aSource_.getDelayUnit().setLength(delay);
+}
+
+void MainController::feedbackChanged(float feedback)
+{
+    aSource_.getDelayUnit().setFeedback(feedback);
+}
+
 void MainController::setMasterGain(float gain)
 {
     aSourcePlayer_.setGain(gain);

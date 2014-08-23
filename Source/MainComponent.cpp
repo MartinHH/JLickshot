@@ -66,6 +66,7 @@ MainContentComponent::MainContentComponent(MainController* controller):
     gainSlider_->addListener (this);
     
     delayComponent_ = new DelayComponent();
+    delayComponent_->addListener(controller);
     addAndMakeVisible(delayComponent_);
     
     laf_ = new LookAndFeel_V3();

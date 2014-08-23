@@ -21,6 +21,7 @@
 #define DELAYCOMPONENT_H_INCLUDED
 
 #include "JuceHeader.h"
+#include "Defines.h"
 
 class DelayComponent  : public Component,
                         public ButtonListener,
@@ -30,18 +31,39 @@ public:
     DelayComponent ();
     ~DelayComponent();
     
+    class Listener
+    {
+    public:
+        virtual ~Listener(){}
+        
+        virtual void activationStatusChanged(bool delaySetActive) = 0;
+        
+        virtual void delayTimeChanged(float delay) = 0;
+        
+        virtual void feedbackChanged(float feedback) = 0;
+    };
+    
+    /** Adds a listener. */
+    void addListener (Listener* listener);
+    
+    /** Removes a previously-registered listener. */
+    void removeListener (Listener* listener);
+    
     void paint (Graphics& g);
     void resized();
     void buttonClicked (Button* buttonThatWasClicked);
     void sliderValueChanged (Slider* sliderThatWasMoved);
     
 private:
+    static float normalizeSlider(Slider* slider);
+    
     ScopedPointer<GroupComponent> groupComponent_;
     ScopedPointer<ToggleButton> activateButton_;
     ScopedPointer<Slider> delaySlider_;
     ScopedPointer<Label> delayLabel;
     ScopedPointer<Slider> feedbackSlider_;
     ScopedPointer<Label> feedbackLabel_;
+    ListenerList<Listener> listeners_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayComponent)
 };

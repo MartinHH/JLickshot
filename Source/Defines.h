@@ -34,4 +34,12 @@
                                     : ((value) > (upper)) ? (upper) : (value)
 #endif
 
+#ifndef NORMALIZE
+#define NORMALIZE(min, max, val) ((val)-(min)) / ((max)-(min))
+#endif
+
+#ifndef DENORMALIZE
+#define DENORMALIZE(min, max, val) ((val) * ((max)-(min))) + (min)
+#endif
+
 #endif  // DEFINES_H_INCLUDED

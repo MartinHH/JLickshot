@@ -30,6 +30,7 @@ DelayComponent::DelayComponent ()
     
     addAndMakeVisible (delaySlider_ = new Slider ("new slider"));
     delaySlider_->setRange (0, 1.0, 0.001);
+    delaySlider_->setValue(0.5);
     delaySlider_->setSliderStyle (Slider::Rotary);
     delaySlider_->setTextBoxStyle (Slider::TextBoxLeft, false, 50, 20);
     delaySlider_->addListener (this);
@@ -44,6 +45,7 @@ DelayComponent::DelayComponent ()
     
     addAndMakeVisible (feedbackSlider_ = new Slider ("feedback slider"));
     feedbackSlider_->setRange (0, 100, 0.1);
+    feedbackSlider_->setValue(0.0);
     feedbackSlider_->setSliderStyle (Slider::Rotary);
     feedbackSlider_->setTextBoxStyle (Slider::TextBoxLeft, false, 50, 20);
     feedbackSlider_->addListener (this);
@@ -69,7 +71,16 @@ DelayComponent::~DelayComponent()
     feedbackLabel_ = nullptr;
 }
 
-//==============================================================================
+void DelayComponent::addListener(DelayComponent::Listener *listener)
+{
+    listeners_.add(listener);
+}
+
+void DelayComponent::removeListener(DelayComponent::Listener *listener)
+{
+    listeners_.remove(listener);
+}
+
 void DelayComponent::paint (Graphics& g)
 {
     g.fillAll (Colours::lightgrey);
@@ -88,15 +99,31 @@ void DelayComponent::resized()
 void DelayComponent::buttonClicked (Button* buttonThatWasClicked)
 {
     if (buttonThatWasClicked == activateButton_){
-        
+        Component::BailOutChecker checker(this);
+        listeners_.callChecked(checker,
+                               &DelayComponent::Listener::activationStatusChanged,
+                               activateButton_->getToggleState());
     }
 }
 
 void DelayComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 {
     if (sliderThatWasMoved == delaySlider_){
-
+        Component::BailOutChecker checker(this);
+        listeners_.callChecked(checker,
+                               &DelayComponent::Listener::delayTimeChanged,
+                               normalizeSlider(delaySlider_));
     } else if (sliderThatWasMoved == feedbackSlider_) {
-
+        Component::BailOutChecker checker(this);
+        listeners_.callChecked(checker,
+                               &DelayComponent::Listener::feedbackChanged,
+                               normalizeSlider(feedbackSlider_));
     }
+}
+
+float DelayComponent::normalizeSlider(Slider *slider)
+{
+    return NORMALIZE(slider->getMinimum(),
+                     slider->getMaximum(),
+                     slider->getValue());
 }

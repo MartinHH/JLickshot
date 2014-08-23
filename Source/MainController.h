@@ -23,6 +23,7 @@
 #include "JuceHeader.h"
 #include "SampleSynthAudioSource.h"
 #include "SampleChoiceComponent.h"
+#include "DelayComponent.h"
 
 /**
  *  This class contains the main logic. It holds an AudioDeviceManager,
@@ -31,7 +32,8 @@
  *  accepts callbacks from the GUI and offers any relevant accessors to the GUI.
  *  Also, it contains methods to store/restore its state to/from an XML file.
  */
-class MainController    :   public SampleChoiceComponent::Listener
+class MainController    :   public SampleChoiceComponent::Listener,
+                            public DelayComponent::Listener
 {
 public:
     MainController();
@@ -47,6 +49,12 @@ public:
     
     void fileChosen(SampleChoiceComponent* sampleChoiceComponent,
                     const File& audioFile);
+    
+    void activationStatusChanged(bool delaySetActive);
+    
+    void delayTimeChanged(float delay);
+    
+    void feedbackChanged(float feedback);
     
     /** Sets the main playback gain. Sets the gain setting for
      *  the AudioSourcePlayer that is used internally.
