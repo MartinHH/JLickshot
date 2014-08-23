@@ -23,6 +23,7 @@
 
 #include "JuceHeader.h"
 #include "SampleSynth.h"
+#include "SimpleDelay.h"
 
 /**
  *  An AudioSource that plays back a SampleSynth (which is controlled via MIDI).
@@ -37,17 +38,25 @@ public:
     
     MidiMessageCollector* getMidiCollector();
     
+    SimpleDelay& getDelayUnit();
+    
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     
     void releaseResources() override;
     
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
+    
+    void setDelayIsActive(bool delayIsActive);
+    
+    bool getDelayIsActive() const;
 
 private:
     
     MidiMessageCollector midiCollector_;
     MidiKeyboardState& keyState_;
     SampleSynth synth_;
+    SimpleDelay delay_;
+    bool delayIsActive_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleSynthAudioSource)
 

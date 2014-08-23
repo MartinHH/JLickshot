@@ -23,7 +23,8 @@
 SampleSynthAudioSource::SampleSynthAudioSource(MidiKeyboardState& keyState,
                                                int noOfVoices):
     keyState_(keyState),
-    synth_(noOfVoices)
+    synth_(noOfVoices),
+    delayIsActive_(false)
 {
 }
 
@@ -41,11 +42,17 @@ MidiMessageCollector* SampleSynthAudioSource::getMidiCollector()
     return &midiCollector_;
 }
 
+SimpleDelay& SampleSynthAudioSource::getDelayUnit()
+{
+    return delay_;
+}
+
 void SampleSynthAudioSource::prepareToPlay (int samplesPerBlockExpected,
                                             double sampleRate)
 {
     midiCollector_.reset (sampleRate);
     synth_.setCurrentPlaybackSampleRate (sampleRate);
+    delay_.setSampleRate((int) sampleRate);
 }
 
 void SampleSynthAudioSource::releaseResources()
@@ -63,4 +70,17 @@ void SampleSynthAudioSource::getNextAudioBlock(const AudioSourceChannelInfo& buf
     
     synth_.renderNextBlock (*bufferToFill.buffer, incomingMidi, 0,
                             bufferToFill.numSamples);
+    if (delayIsActive_) {
+        delay_.processBlock(*bufferToFill.buffer);
+    }
+}
+
+void SampleSynthAudioSource::setDelayIsActive(bool delayIsActive)
+{
+    delayIsActive_ = delayIsActive;
+}
+
+bool SampleSynthAudioSource::getDelayIsActive() const
+{
+    return delayIsActive_;
 }
