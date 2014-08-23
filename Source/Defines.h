@@ -29,4 +29,9 @@
 #define VERSION_STRING "0.1.1 alpha"
 #endif
 
+#ifndef SATURATE
+#define SATURATE(lower, upper, value) ((value) < (lower)) ? (lower) \
+                                    : ((value) > (upper)) ? (upper) : (value)
+#endif
+
 #endif  // DEFINES_H_INCLUDED

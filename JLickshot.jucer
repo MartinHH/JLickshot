@@ -5,6 +5,8 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="XgPXVM" name="JLickshot">
     <GROUP id="{62EFFF26-BDD3-BA48-66A9-A516E40CC70A}" name="Source">
+      <FILE id="STuLT4" name="SimpleDelay.cpp" compile="1" resource="0" file="Source/SimpleDelay.cpp"/>
+      <FILE id="SmrVIB" name="SimpleDelay.h" compile="0" resource="0" file="Source/SimpleDelay.h"/>
       <FILE id="VK9l1B" name="Defines.h" compile="0" resource="0" file="Source/Defines.h"/>
       <FILE id="wZbSBL" name="SampleCollectionComponent.cpp" compile="1"
             resource="0" file="Source/SampleCollectionComponent.cpp"/>
