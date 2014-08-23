@@ -38,9 +38,6 @@ MainContentComponent::MainContentComponent(MainController* controller):
                                           MidiKeyboardComponent::horizontalKeyboard);
     addAndMakeVisible(keyboard_);
     
-    laf_ = new LookAndFeel_V3();
-    setLookAndFeel(laf_);
-    
     loadButton_ = new TextButton();
     loadButton_->setButtonText(translate("LOAD"));
     loadButton_->addListener(this);
@@ -68,7 +65,13 @@ MainContentComponent::MainContentComponent(MainController* controller):
     gainSlider_->setTooltip(translate("Master gain"));
     gainSlider_->addListener (this);
     
-    setSize (530, 500);
+    delayComponent_ = new DelayComponent();
+    addAndMakeVisible(delayComponent_);
+    
+    laf_ = new LookAndFeel_V3();
+    setLookAndFeel(laf_);
+    
+    setSize (530, 596);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -77,7 +80,7 @@ MainContentComponent::~MainContentComponent()
 
 void MainContentComponent::paint (Graphics& g)
 {
-    g.fillAll (Colours::grey);
+    g.fillAll (Colours::lightgrey);
 
     g.setFont (Font (16.0f));
     g.setColour (Colours::black);
@@ -89,7 +92,8 @@ void MainContentComponent::resized()
     saveButton_->setBounds(155, 5, 140, 24);
     settingsButton_->setBounds(305, 5, 140, 24);
     viewport_->setBounds(10, 34, 520, 391);
-    keyboard_->setBounds(10, 430, 510, 64);
+    delayComponent_->setBounds(10, 430, 510, 96);
+    keyboard_->setBounds(10, 526, 510, 64);
     gainSlider_->setBounds(455, 5, 60, 24);
 }
 
