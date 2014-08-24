@@ -126,7 +126,7 @@ void DelayComponent::updateFromAudioSource(SampleSynthAudioSource& aSource)
     activateButton_->setToggleState(aSource.getDelayIsActive(), dontSendNotification);
     
     SimpleDelay& d = aSource.getDelayUnit();
-    updateSliderFromNormalized(delaySlider_, d.getLength());
+    updateSliderFromNormalized(delaySlider_, d.getRelativeTime());
     updateSliderFromNormalized(feedbackSlider_, d.getFeedback());
 }
 

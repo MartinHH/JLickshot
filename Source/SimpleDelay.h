@@ -26,21 +26,50 @@
 class SimpleDelay
 {
 public:
-    SimpleDelay(int noChannels=2, int maxLength=1, int sampleRate=44100);
+    SimpleDelay(int noChannels=2, int maxTime=1, int sampleRate=44100);
     virtual ~SimpleDelay();
     
+    /** Sets the sample rate.
+     *
+     *  @param sampleRate The current sample rate.
+     */
     void setSampleRate(int sampleRate);
     
-    void setLength(float length);
+    /** Sets the delay time in relation to the maximum delay time.
+     *
+     *  @param time A value within [0.0 ; 1.0].
+     */
+    void setRelativeTime(float time);
     
-    float getLength() const;
+    /** Returns the delay time in relation to the maximum delay time.
+     *
+     *  @return A value within [0.0 ; 1.0].
+     */
+    float getRelativeTime() const;
     
-    float getLengthInSeconds() const;
+    /** Returns the (absolute) delay time in seconds.
+     *
+     *  @return The (absolute) delay time in seconds.
+     */
+    float getTimeInSeconds() const;
     
+    /** Sets the delay feedback value.
+     *
+     *  @param feedback A value within [0.0 ; 1.0].
+     */
     void setFeedback(float feedback);
-    
+
+    /** Returns the delay feedback value.
+     *
+     *  @return The delay feedback value (a value within [0.0 ; 1.0]).
+     */
     float getFeedback() const;
     
+    /** Processes a block auf audio data, adding the delay effect to it.
+     *
+     *  @param buffer A block of audio data that shall have this delay effect
+     *      added.
+     */
     void processBlock (AudioSampleBuffer& buffer);
     
     XmlElement* getStateXml() const;
@@ -52,8 +81,8 @@ protected:
     
 private:
     AudioSampleBuffer delayBuffer_;
-    int maxLength_;     // in seconds
-    float length_;      // relative length in samples
+    int maxTime_;     // in seconds
+    float time_;      // time setting in relation to maxTime_
     float feedBack_;
     int sampleRate_;
     int delayBufferIdx_;

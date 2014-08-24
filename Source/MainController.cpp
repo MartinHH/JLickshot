@@ -87,7 +87,7 @@ void MainController::activationStatusChanged(bool delaySetActive)
 
 void MainController::delayTimeChanged(float delay)
 {
-    aSource_.getDelayUnit().setLength(delay);
+    aSource_.getDelayUnit().setRelativeTime(delay);
 }
 
 void MainController::feedbackChanged(float feedback)

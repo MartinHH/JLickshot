@@ -19,10 +19,10 @@
 
 #include "SimpleDelay.h"
 
-SimpleDelay::SimpleDelay(int noChannels, int maxLength, int sampleRate):
-    delayBuffer_(noChannels, maxLength * sampleRate),
-    maxLength_(maxLength),
-    length_(0.5),
+SimpleDelay::SimpleDelay(int noChannels, int maxTime, int sampleRate):
+    delayBuffer_(noChannels, maxTime * sampleRate),
+    maxTime_(maxTime),
+    time_(0.5),
     feedBack_(0.0),
     sampleRate_(sampleRate),
     delayBufferIdx_(0)
@@ -37,24 +37,24 @@ void SimpleDelay::setSampleRate(int sampleRate)
 {
     if(sampleRate != sampleRate_){
         const ScopedLock sl (lock);
-        delayBuffer_.setSize(delayBuffer_.getNumChannels(), maxLength_ * sampleRate);
+        delayBuffer_.setSize(delayBuffer_.getNumChannels(), maxTime_ * sampleRate);
         sampleRate_ = sampleRate;
     }
 }
 
-void SimpleDelay::setLength(const float length)
+void SimpleDelay::setRelativeTime(const float time)
 {
-    length_ = SATURATE(0.0, 1.0, length);
+    time_ = SATURATE(0.0, 1.0, time);
 }
 
-float SimpleDelay::getLength() const
+float SimpleDelay::getRelativeTime() const
 {
-    return length_;
+    return time_;
 }
 
-float SimpleDelay::getLengthInSeconds() const
+float SimpleDelay::getTimeInSeconds() const
 {
-    return maxLength_ * length_;
+    return maxTime_ * time_;
 }
 
 void SimpleDelay::setFeedback(float feedback)
@@ -74,7 +74,7 @@ void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
     int dIdx;
     
     const int nChannels = jmin(buffer.getNumChannels(), delayBuffer_.getNumChannels());
-    const int dLength = (int)(delayBuffer_.getNumSamples() * length_);
+    const int dLength = (int)(delayBuffer_.getNumSamples() * time_);
     const int nSamples = buffer.getNumSamples();
     
     // for each channel:
@@ -99,7 +99,7 @@ XmlElement* SimpleDelay::getStateXml() const
 {
     XmlElement* rv = new XmlElement("DELAYSETTINGS");
     
-    rv->setAttribute("length", length_);
+    rv->setAttribute("length", time_);
     rv->setAttribute("feedback", feedBack_);
     
     return rv;
@@ -108,7 +108,7 @@ XmlElement* SimpleDelay::getStateXml() const
 void SimpleDelay::updateFromXml(XmlElement *stateXml)
 {
     if (stateXml != nullptr && stateXml->hasTagName("DELAYSETTINGS")) {
-        length_ = stateXml->getDoubleAttribute("length", length_);
+        time_ = stateXml->getDoubleAttribute("length", time_);
         feedBack_ = stateXml->getDoubleAttribute("feedback", feedBack_);
     }
 }
