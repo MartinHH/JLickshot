@@ -71,7 +71,7 @@ void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
 {
     const ScopedLock sl(lock);
     
-    int dIdx;
+    int dIdx = 0;
     
     const int nChannels = jmin(buffer.getNumChannels(), delayBuffer_.getNumChannels());
     const int dLength = (int)(delayBuffer_.getNumSamples() * time_);

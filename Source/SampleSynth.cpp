@@ -228,8 +228,8 @@ bool SampleSynth::sampleIsLoaded(int noteNo) const
     return (dynamic_cast<FixedVelocitySound*>(sounds[noteNo].get()) != nullptr);
 }
 
-void SampleSynth::noteOff(const int midiChannel, const int midiNoteNumber,
-                          const bool allowTailOff)
+void SampleSynth::noteOff(const int /* midiChannel */, const int /* midiNoteNumber */,
+                          const bool /* allowTailOff */)
 {
     // for one-shot-behaviour, noteOff is ignored...
 }

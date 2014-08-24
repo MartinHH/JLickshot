@@ -47,7 +47,7 @@ SimpleDelay& SampleSynthAudioSource::getDelayUnit()
     return delay_;
 }
 
-void SampleSynthAudioSource::prepareToPlay (int samplesPerBlockExpected,
+void SampleSynthAudioSource::prepareToPlay (int /* samplesPerBlockExpected */,
                                             double sampleRate)
 {
     midiCollector_.reset (sampleRate);
