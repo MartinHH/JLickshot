@@ -234,6 +234,60 @@ void SampleSynth::noteOff(const int midiChannel, const int midiNoteNumber,
     // for one-shot-behaviour, noteOff is ignored...
 }
 
+XmlElement* SampleSynth::getStateXml() const
+{
+    XmlElement* rv = new XmlElement("SAMPLES");
+
+    for(int i=0; i<NUMBER_OF_NOTES; i++){
+        if (sampleIsLoaded(i)) {
+            XmlElement* sample = new XmlElement("SAMPLE");
+            sample->setAttribute("note", i);
+            sample->setAttribute("path", getFilePath(i));
+            sample->setAttribute("velocity", getVelocity(i));
+            rv->addChildElement(sample);
+        }
+    }
+    
+    return rv;
+}
+
+SampleSynth::LoadResult SampleSynth::updateFromXml(XmlElement *stateXml)
+{
+    LoadResult rv = LoadResult();
+    
+    if(stateXml != nullptr && stateXml->hasTagName("SAMPLES")){
+        // iterate over sample elements:
+        XmlElement* sample = stateXml->getChildByName("SAMPLE");
+        while (sample != nullptr) {
+            
+            // extract note number:
+            const int noteNo = sample->getIntAttribute("note", -1);
+            
+            if (noteNo >=0 && noteNo < NUMBER_OF_NOTES) {
+                
+                // extract file path and velocity:
+                String path = sample->getStringAttribute("path", String::empty);
+                float velocity =
+                    sample->getDoubleAttribute("velocity", getVelocity(noteNo));
+                
+                // set sample and count result:
+                if(setSample(noteNo, File(path), velocity)){
+                    rv.loaded++;
+                } else {
+                    rv.failed++;
+                }
+            }
+            
+            // next xml element to keep the iteration going:
+            sample = sample->getNextElementWithTagName("SAMPLE");
+        }
+        
+        rv.success = true;
+    }
+    
+    return rv;
+}
+
 void SampleSynth::setSound(int index, const SynthesiserSound::Ptr &newSound)
 {
     const ScopedLock sl (lock);

@@ -22,6 +22,7 @@
 
 #include "JuceHeader.h"
 #include "Defines.h"
+#include "SampleSynthAudioSource.h"
 
 class DelayComponent  : public Component,
                         public ButtonListener,
@@ -54,8 +55,12 @@ public:
     void buttonClicked (Button* buttonThatWasClicked);
     void sliderValueChanged (Slider* sliderThatWasMoved);
     
+    void updateFromAudioSource(SampleSynthAudioSource& aSource);
+    
 private:
-    static float normalizeSlider(Slider* slider);
+    static float normalizeSlider(const Slider* slider);
+    
+    static void updateSliderFromNormalized(Slider* slider, float normalized);
     
     ScopedPointer<GroupComponent> groupComponent_;
     ScopedPointer<ToggleButton> activateButton_;

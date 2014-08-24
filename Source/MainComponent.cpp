@@ -118,7 +118,7 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
             // file has been chosen:
             File chosenFile = fc.getResult();
             // make controller load the settings:
-            MainController::LoadResult rv = controller_->loadState(chosenFile);
+            SampleSynth::LoadResult rv = controller_->loadState(chosenFile);
             // update the gui to the new state:
             updateFromController();
             // show result report:
@@ -160,9 +160,11 @@ void MainContentComponent::updateFromController()
     gainSlider_->setValue(controller_->getMasterGain());
     // update the SampleCollectionComponent:
     sampleComponent_->updateFromSynth(controller_->getSynth());
+    // update the DelayComponent:
+    delayComponent_->updateFromAudioSource(controller_->getAudioSource());
 }
 
-void MainContentComponent::popUpLoadResult(MainController::LoadResult result)
+void MainContentComponent::popUpLoadResult(SampleSynth::LoadResult result)
 {
     if(result.success){
         AlertWindow::showMessageBoxAsync(AlertWindow::InfoIcon,

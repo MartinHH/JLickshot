@@ -49,6 +49,11 @@ MidiKeyboardState& MainController::getKeyState()
     return keyState_;
 }
 
+SampleSynthAudioSource& MainController::getAudioSource()
+{
+    return aSource_;
+}
+
 const SampleSynth& MainController::getSynth()
 {
     return aSource_.getSynth();
@@ -111,36 +116,24 @@ bool MainController::saveState(const File& xmlDest)
     // add main settings:
     XmlElement* generalSettings = new XmlElement("GENERAL");
     generalSettings->setAttribute("gain", aSourcePlayer_.getGain());
+    generalSettings->setAttribute("delay_active", aSource_.getDelayIsActive());
     xml.addChildElement(generalSettings);
     
-    // add all samples that are set:
-    XmlElement* samples = new XmlElement("SAMPLES");
-    const SampleSynth& synth = aSource_.getSynth();
-    for(int i=0; i<NUMBER_OF_NOTES; i++){
-        if (synth.sampleIsLoaded(i)) {
-            XmlElement* sample = new XmlElement("SAMPLE");
-            sample->setAttribute("note", i);
-            sample->setAttribute("path", synth.getFilePath(i));
-            sample->setAttribute("velocity", synth.getVelocity(i));
-            samples->addChildElement(sample);
-        }
-    }
-    xml.addChildElement(samples);
+    // add sample settings:
+    xml.addChildElement(aSource_.getSynth().getStateXml());
+    
+    // add delay setting:
+    xml.addChildElement(aSource_.getDelayUnit().getStateXml());
     
     return xml.writeToFile(xmlDest, String::empty); // TODO
 }
 
-MainController::LoadResult MainController::loadState(const File& xmlSource)
+SampleSynth::LoadResult MainController::loadState(const File& xmlSource)
 {
-    LoadResult rv;
-    rv.loaded = 0;
-    rv.failed = 0;
-    
     ScopedPointer<const XmlElement> xml = XmlDocument::parse(xmlSource);
     
     if (xml == nullptr || !xml->hasTagName("JLICKSHOTSETTINGS")) {
-        rv.success = false;
-        return rv;
+        return SampleSynth::LoadResult();
     }
     
     const XmlElement* admSettings = xml->getChildByName("DEVICESETUP");
@@ -153,43 +146,18 @@ MainController::LoadResult MainController::loadState(const File& xmlSource)
         const double gain =
             generalSettings->getDoubleAttribute("gain", aSourcePlayer_.getGain());
         aSourcePlayer_.setGain(gain);
+        
+        const bool delActive =
+            generalSettings->getBoolAttribute("delay_active", aSource_.getDelayIsActive());
+        aSource_.setDelayIsActive(delActive);
     }
+    
+    aSource_.getDelayUnit().updateFromXml(xml->getChildByName("DELAYSETTINGS"));
     
     SampleSynth& synth = aSource_.getSynth();
     
     // clear synth:
     synth.clearSamples();
     
-    // load sample list:
-    const XmlElement* samples = xml->getChildByName("SAMPLES");
-    if (samples != nullptr) {
-        
-        // iterate over sample elements:
-        XmlElement* sample = samples->getChildByName("SAMPLE");
-        while (sample != nullptr) {
-            
-            // extract note number:
-            const int noteNo = sample->getIntAttribute("note", -1);
-            
-            if (noteNo >=0 && noteNo < NUMBER_OF_NOTES) {
-                // extract file path and velocity:
-                String path = sample->getStringAttribute("path", String::empty);
-                float velocity =
-                    sample->getDoubleAttribute("velocity", synth.getVelocity(noteNo));
-                
-                // set sample and count result:
-                if(synth.setSample(noteNo, File(path), velocity)){
-                    rv.loaded++;
-                } else {
-                    rv.failed++;
-                }
-            }
-            
-            // next xml element to keep the iteration going:
-            sample = sample->getNextElementWithTagName("SAMPLE");
-        }
-    }
-    
-    rv.success = true;
-    return rv;
+    return synth.updateFromXml(xml->getChildByName("SAMPLES"));
 }

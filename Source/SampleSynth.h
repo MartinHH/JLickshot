@@ -154,6 +154,19 @@ public:
     void noteOff (const int midiChannel, const int midiNoteNumber,
                   const bool allowTailOff) override;
     
+    XmlElement* getStateXml() const;
+    
+    /** A struct describing the results of a call to updateFromXml. */
+    struct LoadResult
+    {
+        bool success;   /**< Load operation was generally successfull. */
+        int loaded;     /**< How many samples were loaded successfully. */
+        int failed;     /**< How many samples could not be loaded (only
+                         specified in case success is set to true). */
+    };
+    
+    LoadResult updateFromXml(XmlElement* stateXml);
+
 private:
 
     AudioFormatManager formatManager_;

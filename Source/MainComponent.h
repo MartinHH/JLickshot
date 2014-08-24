@@ -48,7 +48,7 @@ private:
     /** Updates all GUI elements to the state of the MainController. */
     void updateFromController();
     
-    void popUpLoadResult(MainController::LoadResult result);
+    void popUpLoadResult(SampleSynth::LoadResult result);
     
     ScopedPointer<LookAndFeel> laf_;
     ScopedPointer<AudioDeviceSelectorComponent> aDevSelector_;

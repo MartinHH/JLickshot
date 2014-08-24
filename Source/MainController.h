@@ -43,6 +43,8 @@ public:
     
     MidiKeyboardState& getKeyState();
     
+    SampleSynthAudioSource& getAudioSource();
+    
     const SampleSynth& getSynth();
     
     void velocityChanged(SampleChoiceComponent* sampleChoiceComponent);
@@ -82,15 +84,6 @@ public:
      */
     bool saveState(const File& xmlDest);
     
-    /** A struct describing the results of a call to loadState. */
-    struct LoadResult
-    {
-        bool success;   /**< Load operation was generally successfull. */
-        int loaded;     /**< How many samples were loaded successfully. */
-        int failed;     /**< How many samples could not be loaded (only
-                             specified in case success is set to true). */
-    };
-    
     /** Restores the state of the controller from an XML file generated
      *  using saveState.
      *
@@ -98,7 +91,7 @@ public:
      *
      *  @see saveState
      */
-    LoadResult loadState(const File& xmlSource);
+    SampleSynth::LoadResult loadState(const File& xmlSource);
     
 private:
     AudioDeviceManager adm_;

@@ -121,9 +121,25 @@ void DelayComponent::sliderValueChanged (Slider* sliderThatWasMoved)
     }
 }
 
-float DelayComponent::normalizeSlider(Slider *slider)
+void DelayComponent::updateFromAudioSource(SampleSynthAudioSource& aSource)
+{
+    activateButton_->setToggleState(aSource.getDelayIsActive(), dontSendNotification);
+    
+    SimpleDelay& d = aSource.getDelayUnit();
+    updateSliderFromNormalized(delaySlider_, d.getLength());
+    updateSliderFromNormalized(feedbackSlider_, d.getFeedback());
+}
+
+float DelayComponent::normalizeSlider(const Slider *slider)
 {
     return NORMALIZE(slider->getMinimum(),
                      slider->getMaximum(),
                      slider->getValue());
+}
+
+void DelayComponent::updateSliderFromNormalized(juce::Slider *slider, float normalized)
+{
+    slider->setValue(DENORMALIZE(slider->getMinimum(),
+                                 slider->getMaximum(),
+                                 normalized), dontSendNotification);
 }

@@ -62,6 +62,11 @@ void SimpleDelay::setFeedback(float feedback)
     feedBack_ = SATURATE(0.0, 1.0, feedback);
 }
 
+float SimpleDelay::getFeedback() const
+{
+    return feedBack_;
+}
+
 void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
 {
     const ScopedLock sl(lock);
@@ -88,4 +93,22 @@ void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
         }
     }
     delayBufferIdx_ = dIdx;
+}
+
+XmlElement* SimpleDelay::getStateXml() const
+{
+    XmlElement* rv = new XmlElement("DELAYSETTINGS");
+    
+    rv->setAttribute("length", length_);
+    rv->setAttribute("feedback", feedBack_);
+    
+    return rv;
+}
+
+void SimpleDelay::updateFromXml(XmlElement *stateXml)
+{
+    if (stateXml != nullptr && stateXml->hasTagName("DELAYSETTINGS")) {
+        length_ = stateXml->getDoubleAttribute("length", length_);
+        feedBack_ = stateXml->getDoubleAttribute("feedback", feedBack_);
+    }
 }

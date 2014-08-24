@@ -39,7 +39,13 @@ public:
     
     void setFeedback(float feedback);
     
+    float getFeedback() const;
+    
     void processBlock (AudioSampleBuffer& buffer);
+    
+    XmlElement* getStateXml() const;
+    
+    void updateFromXml(XmlElement* stateXml);
     
 protected:
     CriticalSection lock;
