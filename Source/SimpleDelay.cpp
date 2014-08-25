@@ -25,8 +25,13 @@ SimpleDelay::SimpleDelay(int noChannels, int maxTime, int sampleRate):
     time_(0.5),
     feedBack_(0.0),
     sampleRate_(sampleRate),
-    delayBufferIdx_(0)
+    delayBufferIdx_(0),
+    lp_(),
+    lowPass_(false)
 {
+    for(int i=0; i < noChannels; i++){
+        lp_.push_back(OnePoleLowpass(5000, sampleRate_));
+    }
 }
 
 SimpleDelay::~SimpleDelay()
@@ -39,6 +44,9 @@ void SimpleDelay::setSampleRate(int sampleRate)
         const ScopedLock sl (lock);
         delayBuffer_.setSize(delayBuffer_.getNumChannels(), maxTime_ * sampleRate);
         sampleRate_ = sampleRate;
+        for(int i=0; i<lp_.size(); i++){
+            lp_[i].setSampleRate(sampleRate);
+        }
     }
 }
 
@@ -67,6 +75,30 @@ float SimpleDelay::getFeedback() const
     return feedBack_;
 }
 
+void SimpleDelay::setLowpassIsActive(bool lowPassActive)
+{
+    lowPass_ = lowPassActive;
+}
+
+bool SimpleDelay::getLowpassIsActive() const
+{
+    return lowPass_;
+}
+
+void SimpleDelay::setLowpassFrequency(double frequency)
+{
+    const double f = SATURATE(0.0, 25000.0, frequency);
+    for (int i=0; i<lp_.size(); i++) {
+        lp_[i].setFrequency(f);
+    }
+}
+
+double SimpleDelay::getLowpassFrequency() const
+{
+    return lp_.size() > 0 ? lp_[0].getFrequency() : INFINITY;
+}
+
+
 void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
 {
     const ScopedLock sl(lock);
@@ -87,7 +119,12 @@ void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
         for (int i = 0; i < nSamples; i++){
             const float in = channelData[i];
             channelData[i] += delayData[dIdx];
-            delayData[dIdx] = (delayData[dIdx] + in) * feedBack_;
+            const float delayDry = (delayData[dIdx] + in) * feedBack_;
+            if (lowPass_) {
+                delayData[dIdx] = lp_[channel].process(delayDry);
+            } else {
+                delayData[dIdx] = delayDry;
+            }
             if (++dIdx >= dLength)
                 dIdx = 0;
         }
@@ -101,6 +138,8 @@ XmlElement* SimpleDelay::getStateXml() const
     
     rv->setAttribute("length", time_);
     rv->setAttribute("feedback", feedBack_);
+    rv->setAttribute("lp_active", lowPass_);
+    rv->setAttribute("lp_freq", getLowpassFrequency());
     
     return rv;
 }
@@ -110,5 +149,8 @@ void SimpleDelay::updateFromXml(XmlElement *stateXml)
     if (stateXml != nullptr && stateXml->hasTagName("DELAYSETTINGS")) {
         time_ = stateXml->getDoubleAttribute("length", time_);
         feedBack_ = stateXml->getDoubleAttribute("feedback", feedBack_);
+        lowPass_ = stateXml->getBoolAttribute("lp_active", lowPass_);
+        setLowpassFrequency(stateXml->getDoubleAttribute("lp_freq",
+                                                         getLowpassFrequency()));
     }
 }

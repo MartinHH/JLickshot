@@ -5,6 +5,8 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="XgPXVM" name="JLickshot">
     <GROUP id="{62EFFF26-BDD3-BA48-66A9-A516E40CC70A}" name="Source">
+      <FILE id="rWiysm" name="OnePoleLowpass.h" compile="0" resource="0"
+            file="Source/OnePoleLowpass.h"/>
       <FILE id="PF5cCD" name="DelayComponent.cpp" compile="1" resource="0"
             file="Source/DelayComponent.cpp"/>
       <FILE id="XO33rp" name="DelayComponent.h" compile="0" resource="0"

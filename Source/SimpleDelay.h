@@ -22,6 +22,7 @@
 
 #include "JuceHeader.h"
 #include "Defines.h"
+#include "OnePoleLowpass.h"
 
 class SimpleDelay
 {
@@ -65,6 +66,14 @@ public:
      */
     float getFeedback() const;
     
+    void setLowpassIsActive(bool lowPassActive);
+    
+    bool getLowpassIsActive() const;
+    
+    void setLowpassFrequency(double frequency);
+    
+    double getLowpassFrequency() const;
+    
     /** Processes a block auf audio data, adding the delay effect to it.
      *
      *  @param buffer A block of audio data that shall have this delay effect
@@ -86,6 +95,8 @@ private:
     float feedBack_;
     int sampleRate_;
     int delayBufferIdx_;
+    std::vector<OnePoleLowpass> lp_;
+    bool lowPass_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleDelay)
 };
