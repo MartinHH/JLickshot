@@ -95,6 +95,16 @@ void MainController::feedbackChanged(float feedback)
     aSource_.getDelayUnit().setFeedback(feedback);
 }
 
+void MainController::lowpassActivatedChanged(bool lpSetActive)
+{
+    aSource_.getDelayUnit().setLowpassIsActive(lpSetActive);
+}
+
+void MainController::lowpassFrequencyChanged(float frequency)
+{
+    aSource_.getDelayUnit().setLowpassFrequency(frequency);
+}
+
 void MainController::setMasterGain(float gain)
 {
     aSourcePlayer_.setGain(gain);

@@ -58,6 +58,10 @@ public:
     
     void feedbackChanged(float feedback);
     
+    void lowpassActivatedChanged(bool lpSetActive);
+    
+    void lowpassFrequencyChanged(float frequency);
+    
     /** Sets the main playback gain. Sets the gain setting for
      *  the AudioSourcePlayer that is used internally.
      *

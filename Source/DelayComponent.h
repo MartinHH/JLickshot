@@ -42,6 +42,10 @@ public:
         virtual void delayTimeChanged(float delay) = 0;
         
         virtual void feedbackChanged(float feedback) = 0;
+        
+        virtual void lowpassActivatedChanged(bool lpSetActive) = 0;
+        
+        virtual void lowpassFrequencyChanged(float frequency) = 0;
     };
     
     /** Adds a listener. */
