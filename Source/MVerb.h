@@ -78,7 +78,7 @@ public:
         //nowt to do here
     }
 
-    void process(T **inputs, T **outputs, int sampleFrames){
+    void process(const T **inputs, T **outputs, int sampleFrames){
         T OneOverSampleFrames = 1. / sampleFrames;
         T MixDelta	= (Mix - MixSmooth) * OneOverSampleFrames;
         T EarlyLateDelta = (EarlyMix - EarlyLateSmooth) * OneOverSampleFrames;
