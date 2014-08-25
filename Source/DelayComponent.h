@@ -72,6 +72,9 @@ private:
     ScopedPointer<Label> delayLabel;
     ScopedPointer<Slider> feedbackSlider_;
     ScopedPointer<Label> feedbackLabel_;
+    ScopedPointer<ToggleButton> lowpassButton_;
+    ScopedPointer<Slider> frequencySlider_;
+    ScopedPointer<Label> frequencyLabel_;
     ListenerList<Listener> listeners_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayComponent)

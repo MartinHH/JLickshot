@@ -72,7 +72,7 @@ MainContentComponent::MainContentComponent(MainController* controller):
     laf_ = new LookAndFeel_V3();
     setLookAndFeel(laf_);
     
-    setSize (530, 596);
+    setSize (530, 636);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -92,9 +92,9 @@ void MainContentComponent::resized()
     loadButton_->setBounds(10, 5, 140, 24);
     saveButton_->setBounds(155, 5, 140, 24);
     settingsButton_->setBounds(305, 5, 140, 24);
-    viewport_->setBounds(10, 34, 520, 391);
-    delayComponent_->setBounds(10, 430, 510, 96);
-    keyboard_->setBounds(10, 526, 510, 64);
+    viewport_->setBounds(10, 34, 520, 383);
+    delayComponent_->setBounds(10, 422, 510, 144);
+    keyboard_->setBounds(10, 566, 510, 64);
     gainSlider_->setBounds(455, 5, 60, 24);
 }
 
