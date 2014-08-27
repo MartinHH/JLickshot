@@ -89,13 +89,20 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
+    // positioned from top:
     loadButton_->setBounds(10, 5, 140, 24);
     saveButton_->setBounds(155, 5, 140, 24);
     settingsButton_->setBounds(305, 5, 140, 24);
-    viewport_->setBounds(10, 34, 520, 383);
-    delayComponent_->setBounds(10, 422, 510, 132);
-    keyboard_->setBounds(10, 554, 510, 64);
     gainSlider_->setBounds(455, 5, 60, 24);
+    
+    // positioned from bottom:
+    keyboard_->setBounds(10, getHeight()-65, 510, 64);
+    delayComponent_->setBounds(10, getHeight()-keyboard_->getHeight() - 132,
+                               510, 132);
+    
+    // takes up the remaining space:
+    viewport_->setBounds(10, 34, 520, getHeight()-34-206);
+
 }
 
 void MainContentComponent::sliderValueChanged(juce::Slider *sliderThatWasMoved)
