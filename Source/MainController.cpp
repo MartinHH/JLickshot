@@ -105,6 +105,56 @@ void MainController::lowpassFrequencyChanged(float frequency)
     aSource_.getDelayUnit().setLowpassFrequency(frequency);
 }
 
+void MainController::reverbActivationChanged(bool delaySetActive)
+{
+    aSource_.setDelayIsActive(delaySetActive);
+}
+
+void MainController::dampingChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::DAMPINGFREQ, newValue);
+}
+
+void MainController::densityChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::DENSITY, newValue);
+}
+
+void MainController::bandwidthChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::BANDWIDTHFREQ, newValue);
+}
+
+void MainController::predelayChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::PREDELAY, newValue);
+}
+
+void MainController::sizeChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::SIZE, newValue);
+}
+
+void MainController::decayChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::DECAY, newValue);
+}
+
+void MainController::gainChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::GAIN, newValue);
+}
+
+void MainController::mixChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::MIX, newValue);
+}
+
+void MainController::earlyLateMixChanged(float newValue)
+{
+    aSource_.getMVerb().setParameter(MVerb<float>::EARLYMIX, newValue);
+}
+
 void MainController::setMasterGain(float gain)
 {
     aSourcePlayer_.setGain(gain);

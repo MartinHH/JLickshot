@@ -66,6 +66,7 @@ MainContentComponent::MainContentComponent(MainController* controller):
     addAndMakeVisible(delayComponent_);
     
     mVerbComponent_ = new MVerbComponent();
+    mVerbComponent_->addListener(controller);
     addAndMakeVisible(mVerbComponent_);
     
     keyboard_ = new MidiKeyboardComponent(controller->getKeyState(),

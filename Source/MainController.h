@@ -24,6 +24,7 @@
 #include "SampleSynthAudioSource.h"
 #include "SampleChoiceComponent.h"
 #include "DelayComponent.h"
+#include "MVerbComponent.h"
 
 /**
  *  This class contains the main logic. It holds an AudioDeviceManager,
@@ -33,7 +34,8 @@
  *  Also, it contains methods to store/restore its state to/from an XML file.
  */
 class MainController    :   public SampleChoiceComponent::Listener,
-                            public DelayComponent::Listener
+                            public DelayComponent::Listener,
+                            public MVerbComponent::Listener
 {
 public:
     MainController();
@@ -61,6 +63,26 @@ public:
     void lowpassActivatedChanged(bool lpSetActive);
     
     void lowpassFrequencyChanged(float frequency);
+    
+    void reverbActivationChanged(bool delaySetActive);
+    
+    void dampingChanged(float newValue);
+    
+    void densityChanged(float newValue);
+    
+    void bandwidthChanged(float newValue);
+    
+    void predelayChanged(float newValue);
+    
+    void sizeChanged(float newValue);
+    
+    void decayChanged(float newValue);
+    
+    void gainChanged(float newValue);
+    
+    void mixChanged(float newValue);
+    
+    void earlyLateMixChanged(float newValue);
     
     /** Sets the main playback gain. Sets the gain setting for
      *  the AudioSourcePlayer that is used internally.
