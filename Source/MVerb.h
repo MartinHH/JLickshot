@@ -291,31 +291,31 @@ public:
     float getParameter(int index) const{
         switch(index){
             case DAMPINGFREQ:
-                    return DampingFreq * 100.;
+                    return 1-DampingFreq;
                     break;
             case DENSITY:
-                    return Density1 * 100.f;
+                    return Density1;
                     break;
             case BANDWIDTHFREQ:
-                    return BandwidthFreq * 100.;
+                    return BandwidthFreq;
                     break;
             case PREDELAY:
-                    return PreDelayTime * 100.;
+                    return PreDelayTime;
                     break;
             case SIZE:
-                    return (((0.95 * Size) + 0.05)*100.);
+                    return (Size - 0.05) / 0.95;
                     break;
             case DECAY:
-                    return Decay * 100.f;
+                    return Decay;
                     break;
             case GAIN:
-                    return Gain * 100.f;
+                    return Gain;
                     break;
             case MIX:
-                    return Mix * 100.f;
+                    return Mix;
                     break;
             case EARLYMIX:
-                    return EarlyMix * 100.f;
+                    return EarlyMix;
                     break;
             default: return 0.f;
                 break;
