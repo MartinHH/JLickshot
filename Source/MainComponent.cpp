@@ -34,10 +34,6 @@ MainContentComponent::MainContentComponent(MainController* controller):
     viewport_->setViewedComponent(sampleComponent_, false);
     addAndMakeVisible(viewport_);
     
-    keyboard_ = new MidiKeyboardComponent(controller->getKeyState(),
-                                          MidiKeyboardComponent::horizontalKeyboard);
-    addAndMakeVisible(keyboard_);
-    
     loadButton_ = new TextButton();
     loadButton_->setButtonText(translate("LOAD"));
     loadButton_->addListener(this);
@@ -72,10 +68,14 @@ MainContentComponent::MainContentComponent(MainController* controller):
     mVerbComponent_ = new MVerbComponent();
     addAndMakeVisible(mVerbComponent_);
     
+    keyboard_ = new MidiKeyboardComponent(controller->getKeyState(),
+                                          MidiKeyboardComponent::horizontalKeyboard);
+    addAndMakeVisible(keyboard_);
+    
     laf_ = new LookAndFeel_V3();
     setLookAndFeel(laf_);
     
-    setSize (530, 618);
+    setSize (1050, 618);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -97,22 +97,17 @@ void MainContentComponent::resized()
     saveButton_->setBounds(155, 5, 140, 24);
     settingsButton_->setBounds(305, 5, 140, 24);
     gainSlider_->setBounds(455, 5, 60, 24);
+    delayComponent_->setBounds(530, 10, 510, 124);
+    mVerbComponent_->setBounds(530, 10 + delayComponent_->getHeight(),
+                               510, 214);
     
     // positioned from bottom:
-    keyboard_->setBounds(10, getHeight()-65, 510, 64);
-    mVerbComponent_->setBounds(10,
-                               getHeight()-keyboard_->getHeight() - 214,
-                               510, 214);
-    delayComponent_->setBounds(10,
-                               getHeight()-keyboard_->getHeight()
-                               - mVerbComponent_->getHeight() - 124,
-                               510, 124);
+    keyboard_->setBounds(10, getHeight()-64, getWidth()-20, 64);
+
     
-    // takes up the remaining space:
+    // takes up the remaining space on the left:
     viewport_->setBounds(10, 34, 520,
-                         getHeight()- 34 - 10 - keyboard_->getHeight()
-                         - mVerbComponent_->getHeight()
-                         - delayComponent_->getHeight());
+                         getHeight() - 34 - 10 - keyboard_->getHeight());
 
 }
 
