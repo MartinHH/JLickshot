@@ -48,7 +48,7 @@ SimpleDelay& SampleSynthAudioSource::getDelayUnit()
     return delay_;
 }
 
-MVerb<float>& SampleSynthAudioSource::getMVerb()
+MVerbPlus& SampleSynthAudioSource::getMVerb()
 {
     return mVerb_;
 }
