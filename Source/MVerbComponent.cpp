@@ -190,5 +190,20 @@ void MVerbComponent::sliderValueChanged(Slider *sliderThatWasMoved)
                                &MVerbComponent::Listener::decayChanged,
                                normalizeSlider(decaySlider_));
     }
+}
 
+void MVerbComponent::updateFromAudioSource(SampleSynthAudioSource& aSource)
+{
+    activateButton_->setToggleState(aSource.getDelayIsActive(), dontSendNotification);
+    
+    MVerb<float>& mv = aSource.getMVerb();
+    updateSliderFromNormalized(gainSlider_, mv.getParameter(MVerb<float>::GAIN));
+    updateSliderFromNormalized(mixSlider_, mv.getParameter(MVerb<float>::MIX));
+    updateSliderFromNormalized(earlyLateMixSlider_, mv.getParameter(MVerb<float>::EARLYMIX));
+    updateSliderFromNormalized(dampingSlider_, mv.getParameter(MVerb<float>::DAMPINGFREQ));
+    updateSliderFromNormalized(densitySlider_, mv.getParameter(MVerb<float>::DENSITY));
+    updateSliderFromNormalized(bandwidthSlider_, mv.getParameter(MVerb<float>::BANDWIDTHFREQ));
+    updateSliderFromNormalized(predelaySlider_, mv.getParameter(MVerb<float>::PREDELAY));
+    updateSliderFromNormalized(sizeSlider_, mv.getParameter(MVerb<float>::SIZE));
+    updateSliderFromNormalized(decaySlider_, mv.getParameter(MVerb<float>::DECAY));
 }

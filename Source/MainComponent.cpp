@@ -73,6 +73,8 @@ MainContentComponent::MainContentComponent(MainController* controller):
                                           MidiKeyboardComponent::horizontalKeyboard);
     addAndMakeVisible(keyboard_);
     
+    updateFromController();
+    
     laf_ = new LookAndFeel_V3();
     setLookAndFeel(laf_);
     
@@ -176,6 +178,8 @@ void MainContentComponent::updateFromController()
     sampleComponent_->updateFromSynth(controller_->getSynth());
     // update the DelayComponent:
     delayComponent_->updateFromAudioSource(controller_->getAudioSource());
+    // update the MVerbComponent
+    mVerbComponent_->updateFromAudioSource(controller_->getAudioSource());
 }
 
 void MainContentComponent::popUpLoadResult(SampleSynth::LoadResult result)

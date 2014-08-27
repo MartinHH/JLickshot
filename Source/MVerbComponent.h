@@ -22,6 +22,7 @@
 
 #include "JuceHeader.h"
 #include "JLickshotComponent.h"
+#include "SampleSynthAudioSource.h"
 
 class MVerbComponent    : public JLickshotComponent,
                           public ButtonListener
@@ -67,6 +68,8 @@ public:
     void resized();
     void buttonClicked (Button* buttonThatWasClicked);
     void sliderValueChanged (Slider* sliderThatWasMoved);
+    
+    void updateFromAudioSource(SampleSynthAudioSource& aSource);
 
 private:
     ScopedPointer<GroupComponent> groupComponent_;
