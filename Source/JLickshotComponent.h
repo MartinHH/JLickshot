@@ -87,7 +87,7 @@ inline Slider* JLickshotComponent::createAndAddDefaultslider(const String &name)
 {
     Slider* s = new Slider(name);
     addAndMakeVisible(s);
-    s->setRange (0, 1.0, 0.01);
+    s->setRange (0, 100.0, 0.1);
     s->setSliderStyle (Slider::Rotary);
     s->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
     s->addListener (this);
