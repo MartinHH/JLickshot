@@ -31,39 +31,30 @@ MVerbComponent::MVerbComponent():
     
     gainLabel_ = createAndAddDefaultLabel(translate("gain Label"), translate("Gain:"));
     gainSlider_= createAndAddDefaultslider(translate("gain slider"));
-    gainSlider_->setValue(1.0);
 
     mixLabel_ = createAndAddDefaultLabel(translate("mix Label"), translate("Mix:"));
     mixSlider_= createAndAddDefaultslider(translate("mix slider"));
-    mixSlider_->setValue(0.15);
 
     earlyLateMixLabel_ = createAndAddDefaultLabel(translate("early late Label"), translate("Early/Late:"));
     earlyLateMixSlider_= createAndAddDefaultslider(translate("early late slider"));
-    earlyLateMixSlider_->setValue(0.75);
     
     dampingLabel_ = createAndAddDefaultLabel(translate("damping Label"), translate("Damping:"));
     dampingSlider_= createAndAddDefaultslider(translate("damping slider"));
-    dampingSlider_->setValue(0.0);
 
     densityLabel_ = createAndAddDefaultLabel(translate("density Label"), translate("Density:"));
     densitySlider_= createAndAddDefaultslider(translate("density slider"));
-    densitySlider_->setValue(0.5);
     
     bandwidthLabel_ = createAndAddDefaultLabel(translate("bandwidth Label"), translate("Bandwidth:"));
     bandwidthSlider_= createAndAddDefaultslider(translate("bandwidth slider"));
-    bandwidthSlider_->setValue(1.0);
     
     predelayLabel_ = createAndAddDefaultLabel(translate("predelay Label"), translate("Predelay:"));
     predelaySlider_= createAndAddDefaultslider(translate("predelay slider"));
-    predelaySlider_->setValue(0.0);
     
     sizeLabel_ = createAndAddDefaultLabel(translate("size Label"), translate("Size:"));
     sizeSlider_= createAndAddDefaultslider(translate("size slider"));
-    sizeSlider_->setValue(0.5);
     
     decayLabel_ = createAndAddDefaultLabel(translate("decay Label"), translate("Decay:"));
     decaySlider_= createAndAddDefaultslider(translate("decay slider"));
-    decaySlider_->setValue(0.5);
     
     setSize (430, 214);
 }
