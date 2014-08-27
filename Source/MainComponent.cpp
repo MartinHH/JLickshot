@@ -69,6 +69,9 @@ MainContentComponent::MainContentComponent(MainController* controller):
     delayComponent_->addListener(controller);
     addAndMakeVisible(delayComponent_);
     
+    mVerbComponent_ = new MVerbComponent();
+    addAndMakeVisible(mVerbComponent_);
+    
     laf_ = new LookAndFeel_V3();
     setLookAndFeel(laf_);
     
@@ -97,11 +100,19 @@ void MainContentComponent::resized()
     
     // positioned from bottom:
     keyboard_->setBounds(10, getHeight()-65, 510, 64);
-    delayComponent_->setBounds(10, getHeight()-keyboard_->getHeight() - 124,
+    mVerbComponent_->setBounds(10,
+                               getHeight()-keyboard_->getHeight() - 214,
+                               510, 214);
+    delayComponent_->setBounds(10,
+                               getHeight()-keyboard_->getHeight()
+                               - mVerbComponent_->getHeight() - 124,
                                510, 124);
     
     // takes up the remaining space:
-    viewport_->setBounds(10, 34, 520, getHeight()-34-198);
+    viewport_->setBounds(10, 34, 520,
+                         getHeight()- 34 - 10 - keyboard_->getHeight()
+                         - mVerbComponent_->getHeight()
+                         - delayComponent_->getHeight());
 
 }
 

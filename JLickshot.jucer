@@ -5,6 +5,12 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="XgPXVM" name="JLickshot">
     <GROUP id="{62EFFF26-BDD3-BA48-66A9-A516E40CC70A}" name="Source">
+      <FILE id="LlauKg" name="JLickshotComponent.h" compile="0" resource="0"
+            file="Source/JLickshotComponent.h"/>
+      <FILE id="ZqH4GN" name="MVerbComponent.cpp" compile="1" resource="0"
+            file="Source/MVerbComponent.cpp"/>
+      <FILE id="auxI1k" name="MVerbComponent.h" compile="0" resource="0"
+            file="Source/MVerbComponent.h"/>
       <FILE id="Nak9eK" name="MVerb.h" compile="0" resource="0" file="Source/MVerb.h"/>
       <FILE id="rWiysm" name="OnePoleLowpass.h" compile="0" resource="0"
             file="Source/OnePoleLowpass.h"/>

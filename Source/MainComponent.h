@@ -24,6 +24,7 @@
 #include "MainController.h"
 #include "SampleCollectionComponent.h"
 #include "DelayComponent.h"
+#include "MVerbComponent.h"
 
 /**
  *  This is the main GUI component that contains any subcomponents. It holds
@@ -60,6 +61,7 @@ private:
     ScopedPointer<TextButton> settingsButton_;
     ScopedPointer<Slider> gainSlider_;
     ScopedPointer<DelayComponent> delayComponent_;
+    ScopedPointer<MVerbComponent> mVerbComponent_;
     MainController* controller_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
