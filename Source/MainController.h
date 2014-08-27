@@ -52,7 +52,7 @@ public:
     void fileChosen(SampleChoiceComponent* sampleChoiceComponent,
                     const File& audioFile);
     
-    void activationStatusChanged(bool delaySetActive);
+    void delayActivationChanged(bool delaySetActive);
     
     void delayTimeChanged(float delay);
     

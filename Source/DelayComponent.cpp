@@ -129,7 +129,7 @@ void DelayComponent::buttonClicked (Button* buttonThatWasClicked)
     if (buttonThatWasClicked == activateButton_){
         Component::BailOutChecker checker(this);
         listeners_.callChecked(checker,
-                               &DelayComponent::Listener::activationStatusChanged,
+                               &DelayComponent::Listener::delayActivationChanged,
                                activateButton_->getToggleState());
     } else if (buttonThatWasClicked == lowpassButton_){
         Component::BailOutChecker checker(this);

@@ -80,7 +80,7 @@ void MainController::fileChosen(SampleChoiceComponent *sampleChoiceComponent,
     }
 }
 
-void MainController::activationStatusChanged(bool delaySetActive)
+void MainController::delayActivationChanged(bool delaySetActive)
 {
     aSource_.setDelayIsActive(delaySetActive);
 }

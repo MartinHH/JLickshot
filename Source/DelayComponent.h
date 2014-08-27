@@ -37,7 +37,7 @@ public:
     public:
         virtual ~Listener(){}
         
-        virtual void activationStatusChanged(bool delaySetActive) = 0;
+        virtual void delayActivationChanged(bool delaySetActive) = 0;
         
         virtual void delayTimeChanged(float delay) = 0;
         
