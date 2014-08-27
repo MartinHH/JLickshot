@@ -68,7 +68,7 @@ public:
                              true);
 
             centreWithSize (getWidth(), getHeight());
-            setResizeLimits(530, 440, getWidth(), 800);
+            setResizeLimits(530, 442, getWidth(), 800);
             setResizable(true, true);
             setVisible (true);
         }
