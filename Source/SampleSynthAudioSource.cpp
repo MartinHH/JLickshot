@@ -24,7 +24,8 @@ SampleSynthAudioSource::SampleSynthAudioSource(MidiKeyboardState& keyState,
                                                int noOfVoices):
     keyState_(keyState),
     synth_(noOfVoices),
-    delayIsActive_(false)
+    delayIsActive_(false),
+    reverbIsActive_(false)
 {
 }
 
@@ -47,12 +48,18 @@ SimpleDelay& SampleSynthAudioSource::getDelayUnit()
     return delay_;
 }
 
+MVerb<float>& SampleSynthAudioSource::getMVerb()
+{
+    return mVerb_;
+}
+
 void SampleSynthAudioSource::prepareToPlay (int /* samplesPerBlockExpected */,
                                             double sampleRate)
 {
     midiCollector_.reset (sampleRate);
     synth_.setCurrentPlaybackSampleRate (sampleRate);
     delay_.setSampleRate((int) sampleRate);
+    mVerb_.setSampleRate(sampleRate);
 }
 
 void SampleSynthAudioSource::releaseResources()
@@ -73,6 +80,12 @@ void SampleSynthAudioSource::getNextAudioBlock(const AudioSourceChannelInfo& buf
     if (delayIsActive_) {
         delay_.processBlock(*bufferToFill.buffer);
     }
+    
+    if(reverbIsActive_){
+        mVerb_.process(bufferToFill.buffer->getArrayOfReadPointers(),
+                       bufferToFill.buffer->getArrayOfWritePointers(),
+                       bufferToFill.numSamples);
+    }
 }
 
 void SampleSynthAudioSource::setDelayIsActive(bool delayIsActive)
@@ -83,4 +96,14 @@ void SampleSynthAudioSource::setDelayIsActive(bool delayIsActive)
 bool SampleSynthAudioSource::getDelayIsActive() const
 {
     return delayIsActive_;
+}
+
+void SampleSynthAudioSource::setReverbIsActive(bool reverbIsActive)
+{
+    reverbIsActive_ = reverbIsActive;
+}
+
+bool SampleSynthAudioSource::getReverbIsActive() const
+{
+    return reverbIsActive_;
 }

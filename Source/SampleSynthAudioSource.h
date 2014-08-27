@@ -24,6 +24,7 @@
 #include "JuceHeader.h"
 #include "SampleSynth.h"
 #include "SimpleDelay.h"
+#include "MVerb.h"
 
 /**
  *  An AudioSource that plays back a SampleSynth (which is controlled via MIDI).
@@ -40,6 +41,8 @@ public:
     
     SimpleDelay& getDelayUnit();
     
+    MVerb<float>& getMVerb();
+    
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     
     void releaseResources() override;
@@ -50,13 +53,19 @@ public:
     
     bool getDelayIsActive() const;
 
+    void setReverbIsActive(bool reverbIsActive);
+    
+    bool getReverbIsActive() const;
+    
 private:
     
     MidiMessageCollector midiCollector_;
     MidiKeyboardState& keyState_;
     SampleSynth synth_;
     SimpleDelay delay_;
+    MVerb<float> mVerb_;
     bool delayIsActive_;
+    bool reverbIsActive_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleSynthAudioSource)
 
