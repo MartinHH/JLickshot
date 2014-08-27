@@ -78,7 +78,7 @@ DelayComponent::DelayComponent ()
     frequencyLabel_->setColour (TextEditor::textColourId, Colours::black);
     frequencyLabel_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
     
-    setSize (510, 124);
+    setSize (430, 124);
     
 }
 
@@ -115,13 +115,12 @@ void DelayComponent::resized()
     activateButton_->setBounds (16, 32, 88, 24);
     lowpassButton_->setBounds (16, 64, 88, 24);
     
-    delayLabel->setBounds (117, 20, 76, 16);
-    delaySlider_->setBounds (123, 40, 64, 56);
-    feedbackLabel_->setBounds (217, 20, 76, 16);
-    feedbackSlider_->setBounds (223, 40, 64, 56);
-    frequencyLabel_->setBounds (317, 20, 76, 16);
-    frequencySlider_->setBounds (323, 40, 64, 56);
-
+    setDefaultLabelBounds(delayLabel, 0, 1);
+    setDefaultSliderBounds(delaySlider_, 0, 1);
+    setDefaultLabelBounds(feedbackLabel_, 0, 2);
+    setDefaultSliderBounds(feedbackSlider_, 0, 2);
+    setDefaultLabelBounds(frequencyLabel_, 0, 3);
+    setDefaultSliderBounds(frequencySlider_, 0, 3);
 }
 
 void DelayComponent::buttonClicked (Button* buttonThatWasClicked)
@@ -171,18 +170,4 @@ void DelayComponent::updateFromAudioSource(SampleSynthAudioSource& aSource)
                                    dontSendNotification);
     frequencySlider_->setValue(d.getLowpassFrequency(),
                                dontSendNotification);
-}
-
-float DelayComponent::normalizeSlider(const Slider *slider)
-{
-    return NORMALIZE(slider->getMinimum(),
-                     slider->getMaximum(),
-                     slider->getValue());
-}
-
-void DelayComponent::updateSliderFromNormalized(juce::Slider *slider, float normalized)
-{
-    slider->setValue(DENORMALIZE(slider->getMinimum(),
-                                 slider->getMaximum(),
-                                 normalized), dontSendNotification);
 }

@@ -23,10 +23,10 @@
 #include "JuceHeader.h"
 #include "Defines.h"
 #include "SampleSynthAudioSource.h"
+#include "JLickshotComponent.h"
 
-class DelayComponent  : public Component,
-                        public ButtonListener,
-                        public SliderListener
+class DelayComponent  : public JLickshotComponent,
+                        public ButtonListener
 {
 public:
     DelayComponent ();
@@ -61,11 +61,7 @@ public:
     
     void updateFromAudioSource(SampleSynthAudioSource& aSource);
     
-private:
-    static float normalizeSlider(const Slider* slider);
-    
-    static void updateSliderFromNormalized(Slider* slider, float normalized);
-    
+private:    
     ScopedPointer<GroupComponent> groupComponent_;
     ScopedPointer<ToggleButton> activateButton_;
     ScopedPointer<Slider> delaySlider_;

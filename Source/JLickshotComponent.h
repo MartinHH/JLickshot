@@ -23,6 +23,33 @@
 #include "JuceHeader.h"
 #include "Defines.h"
 
+#ifndef ROW1_LABEL_Y
+#define ROW1_LABEL_Y 20
+#endif 
+
+#ifndef ROW1_SLIDER_Y
+#define ROW1_SLIDER_Y (ROW1_LABEL_Y + 20)
+#endif
+
+#ifndef ROW_DISTANCE
+#define ROW_DISTANCE 86
+#endif
+
+#define ROW2_LABEL_Y (ROW1_LABEL1 + ROW_DISTANCE)
+#define ROW2_SLIDER_Y (ROW2_LABEL_Y + 20)
+
+#ifndef COLUMN1_LABEL_X
+#define COLUM1_LABEL_X 17
+#endif
+
+#ifndef COLUMN1_LABEL_X
+#define COLUM1_SLIDER_X 23
+#endif
+
+#ifndef COLUMN_DISTANCE
+#define COLUMN_DISTANCE 80
+#endif
+
 /**
  *  Base class for components containing parameter sliders. It
  *  offers methods to create sliders and labels with standard settings
@@ -43,6 +70,10 @@ protected:
     Slider* createAndAddDefaultslider(const String& name);
     
     Label* createAndAddDefaultLabel(const String& name, const String& text);
+    
+    void setDefaultSliderBounds(Slider* slider, int row, int coloumn);
+    
+    void setDefaultLabelBounds(Label* label, int row, int coloumn);
     
     static float normalizeSlider(const Slider* slider);
     
@@ -73,6 +104,20 @@ inline Label* JLickshotComponent::createAndAddDefaultLabel(const String &name, c
     l->setColour (TextEditor::textColourId, Colours::black);
     l->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
     return l;
+}
+
+inline void JLickshotComponent::setDefaultSliderBounds(Slider* slider, int row, int column)
+{
+    slider->setBounds(COLUM1_SLIDER_X + column * COLUMN_DISTANCE,
+                      ROW1_SLIDER_Y + row * ROW_DISTANCE,
+                      64, 56);
+}
+
+inline void JLickshotComponent::setDefaultLabelBounds(Label* label, int row, int column)
+{
+    label->setBounds(COLUM1_LABEL_X + column * COLUMN_DISTANCE,
+                     ROW1_LABEL_Y + row * ROW_DISTANCE,
+                     76, 16);
 }
 
 inline float JLickshotComponent::normalizeSlider(const Slider *slider)

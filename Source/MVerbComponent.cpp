@@ -19,12 +19,6 @@
 
 #include "MVerbComponent.h"
 
-#define ROW1_LABEL_Y 20
-#define ROW1_SLIDER_Y (ROW1_LABEL_Y + 20)
-#define ROW2_LABEL_Y 106
-#define ROW2_SLIDER_Y (ROW2_LABEL_Y + 20)
-
-
 MVerbComponent::MVerbComponent():
     JLickshotComponent(translate("jlickshot component"))
 {
@@ -71,7 +65,7 @@ MVerbComponent::MVerbComponent():
     decaySlider_= createAndAddDefaultslider(translate("decay slider"));
     decaySlider_->setValue(0.5);
     
-    setSize (510, 214);
+    setSize (430, 214);
 }
 
 MVerbComponent::~MVerbComponent()
@@ -118,25 +112,24 @@ void MVerbComponent::resized()
 {
     groupComponent_->setBounds(0, 0, getWidth(), getHeight()-12);
     activateButton_->setBounds (16, 32, 88, 24);
-    gainLabel_->setBounds (117, ROW1_LABEL_Y, 76, 16);
-    gainSlider_->setBounds (123, ROW1_SLIDER_Y, 64, 56);
-    mixLabel_->setBounds (217, ROW1_LABEL_Y, 76, 16);
-    mixSlider_->setBounds (223, ROW1_SLIDER_Y, 64, 56);
-    earlyLateMixLabel_->setBounds (317, ROW1_LABEL_Y, 76, 16);
-    earlyLateMixSlider_->setBounds (323, ROW1_SLIDER_Y, 64, 56);
-    dampingLabel_->setBounds (417, ROW1_LABEL_Y, 76, 16);
-    dampingSlider_->setBounds (423, ROW1_SLIDER_Y, 64, 56);
-    densityLabel_->setBounds ( 17, ROW2_LABEL_Y, 76, 16);
-    densitySlider_->setBounds ( 23, ROW2_SLIDER_Y, 64, 56);
-    bandwidthLabel_->setBounds (117, ROW2_LABEL_Y, 76, 16);
-    bandwidthSlider_->setBounds (123, ROW2_SLIDER_Y, 64, 56);
-    predelayLabel_->setBounds (217, ROW2_LABEL_Y, 76, 16);
-    predelaySlider_->setBounds (223, ROW2_SLIDER_Y, 64, 56);
-    sizeLabel_->setBounds (317, ROW2_LABEL_Y, 76, 16);
-    sizeSlider_->setBounds (323, ROW2_SLIDER_Y, 64, 56);
-    decayLabel_->setBounds (417, ROW2_LABEL_Y, 76, 16);
-    decaySlider_->setBounds (423, ROW2_SLIDER_Y, 64, 56);
-
+    setDefaultLabelBounds(gainLabel_, 0, 1);
+    setDefaultSliderBounds(gainSlider_, 0, 1);
+    setDefaultLabelBounds(mixLabel_, 0, 2);
+    setDefaultSliderBounds(mixSlider_, 0, 2);
+    setDefaultLabelBounds(earlyLateMixLabel_, 0, 3);
+    setDefaultSliderBounds(earlyLateMixSlider_, 0, 3);
+    setDefaultLabelBounds(dampingLabel_, 0, 4);
+    setDefaultSliderBounds(dampingSlider_, 0, 4);
+    setDefaultLabelBounds(densityLabel_, 1, 0);
+    setDefaultSliderBounds(densitySlider_, 1, 0);
+    setDefaultLabelBounds(bandwidthLabel_, 1, 1);
+    setDefaultSliderBounds(bandwidthSlider_, 1, 1);
+    setDefaultLabelBounds(predelayLabel_, 1, 2);
+    setDefaultSliderBounds(predelaySlider_, 1, 2);
+    setDefaultLabelBounds(sizeLabel_, 1, 3);
+    setDefaultSliderBounds(sizeSlider_, 1, 3);
+    setDefaultLabelBounds(decayLabel_, 1, 4);
+    setDefaultSliderBounds(decaySlider_, 1, 4);
 }
 
 void MVerbComponent::buttonClicked(Button *buttonThatWasClicked)
