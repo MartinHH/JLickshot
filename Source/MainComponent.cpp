@@ -97,11 +97,11 @@ void MainContentComponent::resized()
     
     // positioned from bottom:
     keyboard_->setBounds(10, getHeight()-65, 510, 64);
-    delayComponent_->setBounds(10, getHeight()-keyboard_->getHeight() - 132,
-                               510, 132);
+    delayComponent_->setBounds(10, getHeight()-keyboard_->getHeight() - 124,
+                               510, 124);
     
     // takes up the remaining space:
-    viewport_->setBounds(10, 34, 520, getHeight()-34-206);
+    viewport_->setBounds(10, 34, 520, getHeight()-34-198);
 
 }
 

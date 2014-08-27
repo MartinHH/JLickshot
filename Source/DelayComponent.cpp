@@ -28,17 +28,17 @@ DelayComponent::DelayComponent ()
     activateButton_->setButtonText (TRANS("activate"));
     activateButton_->addListener (this);
     
-    addAndMakeVisible (delaySlider_ = new Slider ("new slider"));
+    addAndMakeVisible (delaySlider_ = new Slider ("delay slider"));
     delaySlider_->setRange (0, 1.0, 0.001);
     delaySlider_->setValue(0.5);
     delaySlider_->setSliderStyle (Slider::Rotary);
-    delaySlider_->setTextBoxStyle (Slider::TextBoxLeft, false, 50, 20);
+    delaySlider_->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
     delaySlider_->addListener (this);
     
     addAndMakeVisible (delayLabel = new Label ("delay label",
                                                TRANS("Delay:")));
     delayLabel->setFont (Font (15.00f, Font::plain));
-    delayLabel->setJustificationType (Justification::centredLeft);
+    delayLabel->setJustificationType (Justification::centred);
     delayLabel->setEditable (false, false, false);
     delayLabel->setColour (TextEditor::textColourId, Colours::black);
     delayLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
@@ -47,13 +47,13 @@ DelayComponent::DelayComponent ()
     feedbackSlider_->setRange (0, 100, 0.1);
     feedbackSlider_->setValue(0.0);
     feedbackSlider_->setSliderStyle (Slider::Rotary);
-    feedbackSlider_->setTextBoxStyle (Slider::TextBoxLeft, false, 50, 20);
+    feedbackSlider_->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
     feedbackSlider_->addListener (this);
     
     addAndMakeVisible (feedbackLabel_ = new Label ("feedback label",
                                                    TRANS("Feedback:")));
     feedbackLabel_->setFont (Font (15.00f, Font::plain));
-    feedbackLabel_->setJustificationType (Justification::centredLeft);
+    feedbackLabel_->setJustificationType (Justification::centred);
     feedbackLabel_->setEditable (false, false, false);
     feedbackLabel_->setColour (TextEditor::textColourId, Colours::black);
     feedbackLabel_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
@@ -66,19 +66,19 @@ DelayComponent::DelayComponent ()
     frequencySlider_->setRange (50, 20000, 0.1);
     frequencySlider_->setValue(5000);
     frequencySlider_->setSkewFactor(0.5);
-    frequencySlider_->setSliderStyle (Slider::LinearHorizontal);
-    frequencySlider_->setTextBoxStyle (Slider::TextBoxLeft, false, 50, 20);
+    frequencySlider_->setSliderStyle (Slider::Rotary);
+    frequencySlider_->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
     frequencySlider_->addListener (this);
     
     addAndMakeVisible (frequencyLabel_ = new Label ("frequency label",
                                                     TRANS("Frequency:")));
     frequencyLabel_->setFont (Font (15.00f, Font::plain));
-    frequencyLabel_->setJustificationType (Justification::centredLeft);
+    frequencyLabel_->setJustificationType (Justification::centred);
     frequencyLabel_->setEditable (false, false, false);
     frequencyLabel_->setColour (TextEditor::textColourId, Colours::black);
     frequencyLabel_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
     
-    setSize (510, 136);
+    setSize (510, 124);
     
 }
 
@@ -112,14 +112,16 @@ void DelayComponent::paint (Graphics& g)
 void DelayComponent::resized()
 {
     groupComponent_->setBounds(0, 0, getWidth(), getHeight()-12);
-    activateButton_->setBounds (24, 28, 71, 32);
-    delaySlider_->setBounds (168, 20, 112, 48);
-    delayLabel->setBounds (112, 28, 56, 32);
-    feedbackSlider_->setBounds (376, 20, 112, 48);
-    feedbackLabel_->setBounds (296, 28, 72, 32);
-    lowpassButton_->setBounds (24, 76, 128, 24);
-    frequencySlider_->setBounds (200, 76, 224, 24);
-    frequencyLabel_->setBounds (112, 72, 80, 32);
+    activateButton_->setBounds (16, 32, 88, 24);
+    lowpassButton_->setBounds (16, 64, 88, 24);
+    
+    delayLabel->setBounds (117, 20, 76, 16);
+    delaySlider_->setBounds (123, 40, 64, 56);
+    feedbackLabel_->setBounds (217, 20, 76, 16);
+    feedbackSlider_->setBounds (223, 40, 64, 56);
+    frequencyLabel_->setBounds (317, 20, 76, 16);
+    frequencySlider_->setBounds (323, 40, 64, 56);
+
 }
 
 void DelayComponent::buttonClicked (Button* buttonThatWasClicked)
