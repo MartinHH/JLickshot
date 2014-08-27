@@ -288,7 +288,7 @@ public:
         }
     }
 
-    float getParameter(int index){
+    float getParameter(int index) const{
         switch(index){
             case DAMPINGFREQ:
                     return DampingFreq * 100.;
