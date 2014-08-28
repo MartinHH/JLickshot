@@ -185,7 +185,7 @@ void MVerbComponent::sliderValueChanged(Slider *sliderThatWasMoved)
 
 void MVerbComponent::updateFromAudioSource(SampleSynthAudioSource& aSource)
 {
-    activateButton_->setToggleState(aSource.getDelayIsActive(), dontSendNotification);
+    activateButton_->setToggleState(aSource.getReverbIsActive(), dontSendNotification);
     
     MVerb<float>& mv = aSource.getMVerb();
     updateSliderFromNormalized(gainSlider_, mv.getParameter(MVerb<float>::GAIN));

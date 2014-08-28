@@ -107,7 +107,7 @@ void MainController::lowpassFrequencyChanged(float frequency)
 
 void MainController::reverbActivationChanged(bool delaySetActive)
 {
-    aSource_.setDelayIsActive(delaySetActive);
+    aSource_.setReverbIsActive(delaySetActive);
 }
 
 void MainController::dampingChanged(float newValue)
