@@ -177,6 +177,7 @@ bool MainController::saveState(const File& xmlDest)
     XmlElement* generalSettings = new XmlElement("GENERAL");
     generalSettings->setAttribute("gain", aSourcePlayer_.getGain());
     generalSettings->setAttribute("delay_active", aSource_.getDelayIsActive());
+    generalSettings->setAttribute("reverb_active", aSource_.getReverbIsActive());
     xml.addChildElement(generalSettings);
     
     // add sample settings:
@@ -184,6 +185,9 @@ bool MainController::saveState(const File& xmlDest)
     
     // add delay setting:
     xml.addChildElement(aSource_.getDelayUnit().getStateXml());
+    
+    // add reverb settings:
+    xml.addChildElement(aSource_.getMVerb().getStateXml());
     
     return xml.writeToFile(xmlDest, String::empty); // TODO
 }
@@ -210,9 +214,15 @@ SampleSynth::LoadResult MainController::loadState(const File& xmlSource)
         const bool delActive =
             generalSettings->getBoolAttribute("delay_active", aSource_.getDelayIsActive());
         aSource_.setDelayIsActive(delActive);
+        
+        const bool revActive =
+            generalSettings->getBoolAttribute("reverb_active", aSource_.getReverbIsActive());
+        aSource_.setReverbIsActive(revActive);
     }
     
     aSource_.getDelayUnit().updateFromXml(xml->getChildByName("DELAYSETTINGS"));
+    
+    aSource_.getMVerb().updateFromXml(xml->getChildByName("MVERBSETTINGS"));
     
     SampleSynth& synth = aSource_.getSynth();
     
