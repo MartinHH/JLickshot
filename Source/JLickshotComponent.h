@@ -67,7 +67,8 @@ public:
 
 protected:
 
-    Slider* createAndAddDefaultslider(const String& name);
+    Slider* createAndAddDefaultslider(const String& name, double min = 0.0,
+                                      double max = 100.0, double interval = 0.1);
     
     Label* createAndAddDefaultLabel(const String& name, const String& text);
     
@@ -83,11 +84,12 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JLickshotComponent)
 };
 
-inline Slider* JLickshotComponent::createAndAddDefaultslider(const String &name)
+inline Slider* JLickshotComponent::createAndAddDefaultslider(const String &name, double min,
+                                                             double max, double interval)
 {
     Slider* s = new Slider(name);
     addAndMakeVisible(s);
-    s->setRange (0, 100.0, 0.1);
+    s->setRange (min, max, interval);
     s->setSliderStyle (Slider::Rotary);
     s->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
     s->addListener (this);

@@ -25,61 +25,27 @@ DelayComponent::DelayComponent ()
                                                             TRANS("Delay")));
     
     addAndMakeVisible (activateButton_ = new ToggleButton ("activate button"));
-    activateButton_->setButtonText (TRANS("activate"));
+    activateButton_->setButtonText (translate("activate"));
     activateButton_->addListener (this);
     
-    addAndMakeVisible (delaySlider_ = new Slider ("delay slider"));
-    delaySlider_->setRange (0, 1.0, 0.001);
-    delaySlider_->setValue(0.5);
-    delaySlider_->setSliderStyle (Slider::Rotary);
-    delaySlider_->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
-    delaySlider_->addListener (this);
-    
-    addAndMakeVisible (delayLabel = new Label ("delay label",
-                                               TRANS("Delay:")));
-    delayLabel->setFont (Font (15.00f, Font::plain));
-    delayLabel->setJustificationType (Justification::centred);
-    delayLabel->setEditable (false, false, false);
-    delayLabel->setColour (TextEditor::textColourId, Colours::black);
-    delayLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-    
-    addAndMakeVisible (feedbackSlider_ = new Slider ("feedback slider"));
-    feedbackSlider_->setRange (0, 100, 0.1);
-    feedbackSlider_->setValue(0.0);
-    feedbackSlider_->setSliderStyle (Slider::Rotary);
-    feedbackSlider_->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
-    feedbackSlider_->addListener (this);
-    
-    addAndMakeVisible (feedbackLabel_ = new Label ("feedback label",
-                                                   TRANS("Feedback:")));
-    feedbackLabel_->setFont (Font (15.00f, Font::plain));
-    feedbackLabel_->setJustificationType (Justification::centred);
-    feedbackLabel_->setEditable (false, false, false);
-    feedbackLabel_->setColour (TextEditor::textColourId, Colours::black);
-    feedbackLabel_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-    
     addAndMakeVisible (lowpassButton_ = new ToggleButton ("lowpass button"));
-    lowpassButton_->setButtonText (TRANS("lowpass"));
+    lowpassButton_->setButtonText (translate("lowpass"));
     lowpassButton_->addListener (this);
     
-    addAndMakeVisible (frequencySlider_ = new Slider ("frequency slider"));
-    frequencySlider_->setRange (50, 20000, 0.1);
+    delayLabel = createAndAddDefaultLabel(translate("delay label"), translate("Delay:"));
+    delaySlider_ = createAndAddDefaultslider(translate("delay slider"), 0, 1.0, 0.001);
+    delaySlider_->setValue(0.5);
+
+    feedbackLabel_ = createAndAddDefaultLabel(translate("feedback label"), translate("Feedback:"));
+    feedbackSlider_ = createAndAddDefaultslider(translate("delay slider"), 0, 100, 0.1);
+    feedbackSlider_->setValue(0.0);
+    
+    frequencyLabel_ = createAndAddDefaultLabel(translate("frequency label"), translate("Frequency:"));
+    frequencySlider_ = createAndAddDefaultslider(translate("frequency slider"), 50, 20000, 0.1);
     frequencySlider_->setValue(5000);
     frequencySlider_->setSkewFactor(0.5);
-    frequencySlider_->setSliderStyle (Slider::Rotary);
-    frequencySlider_->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
-    frequencySlider_->addListener (this);
-    
-    addAndMakeVisible (frequencyLabel_ = new Label ("frequency label",
-                                                    TRANS("Frequency:")));
-    frequencyLabel_->setFont (Font (15.00f, Font::plain));
-    frequencyLabel_->setJustificationType (Justification::centred);
-    frequencyLabel_->setEditable (false, false, false);
-    frequencyLabel_->setColour (TextEditor::textColourId, Colours::black);
-    frequencyLabel_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
     
     setSize (430, 124);
-    
 }
 
 DelayComponent::~DelayComponent()
