@@ -20,6 +20,7 @@
 #ifndef ONEPOLELOWPASS_H_INCLUDED
 #define ONEPOLELOWPASS_H_INCLUDED
 
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 class OnePoleLowpass
