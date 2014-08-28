@@ -20,12 +20,8 @@
 
 #include "SampleSynthAudioSource.h"
 
-SampleSynthAudioSource::SampleSynthAudioSource(MidiKeyboardState& keyState,
-                                               int noOfVoices):
-    keyState_(keyState),
-    synth_(noOfVoices),
-    delayIsActive_(false),
-    reverbIsActive_(false)
+SampleSynthAudioSource::SampleSynthAudioSource(int noOfVoices):
+    JLickshotProcessorBase(noOfVoices)
 {
 }
 
@@ -33,33 +29,16 @@ SampleSynthAudioSource::~SampleSynthAudioSource()
 {
 }
 
-SampleSynth& SampleSynthAudioSource::getSynth()
-{
-    return synth_;
-}
-
 MidiMessageCollector* SampleSynthAudioSource::getMidiCollector()
 {
     return &midiCollector_;
-}
-
-SimpleDelay& SampleSynthAudioSource::getDelayUnit()
-{
-    return delay_;
-}
-
-MVerbPlus& SampleSynthAudioSource::getMVerb()
-{
-    return mVerb_;
 }
 
 void SampleSynthAudioSource::prepareToPlay (int /* samplesPerBlockExpected */,
                                             double sampleRate)
 {
     midiCollector_.reset (sampleRate);
-    synth_.setCurrentPlaybackSampleRate (sampleRate);
-    delay_.setSampleRate((int) sampleRate);
-    mVerb_.setSampleRate(sampleRate);
+    setSampleRate(sampleRate);
 }
 
 void SampleSynthAudioSource::releaseResources()
@@ -72,38 +51,6 @@ void SampleSynthAudioSource::getNextAudioBlock(const AudioSourceChannelInfo& buf
     
     MidiBuffer incomingMidi;
     midiCollector_.removeNextBlockOfMessages (incomingMidi, bufferToFill.numSamples);
-    
-    keyState_.processNextMidiBuffer (incomingMidi, 0, bufferToFill.numSamples, true);
-    
-    synth_.renderNextBlock (*bufferToFill.buffer, incomingMidi, 0,
-                            bufferToFill.numSamples);
-    if (delayIsActive_) {
-        delay_.processBlock(*bufferToFill.buffer);
-    }
-    
-    if(reverbIsActive_){
-        mVerb_.process(bufferToFill.buffer->getArrayOfReadPointers(),
-                       bufferToFill.buffer->getArrayOfWritePointers(),
-                       bufferToFill.numSamples);
-    }
-}
 
-void SampleSynthAudioSource::setDelayIsActive(bool delayIsActive)
-{
-    delayIsActive_ = delayIsActive;
-}
-
-bool SampleSynthAudioSource::getDelayIsActive() const
-{
-    return delayIsActive_;
-}
-
-void SampleSynthAudioSource::setReverbIsActive(bool reverbIsActive)
-{
-    reverbIsActive_ = reverbIsActive;
-}
-
-bool SampleSynthAudioSource::getReverbIsActive() const
-{
-    return reverbIsActive_;
+    process(*bufferToFill.buffer, incomingMidi, bufferToFill.numSamples);
 }

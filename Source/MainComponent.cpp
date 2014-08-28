@@ -69,7 +69,7 @@ MainContentComponent::MainContentComponent(MainController* controller):
     mVerbComponent_->addListener(controller);
     addAndMakeVisible(mVerbComponent_);
     
-    keyboard_ = new MidiKeyboardComponent(controller->getKeyState(),
+    keyboard_ = new MidiKeyboardComponent(controller->getAudioSource().getKeyState(),
                                           MidiKeyboardComponent::horizontalKeyboard);
     addAndMakeVisible(keyboard_);
     

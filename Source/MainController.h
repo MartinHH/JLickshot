@@ -43,8 +43,6 @@ public:
     
     AudioDeviceManager& getAudioDeviceManager();
     
-    MidiKeyboardState& getKeyState();
-    
     SampleSynthAudioSource& getAudioSource();
     
     const SampleSynth& getSynth();
@@ -121,7 +119,6 @@ public:
     
 private:
     AudioDeviceManager adm_;
-    MidiKeyboardState keyState_;
     SampleSynthAudioSource aSource_;
     AudioSourcePlayer aSourcePlayer_;
     

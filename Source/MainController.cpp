@@ -19,8 +19,7 @@
 
 #include "MainController.h"
 
-MainController::MainController():
-    aSource_(keyState_)
+MainController::MainController()
 {
     // initialise audio device manager:
     adm_.initialise (2, 2, nullptr, true, String::empty, 0);
@@ -42,11 +41,6 @@ MainController::~MainController()
 AudioDeviceManager& MainController::getAudioDeviceManager()
 {
     return adm_;
-}
-
-MidiKeyboardState& MainController::getKeyState()
-{
-    return keyState_;
 }
 
 SampleSynthAudioSource& MainController::getAudioSource()

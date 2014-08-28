@@ -22,26 +22,19 @@
 #define SAMPLESYNTHAUDIOSOURCE_H_INCLUDED
 
 #include "JuceHeader.h"
-#include "SampleSynth.h"
-#include "SimpleDelay.h"
-#include "MVerbPlus.h"
+#include "JLickshotProcessorBase.h"
 
 /**
  *  An AudioSource that plays back a SampleSynth (which is controlled via MIDI).
  */
-class SampleSynthAudioSource  : public AudioSource
+class SampleSynthAudioSource  : public AudioSource,
+                                public JLickshotProcessorBase
 {
 public:
-    SampleSynthAudioSource (MidiKeyboardState& keyState, int noOfVoices = 8);
+    SampleSynthAudioSource (int noOfVoices = 8);
     ~SampleSynthAudioSource();
     
-    SampleSynth& getSynth();
-    
     MidiMessageCollector* getMidiCollector();
-    
-    SimpleDelay& getDelayUnit();
-    
-    MVerbPlus& getMVerb();
     
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     
@@ -49,23 +42,9 @@ public:
     
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
     
-    void setDelayIsActive(bool delayIsActive);
-    
-    bool getDelayIsActive() const;
-
-    void setReverbIsActive(bool reverbIsActive);
-    
-    bool getReverbIsActive() const;
-    
 private:
     
     MidiMessageCollector midiCollector_;
-    MidiKeyboardState& keyState_;
-    SampleSynth synth_;
-    SimpleDelay delay_;
-    MVerbPlus mVerb_;
-    bool delayIsActive_;
-    bool reverbIsActive_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleSynthAudioSource)
 
