@@ -27,11 +27,12 @@
 #include "MVerbComponent.h"
 
 /**
- *  This class contains the main logic. It holds an AudioDeviceManager,
- *  a MidiKeyboardState, an AudioSourcePlayer and a SampleSynthAudioSource
- *  (which holds the SampleSynth) and connects them. Furthermore, it
- *  accepts callbacks from the GUI and offers any relevant accessors to the GUI.
- *  Also, it contains methods to store/restore its state to/from an XML file.
+ *  This class contains the main logic of the stand-alone version. It holds an
+ *  AudioDeviceManager, a MidiKeyboardState, an AudioSourcePlayer and a
+ *  SampleSynthAudioSource (which holds the SampleSynth) and connects them.
+ *  Furthermore, it accepts callbacks from the GUI and offers any relevant
+ *  accessors to the GUI. Also, it contains methods to store/restore its state
+ *  to/from an XML file.
  */
 class MainController    :   public SampleChoiceComponent::Listener,
                             public DelayComponent::Listener,
