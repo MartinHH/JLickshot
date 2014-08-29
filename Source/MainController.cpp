@@ -167,12 +167,8 @@ bool MainController::saveState(const File& xmlDest)
     // add state of audio device manager:
     xml.addChildElement(adm_.createStateXml());
     
-    // add main settings:
-    XmlElement* generalSettings = aSource_.createGeneralSettingsXml();
-    generalSettings->setAttribute("gain", aSourcePlayer_.getGain());
-    xml.addChildElement(generalSettings);
-    
-    aSource_.addXmlOfSynthAndFx(&xml);
+    // add all other settings:
+    aSource_.addStateXmlElements(&xml);
     
     return xml.writeToFile(xmlDest, String::empty); // TODO
 }
@@ -189,15 +185,6 @@ SampleSynth::LoadResult MainController::loadState(const File& xmlSource)
     if(admSettings != nullptr){
         adm_.initialise(0, 2, admSettings, true, String::empty, 0);
     }
-    
-    const XmlElement* generalSettings = xml->getChildByName("GENERAL");
-    if(generalSettings != nullptr){
-        const double gain =
-            generalSettings->getDoubleAttribute("gain", aSourcePlayer_.getGain());
-        aSourcePlayer_.setGain(gain);
         
-        aSource_.updateGeneralSettingsFromXml(generalSettings);
-    }
-        
-    return aSource_.updateSynthAndFxFromXml(xml);
+    return aSource_.updateFromXml(xml);
 }

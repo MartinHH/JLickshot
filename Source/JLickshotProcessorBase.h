@@ -63,20 +63,16 @@ public:
     
     /** Calls the getStateXml methods of the synth and the effects
      *  and adds the returned XmlElements as childs to the XmlElement
-     *  passed as parameter.
+     *  passed as parameter. Also adds the "GENERALSETTINGS" element.
      *
      *  @param An XmlElement that those XmlElements shall be added to.
      *
      *  @return A pointer to the same XmlElement that was passed as
      *      parameter.
      */
-    XmlElement* addXmlOfSynthAndFx(XmlElement* xml);
+    XmlElement* addStateXmlElements(XmlElement* xml);
     
-    SampleSynth::LoadResult updateSynthAndFxFromXml(const XmlElement* stateXml);
-    
-    XmlElement* createGeneralSettingsXml() const;
-    
-    void updateGeneralSettingsFromXml(const XmlElement* stateXml);
+    SampleSynth::LoadResult updateFromXml(const XmlElement* stateXml);
     
 protected:
     MidiKeyboardState keyState_;
