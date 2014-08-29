@@ -98,6 +98,10 @@ double SimpleDelay::getLowpassFrequency() const
     return lp_.size() > 0 ? lp_[0].getFrequency() : INFINITY;
 }
 
+int SimpleDelay::getNumChannels() const
+{
+    return delayBuffer_.getNumChannels();
+}
 
 void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
 {

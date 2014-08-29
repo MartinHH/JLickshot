@@ -57,6 +57,10 @@ public:
     
     bool getReverbIsActive() const;
     
+    void setMasterGain(float gain);
+    
+    float getMasterGain() const;
+    
     /** Calls the getStateXml methods of the synth and the effects
      *  and adds the returned XmlElements as childs to the XmlElement
      *  passed as parameter.
@@ -81,6 +85,8 @@ protected:
     MVerbPlus mVerb_;
     bool delayIsActive_;
     bool reverbIsActive_;
+    float gain_;
+    float lastGain_;
     
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JLickshotProcessorBase)

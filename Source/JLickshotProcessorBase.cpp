@@ -22,7 +22,9 @@
 JLickshotProcessorBase::JLickshotProcessorBase(int noOfVoices):
     synth_(noOfVoices),
     delayIsActive_(false),
-    reverbIsActive_(false)
+    reverbIsActive_(false),
+    gain_(1.0),
+    lastGain_(gain_)
 {
 }
 
@@ -66,6 +68,12 @@ void JLickshotProcessorBase::process(juce::AudioSampleBuffer &buffer,
                        buffer.getArrayOfWritePointers(),
                        numSamples);
     }
+    
+    const int channels = jmin(buffer.getNumChannels(), delay_.getNumChannels());
+    for(int i = 0; i < channels; i++){
+        buffer.applyGainRamp (i, 0, numSamples, lastGain_, gain_);
+    }
+    lastGain_ = gain_;
 }
 
 void JLickshotProcessorBase::setSampleRate(double sampleRate)
@@ -93,6 +101,16 @@ void JLickshotProcessorBase::setReverbIsActive(bool reverbIsActive)
 bool JLickshotProcessorBase::getReverbIsActive() const
 {
     return reverbIsActive_;
+}
+
+void JLickshotProcessorBase::setMasterGain(float gain)
+{
+    gain_ = gain;
+}
+
+float JLickshotProcessorBase::getMasterGain() const
+{
+    return gain_;
 }
 
 XmlElement* JLickshotProcessorBase::addXmlOfSynthAndFx(XmlElement *xml)

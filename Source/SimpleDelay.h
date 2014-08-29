@@ -74,6 +74,8 @@ public:
     
     double getLowpassFrequency() const;
     
+    int getNumChannels() const;
+    
     /** Processes a block auf audio data, adding the delay effect to it.
      *
      *  @param buffer A block of audio data that shall have this delay effect
