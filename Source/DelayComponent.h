@@ -22,7 +22,7 @@
 
 #include "JuceHeader.h"
 #include "Defines.h"
-#include "SampleSynthAudioSource.h"
+#include "JLickshotProcessorBase.h"
 #include "JLickshotComponent.h"
 
 class DelayComponent  : public JLickshotComponent,
@@ -59,7 +59,7 @@ public:
     void buttonClicked (Button* buttonThatWasClicked);
     void sliderValueChanged (Slider* sliderThatWasMoved);
     
-    void updateFromAudioSource(SampleSynthAudioSource& aSource);
+    void updateFromProcessor(JLickshotProcessorBase& processor);
     
 private:    
     ScopedPointer<GroupComponent> groupComponent_;

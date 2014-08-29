@@ -183,11 +183,11 @@ void MVerbComponent::sliderValueChanged(Slider *sliderThatWasMoved)
     }
 }
 
-void MVerbComponent::updateFromAudioSource(SampleSynthAudioSource& aSource)
+void MVerbComponent::updateFromProcessor(JLickshotProcessorBase& processor)
 {
-    activateButton_->setToggleState(aSource.getReverbIsActive(), dontSendNotification);
+    activateButton_->setToggleState(processor.getReverbIsActive(), dontSendNotification);
     
-    MVerb<float>& mv = aSource.getMVerb();
+    MVerb<float>& mv = processor.getMVerb();
     updateSliderFromNormalized(gainSlider_, mv.getParameter(MVerb<float>::GAIN));
     updateSliderFromNormalized(mixSlider_, mv.getParameter(MVerb<float>::MIX));
     updateSliderFromNormalized(earlyLateMixSlider_, mv.getParameter(MVerb<float>::EARLYMIX));

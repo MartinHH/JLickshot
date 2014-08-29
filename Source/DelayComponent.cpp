@@ -124,11 +124,11 @@ void DelayComponent::sliderValueChanged (Slider* sliderThatWasMoved)
     }
 }
 
-void DelayComponent::updateFromAudioSource(SampleSynthAudioSource& aSource)
+void DelayComponent::updateFromProcessor(JLickshotProcessorBase& processor)
 {
-    activateButton_->setToggleState(aSource.getDelayIsActive(), dontSendNotification);
+    activateButton_->setToggleState(processor.getDelayIsActive(), dontSendNotification);
     
-    SimpleDelay& d = aSource.getDelayUnit();
+    SimpleDelay& d = processor.getDelayUnit();
     updateSliderFromNormalized(delaySlider_, d.getRelativeTime());
     updateSliderFromNormalized(feedbackSlider_, d.getFeedback());
     

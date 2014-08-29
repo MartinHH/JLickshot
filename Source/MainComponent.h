@@ -25,6 +25,7 @@
 #include "SampleCollectionComponent.h"
 #include "DelayComponent.h"
 #include "MVerbComponent.h"
+#include "JLickshotProcessorBase.h"
 
 /**
  *  This is the main GUI component that contains any subcomponents. It holds

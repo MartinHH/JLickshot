@@ -177,9 +177,9 @@ void MainContentComponent::updateFromController()
     // update the SampleCollectionComponent:
     sampleComponent_->updateFromSynth(controller_->getSynth());
     // update the DelayComponent:
-    delayComponent_->updateFromAudioSource(controller_->getAudioSource());
+    delayComponent_->updateFromProcessor(controller_->getAudioSource());
     // update the MVerbComponent
-    mVerbComponent_->updateFromAudioSource(controller_->getAudioSource());
+    mVerbComponent_->updateFromProcessor(controller_->getAudioSource());
 }
 
 void MainContentComponent::popUpLoadResult(SampleSynth::LoadResult result)
