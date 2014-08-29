@@ -56,6 +56,23 @@ public:
     
     bool getReverbIsActive() const;
     
+    /** Calls the getStateXml methods of the synth and the effects
+     *  and adds the returned XmlElements as childs to the XmlElement
+     *  passed as parameter.
+     *
+     *  @param An XmlElement that those XmlElements shall be added to.
+     *
+     *  @return A pointer to the same XmlElement that was passed as
+     *      parameter.
+     */
+    XmlElement* addXmlOfSynthAndFx(XmlElement* xml);
+    
+    SampleSynth::LoadResult updateSynthAndFxFromXml(const XmlElement* stateXml);
+    
+    XmlElement* createGeneralSettingsXml() const;
+    
+    void updateGeneralSettingsFromXml(const XmlElement* stateXml);
+    
 protected:
     MidiKeyboardState keyState_;
     SampleSynth synth_;

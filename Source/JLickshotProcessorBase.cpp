@@ -94,3 +94,49 @@ bool JLickshotProcessorBase::getReverbIsActive() const
 {
     return reverbIsActive_;
 }
+
+XmlElement* JLickshotProcessorBase::addXmlOfSynthAndFx(XmlElement *xml)
+{
+    // add sample settings:
+    xml->addChildElement(synth_.getStateXml());
+    
+    // add delay setting:
+    xml->addChildElement(delay_.getStateXml());
+    
+    // add reverb settings:
+    xml->addChildElement(mVerb_.getStateXml());
+    
+    return xml;
+}
+
+SampleSynth::LoadResult JLickshotProcessorBase::updateSynthAndFxFromXml(const XmlElement *stateXml)
+{
+    // this should have been cheked by the caller, but anyway:
+    if (stateXml == nullptr || !stateXml->hasTagName("JLICKSHOTSETTINGS")) {
+        return SampleSynth::LoadResult();
+    }
+    
+    delay_.updateFromXml(stateXml->getChildByName("DELAYSETTINGS"));
+    mVerb_.updateFromXml(stateXml->getChildByName("MVERBSETTINGS"));
+    
+    // clear synth:
+    synth_.clearSamples();
+    
+    return synth_.updateFromXml(stateXml->getChildByName("SAMPLES"));
+}
+
+XmlElement* JLickshotProcessorBase::createGeneralSettingsXml() const
+{
+    XmlElement* generalSettings = new XmlElement("GENERAL");
+    generalSettings->setAttribute("delay_active", delayIsActive_);
+    generalSettings->setAttribute("reverb_active", reverbIsActive_);
+    return generalSettings;
+}
+
+void JLickshotProcessorBase::updateGeneralSettingsFromXml(const XmlElement *stateXml)
+{
+    if(stateXml != nullptr  && stateXml->hasTagName("GENERAL")){
+        delayIsActive_ = stateXml->getBoolAttribute("delay_active", delayIsActive_);
+        reverbIsActive_ = stateXml->getBoolAttribute("reverb_active",reverbIsActive_);
+    }
+}
