@@ -26,8 +26,9 @@
 #include "MVerbPlus.h"
 
 /**
- *  Base class for anything the controllers of the stand-alone version
- *  and the plugin have in common.
+ *  Base class for the audio-processing parts the stand-alone version
+ *  and the plugin have in common. It also cotains the corresponding
+ *  xml-handling methods.
  */
 class JLickshotProcessorBase
 {
