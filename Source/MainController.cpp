@@ -151,12 +151,12 @@ void MainController::earlyLateMixChanged(float newValue)
 
 void MainController::setMasterGain(float gain)
 {
-    aSourcePlayer_.setGain(gain);
+    aSource_.setMasterGain(gain);
 }
 
 float MainController::getMasterGain() const
 {
-    return aSourcePlayer_.getGain();
+    return aSource_.getMasterGain();
 }
 
 bool MainController::saveState(const File& xmlDest)
