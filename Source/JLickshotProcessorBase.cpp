@@ -143,9 +143,9 @@ SampleSynth::LoadResult JLickshotProcessorBase::updateFromXml(const XmlElement *
     
     const XmlElement* generalSettings = stateXml->getChildByName("GENERAL");
     if(generalSettings != nullptr){
+        delayIsActive_ = generalSettings->getBoolAttribute("delay_active", delayIsActive_);
+        reverbIsActive_ = generalSettings->getBoolAttribute("reverb_active",reverbIsActive_);
         gain_ = generalSettings->getDoubleAttribute("gain", gain_);
-        delayIsActive_ = stateXml->getBoolAttribute("delay_active", delayIsActive_);
-        reverbIsActive_ = stateXml->getBoolAttribute("reverb_active",reverbIsActive_);
     }
     
     delay_.updateFromXml(stateXml->getChildByName("DELAYSETTINGS"));
