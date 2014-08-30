@@ -5,6 +5,8 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="XgPXVM" name="JLickshot">
     <GROUP id="{62EFFF26-BDD3-BA48-66A9-A516E40CC70A}" name="Source">
+      <FILE id="X2xiOZ" name="JLickshotControllerBase.h" compile="0" resource="0"
+            file="Source/JLickshotControllerBase.h"/>
       <FILE id="n68td1" name="JLickshotProcessorBase.cpp" compile="1" resource="0"
             file="Source/JLickshotProcessorBase.cpp"/>
       <FILE id="hxCohz" name="JLickshotProcessorBase.h" compile="0" resource="0"

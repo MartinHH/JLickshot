@@ -43,8 +43,7 @@ AudioDeviceManager& MainController::getAudioDeviceManager()
     return adm_;
 }
 
-SampleSynthAudioSource& MainController::getAudioSource()
-{
+JLickshotProcessorBase& MainController::getProcessor(){
     return aSource_;
 }
 

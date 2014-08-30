@@ -22,9 +22,7 @@
 
 #include "JuceHeader.h"
 #include "SampleSynthAudioSource.h"
-#include "SampleChoiceComponent.h"
-#include "DelayComponent.h"
-#include "MVerbComponent.h"
+#include "JLickshotControllerBase.h"
 
 /**
  *  This class contains the main logic of the stand-alone version. It holds an
@@ -34,9 +32,7 @@
  *  accessors to the GUI. Also, it contains methods to store/restore its state
  *  to/from an XML file.
  */
-class MainController    :   public SampleChoiceComponent::Listener,
-                            public DelayComponent::Listener,
-                            public MVerbComponent::Listener
+class MainController    :   public JLickshotControllerBase
 {
 public:
     MainController();
@@ -44,7 +40,7 @@ public:
     
     AudioDeviceManager& getAudioDeviceManager();
     
-    SampleSynthAudioSource& getAudioSource();
+    JLickshotProcessorBase& getProcessor();
     
     const SampleSynth& getSynth();
     
