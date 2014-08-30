@@ -5,51 +5,51 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="XgPXVM" name="JLickshot">
     <GROUP id="{62EFFF26-BDD3-BA48-66A9-A516E40CC70A}" name="Source">
+      <FILE id="VK9l1B" name="Defines.h" compile="0" resource="0" file="Source/Defines.h"/>
       <FILE id="X2xiOZ" name="JLickshotControllerBase.h" compile="0" resource="0"
             file="Source/JLickshotControllerBase.h"/>
       <FILE id="n68td1" name="JLickshotProcessorBase.cpp" compile="1" resource="0"
             file="Source/JLickshotProcessorBase.cpp"/>
       <FILE id="hxCohz" name="JLickshotProcessorBase.h" compile="0" resource="0"
             file="Source/JLickshotProcessorBase.h"/>
-      <FILE id="VN4Zwz" name="MVerbPlus.cpp" compile="1" resource="0" file="Source/MVerbPlus.cpp"/>
-      <FILE id="ALSdMU" name="MVerbPlus.h" compile="0" resource="0" file="Source/MVerbPlus.h"/>
       <FILE id="LlauKg" name="JLickshotComponent.h" compile="0" resource="0"
             file="Source/JLickshotComponent.h"/>
-      <FILE id="ZqH4GN" name="MVerbComponent.cpp" compile="1" resource="0"
-            file="Source/MVerbComponent.cpp"/>
+      <FILE id="Nak9eK" name="MVerb.h" compile="0" resource="0" file="Source/MVerb.h"/>
+      <FILE id="VN4Zwz" name="MVerbPlus.cpp" compile="1" resource="0" file="Source/MVerbPlus.cpp"/>
+      <FILE id="ALSdMU" name="MVerbPlus.h" compile="0" resource="0" file="Source/MVerbPlus.h"/>
       <FILE id="auxI1k" name="MVerbComponent.h" compile="0" resource="0"
             file="Source/MVerbComponent.h"/>
-      <FILE id="Nak9eK" name="MVerb.h" compile="0" resource="0" file="Source/MVerb.h"/>
+      <FILE id="ZqH4GN" name="MVerbComponent.cpp" compile="1" resource="0"
+            file="Source/MVerbComponent.cpp"/>
+      <FILE id="SmrVIB" name="SimpleDelay.h" compile="0" resource="0" file="Source/SimpleDelay.h"/>
+      <FILE id="STuLT4" name="SimpleDelay.cpp" compile="1" resource="0" file="Source/SimpleDelay.cpp"/>
       <FILE id="rWiysm" name="OnePoleLowpass.h" compile="0" resource="0"
             file="Source/OnePoleLowpass.h"/>
-      <FILE id="PF5cCD" name="DelayComponent.cpp" compile="1" resource="0"
-            file="Source/DelayComponent.cpp"/>
       <FILE id="XO33rp" name="DelayComponent.h" compile="0" resource="0"
             file="Source/DelayComponent.h"/>
-      <FILE id="STuLT4" name="SimpleDelay.cpp" compile="1" resource="0" file="Source/SimpleDelay.cpp"/>
-      <FILE id="SmrVIB" name="SimpleDelay.h" compile="0" resource="0" file="Source/SimpleDelay.h"/>
-      <FILE id="VK9l1B" name="Defines.h" compile="0" resource="0" file="Source/Defines.h"/>
-      <FILE id="wZbSBL" name="SampleCollectionComponent.cpp" compile="1"
-            resource="0" file="Source/SampleCollectionComponent.cpp"/>
-      <FILE id="jSejvo" name="SampleCollectionComponent.h" compile="0" resource="0"
-            file="Source/SampleCollectionComponent.h"/>
-      <FILE id="CPwePy" name="SampleChoiceComponent.cpp" compile="1" resource="0"
-            file="Source/SampleChoiceComponent.cpp"/>
+      <FILE id="PF5cCD" name="DelayComponent.cpp" compile="1" resource="0"
+            file="Source/DelayComponent.cpp"/>
       <FILE id="WdzZ65" name="SampleChoiceComponent.h" compile="0" resource="0"
             file="Source/SampleChoiceComponent.h"/>
-      <FILE id="HzIotr" name="SampleSynthAudioSource.cpp" compile="1" resource="0"
-            file="Source/SampleSynthAudioSource.cpp"/>
+      <FILE id="CPwePy" name="SampleChoiceComponent.cpp" compile="1" resource="0"
+            file="Source/SampleChoiceComponent.cpp"/>
+      <FILE id="jSejvo" name="SampleCollectionComponent.h" compile="0" resource="0"
+            file="Source/SampleCollectionComponent.h"/>
+      <FILE id="wZbSBL" name="SampleCollectionComponent.cpp" compile="1"
+            resource="0" file="Source/SampleCollectionComponent.cpp"/>
+      <FILE id="hfUyxh" name="SampleSynth.h" compile="0" resource="0" file="Source/SampleSynth.h"/>
+      <FILE id="nCdDFd" name="SampleSynth.cpp" compile="1" resource="0" file="Source/SampleSynth.cpp"/>
       <FILE id="aZIMcj" name="SampleSynthAudioSource.h" compile="0" resource="0"
             file="Source/SampleSynthAudioSource.h"/>
-      <FILE id="nCdDFd" name="SampleSynth.cpp" compile="1" resource="0" file="Source/SampleSynth.cpp"/>
-      <FILE id="hfUyxh" name="SampleSynth.h" compile="0" resource="0" file="Source/SampleSynth.h"/>
-      <FILE id="cuXWbu" name="MainController.cpp" compile="1" resource="0"
-            file="Source/MainController.cpp"/>
+      <FILE id="HzIotr" name="SampleSynthAudioSource.cpp" compile="1" resource="0"
+            file="Source/SampleSynthAudioSource.cpp"/>
       <FILE id="iUf7fi" name="MainController.h" compile="0" resource="0"
             file="Source/MainController.h"/>
+      <FILE id="cuXWbu" name="MainController.cpp" compile="1" resource="0"
+            file="Source/MainController.cpp"/>
+      <FILE id="oAAwIy" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="hHkQFy" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
-      <FILE id="oAAwIy" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="Mmf3Zv" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>
