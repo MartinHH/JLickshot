@@ -64,7 +64,7 @@ public:
                               Colours::lightgrey,
                               DocumentWindow::allButtons)
         {
-            setContentOwned (new MainContentComponent(controller),
+            setContentOwned (new MainContentComponent(controller, &controller->getAudioDeviceManager()),
                              true);
 
             centreWithSize (getWidth(), getHeight());
