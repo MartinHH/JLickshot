@@ -19,13 +19,21 @@
 
 #include "MainComponent.h"
 
-MainContentComponent::MainContentComponent(MainController* controller):
+MainContentComponent::MainContentComponent(JLickshotControllerBase* controller,
+                                           AudioDeviceManager* adm):
     controller_(controller)
 {
-    aDevSelector_ =
-        new AudioDeviceSelectorComponent(controller->getAudioDeviceManager(),
-                                         0, 0, 0, 2,
-                                         true, false, true, false);
+    if(adm != nullptr){
+        aDevSelector_ = new AudioDeviceSelectorComponent(*adm, 0, 0, 0, 2,
+                                                         true, false,
+                                                         true, false);
+        
+        settingsButton_ = new TextButton();
+        settingsButton_->setButtonText(translate("SETTINGS"));
+        settingsButton_->addListener(this);
+        settingsButton_->setTooltip(translate("Audio and Midi setting"));
+        addAndMakeVisible(settingsButton_);
+    }
     
     sampleComponent_ = new SampleCollectionComponent();
     sampleComponent_->addListener(controller);
@@ -46,12 +54,6 @@ MainContentComponent::MainContentComponent(MainController* controller):
     saveButton_->setTooltip(translate("Save a setup"));
     addAndMakeVisible(saveButton_);
     
-    settingsButton_ = new TextButton();
-    settingsButton_->setButtonText(translate("SETTINGS"));
-    settingsButton_->addListener(this);
-    settingsButton_->setTooltip(translate("Audio and Midi setting"));
-    addAndMakeVisible(settingsButton_);
-    
     addAndMakeVisible (gainSlider_ = new Slider ("gain slider"));
     gainSlider_->setRange (0, 1.0, 0.01);
     gainSlider_->setValue(0.75);
@@ -69,7 +71,7 @@ MainContentComponent::MainContentComponent(MainController* controller):
     mVerbComponent_->addListener(controller);
     addAndMakeVisible(mVerbComponent_);
     
-    keyboard_ = new MidiKeyboardComponent(controller->getAudioSource().getKeyState(),
+    keyboard_ = new MidiKeyboardComponent(controller->getProcessor().getKeyState(),
                                           MidiKeyboardComponent::horizontalKeyboard);
     addAndMakeVisible(keyboard_);
     
@@ -95,16 +97,21 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
-    // positioned from top:
-    loadButton_->setBounds(10, 5, 140, 24);
-    saveButton_->setBounds(155, 5, 140, 24);
-    settingsButton_->setBounds(305, 5, 140, 24);
+    // starting from top
+    if (settingsButton_ == nullptr) {
+        loadButton_->setBounds(10, 5, 215, 24);
+        saveButton_->setBounds(230, 5, 215, 24);
+    } else {
+        loadButton_->setBounds(10, 5, 140, 24);
+        saveButton_->setBounds(155, 5, 140, 24);
+        settingsButton_->setBounds(305, 5, 140, 24);
+    }
     gainSlider_->setBounds(455, 5, 60, 24);
     delayComponent_->setBounds(530, 10, 430, 124);
     mVerbComponent_->setBounds(530, 10 + delayComponent_->getHeight(),
                                430, 214);
     
-    // positioned from bottom:
+    // now continuing from bottom:
     keyboard_->setBounds(10, getHeight()-64, getWidth()-20, 64);
 
     
@@ -117,7 +124,7 @@ void MainContentComponent::resized()
 void MainContentComponent::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     if (sliderThatWasMoved == gainSlider_){
-        controller_->setMasterGain(gainSlider_->getValue());
+        controller_->getProcessor().setMasterGain(gainSlider_->getValue());
     }
 }
 
@@ -172,14 +179,16 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
 
 void MainContentComponent::updateFromController()
 {
+    JLickshotProcessorBase& proc = controller_->getProcessor();
+    
     // update the gain slider:
-    gainSlider_->setValue(controller_->getMasterGain());
+    gainSlider_->setValue(proc.getMasterGain());
     // update the SampleCollectionComponent:
-    sampleComponent_->updateFromSynth(controller_->getSynth());
+    sampleComponent_->updateFromSynth(proc.getSynth());
     // update the DelayComponent:
-    delayComponent_->updateFromProcessor(controller_->getAudioSource());
+    delayComponent_->updateFromProcessor(proc);
     // update the MVerbComponent
-    mVerbComponent_->updateFromProcessor(controller_->getAudioSource());
+    mVerbComponent_->updateFromProcessor(proc);
 }
 
 void MainContentComponent::popUpLoadResult(SampleSynth::LoadResult result)

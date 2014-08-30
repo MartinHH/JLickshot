@@ -25,7 +25,7 @@
 #include "SampleCollectionComponent.h"
 #include "DelayComponent.h"
 #include "MVerbComponent.h"
-#include "JLickshotProcessorBase.h"
+#include "JLickshotControllerBase.h"
 
 /**
  *  This is the main GUI component that contains any subcomponents. It holds
@@ -37,7 +37,8 @@ class MainContentComponent   :  public Component,
 {
 public:
 
-    MainContentComponent(MainController* controller);
+    MainContentComponent(JLickshotControllerBase* controller,
+                         AudioDeviceManager* adm = nullptr);
     ~MainContentComponent();
     
     void paint (Graphics&);
@@ -63,7 +64,7 @@ private:
     ScopedPointer<Slider> gainSlider_;
     ScopedPointer<DelayComponent> delayComponent_;
     ScopedPointer<MVerbComponent> mVerbComponent_;
-    MainController* controller_;
+    JLickshotControllerBase* controller_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
