@@ -85,6 +85,9 @@ public:
     double getLowpassFrequencyNormalized() const
         { return NORMALIZE(LP_MIN_FREQ, LP_MAX_FREQ, getLowpassFrequency()); }
     
+    void setLowpassFrequencyNormalized(double frequency)
+        { setLowpassFrequency(DENORMALIZE(LP_MIN_FREQ, LP_MAX_FREQ, frequency)); }
+    
     int getNumChannels() const;
     
     /** Processes a block auf audio data, adding the delay effect to it.
