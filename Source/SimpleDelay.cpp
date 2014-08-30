@@ -87,7 +87,7 @@ bool SimpleDelay::getLowpassIsActive() const
 
 void SimpleDelay::setLowpassFrequency(double frequency)
 {
-    const double f = SATURATE(0.0, 25000.0, frequency);
+    const double f = SATURATE(LP_MIN_FREQ, LP_MAX_FREQ, frequency);
     for (int i=0; i<lp_.size(); i++) {
         lp_[i].setFrequency(f);
     }

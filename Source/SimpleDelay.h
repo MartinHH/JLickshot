@@ -24,6 +24,14 @@
 #include "Defines.h"
 #include "OnePoleLowpass.h"
 
+#ifndef LP_MIN_FREQ
+#define LP_MIN_FREQ 0.0
+#endif
+
+#ifndef LP_MAX_FREQ
+#define LP_MAX_FREQ 25000.0
+#endif
+
 class SimpleDelay
 {
 public:
