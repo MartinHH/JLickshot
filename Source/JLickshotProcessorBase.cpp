@@ -25,7 +25,7 @@ JLickshotProcessorBase::JLickshotProcessorBase(int noOfVoices):
     reverbIsActive_(false),
     gain_(1.0),
     lastGain_(gain_),
-    samplesChanged_(0)
+    samplesChanged_(1) // 1 makes sure the gui syncs itself at construction
 {
 }
 

@@ -183,8 +183,10 @@ void MainContentComponent::updateFromController()
     
     // update the gain slider:
     gainSlider_->setValue(proc.getMasterGain());
-    // update the SampleCollectionComponent:
-    sampleComponent_->updateFromSynth(proc.getSynth());
+    if(proc.samplesChanged()){
+        // update the SampleCollectionComponent:
+        sampleComponent_->updateFromSynth(proc.getSynth());
+    }
     // update the DelayComponent:
     delayComponent_->updateFromProcessor(proc);
     // update the MVerbComponent
