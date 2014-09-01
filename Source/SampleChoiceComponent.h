@@ -28,7 +28,8 @@
  */
 class SampleChoiceComponent    :    public Component,
                                     public SliderListener,
-                                    public ButtonListener
+                                    public ButtonListener,
+                                    public FileDragAndDropTarget
 {
 public:
     /** Constructor.
@@ -71,6 +72,9 @@ public:
     
     float getVelocity() const;
     void setVelocity(float velocity);
+    
+    bool isInterestedInFileDrag (const StringArray& files) override;
+    void filesDropped (const StringArray& files, int x, int y) override;
     
 private:
     int noteNo_;

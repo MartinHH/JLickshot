@@ -40,6 +40,7 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     nameDisplay_->setScrollbarsShown (true);
     nameDisplay_->setCaretVisible (false);
     nameDisplay_->setPopupMenuEnabled (true);
+    nameDisplay_->setTooltip(translate("You can drag audio files here"));
     nameDisplay_->setText (translate("empty"));
     
     addAndMakeVisible (velocitySlider_ = new Slider ("velocity slider"));
@@ -141,4 +142,21 @@ void SampleChoiceComponent::setVelocity(float velocity)
 {
     velocitySlider_->setValue(velocity);
     repaint();
+}
+
+bool SampleChoiceComponent::isInterestedInFileDrag(const StringArray &files)
+{
+    return files.size() == 1 && (files[0].endsWith(translate(".wav"))
+                              || files[0].endsWith(translate(".aif"))
+                              || files[0].endsWith(translate(".aiff"))
+                              || files[0].endsWith(translate(".mp3")));
+}
+
+void SampleChoiceComponent::filesDropped(const juce::StringArray &files, int /* x */, int /* y */)
+{
+    const File file(files[0]);
+    Component::BailOutChecker checker(this);
+    listeners_.callChecked(checker,
+                           &SampleChoiceComponent::Listener::fileChosen,
+                           this, file);
 }
