@@ -24,7 +24,8 @@ JLickshotProcessorBase::JLickshotProcessorBase(int noOfVoices):
     delayIsActive_(false),
     reverbIsActive_(false),
     gain_(1.0),
-    lastGain_(gain_)
+    lastGain_(gain_),
+    samplesChanged_(0)
 {
 }
 
@@ -154,5 +155,11 @@ SampleSynth::LoadResult JLickshotProcessorBase::updateFromXml(const XmlElement *
     // clear synth:
     synth_.clearSamples();
     
-    return synth_.updateFromXml(stateXml->getChildByName("SAMPLES"));
+    SampleSynth::LoadResult rv = synth_.updateFromXml(stateXml->getChildByName("SAMPLES"));
+    
+    if(rv.success){
+        samplesChanged_.set(1);
+    }
+    
+    return rv;
 }
