@@ -59,7 +59,7 @@ void SampleCollectionComponent::paint (Graphics& g)
 void SampleCollectionComponent::resized()
 {
     for(int i=0; i<NUMBER_OF_NOTES; i++){
-        choosers_[i]->setBounds(0, i*26+1, 500, 24);
+        choosers_[i]->setBounds(0, i*26+1, getWidth(), 24);
     }
 }
 

@@ -43,6 +43,11 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     nameDisplay_->setTooltip(translate("You can drag audio files here"));
     nameDisplay_->setText (translate("empty"));
     
+    addAndMakeVisible (fileButton_ = new TextButton ("file button"));
+    fileButton_->setButtonText (translate("Select File"));
+    fileButton_->setTooltip(translate("Select an audio file for this slot"));
+    fileButton_->addListener (this);
+    
     addAndMakeVisible (velocitySlider_ = new Slider ("velocity slider"));
     velocitySlider_->setRange (0, 1.0, 0.01);
     velocitySlider_->setValue(0.75);
@@ -51,11 +56,6 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     velocitySlider_->setTooltip(translate("Individual gain for this slot"));
     velocitySlider_->addListener (this);
     
-    addAndMakeVisible (fileButton_ = new TextButton ("new button"));
-    fileButton_->setButtonText (translate("Select File"));
-    fileButton_->setTooltip(translate("Select an audio file for this slot"));
-    fileButton_->addListener (this);
-    
     setSize (500, 24);
 }
 
@@ -63,8 +63,8 @@ SampleChoiceComponent::~SampleChoiceComponent()
 {
     noteLabel_ = nullptr;
     nameDisplay_ = nullptr;
-    velocitySlider_ = nullptr;
     fileButton_ = nullptr;
+    velocitySlider_ = nullptr;
 }
 
 void SampleChoiceComponent::addListener(SampleChoiceComponent::Listener *listener)
@@ -84,10 +84,17 @@ void SampleChoiceComponent::paint (Graphics& g)
 
 void SampleChoiceComponent::resized()
 {
-    noteLabel_->setBounds (0, 0, 40, 24);
-    nameDisplay_->setBounds (48, 0, 304, 24);
-    velocitySlider_->setBounds (464, 0, 30, 24);
-    fileButton_->setBounds (376, 0, 78, 24);
+    // from left:
+    noteLabel_->setBounds (0, 0, 40, getHeight());
+
+    // from right:
+    velocitySlider_->setBounds (getWidth() - 36, 0, 30, getHeight());
+    fileButton_->setBounds (velocitySlider_->getX() - 88, 0, 78, getHeight());
+    
+    // takes up space in between:
+    const int nameX = noteLabel_->getWidth() + 8;
+    const int nameW = fileButton_->getX() - nameX - 8;
+    nameDisplay_->setBounds (nameX, 0, nameW, getHeight());
 }
 
 void SampleChoiceComponent::sliderValueChanged (Slider* sliderThatWasMoved)
