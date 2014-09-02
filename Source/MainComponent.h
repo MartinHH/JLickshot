@@ -29,7 +29,7 @@
 
 /**
  *  This is the main GUI component that contains any subcomponents. It holds
- *  a pointer to the MainController.
+ *  a pointer to the main JLickshotControllerBase controller.
  */
 class MainContentComponent   :  public Component,
                                 public SliderListener,
@@ -51,6 +51,7 @@ private:
     /** Updates all GUI elements to the state of the MainController. */
     void updateFromController();
     
+    /** Opens a popup window displaying the results of loading a preset. */
     void popUpLoadResult(SampleSynth::LoadResult result);
     
     ScopedPointer<LookAndFeel> laf_;

@@ -23,6 +23,9 @@
 #include "JuceHeader.h"
 #include "MVerb.h"
 
+/** An MVerb<float> with added methods for storing and restoring its
+ *  state to/from XML.
+ */
 class MVerbPlus :   public MVerb<float>
 {
 public:

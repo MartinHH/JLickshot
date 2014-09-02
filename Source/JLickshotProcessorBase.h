@@ -27,7 +27,7 @@
 
 /**
  *  Base class for the audio-processing parts the stand-alone version
- *  and the plugin have in common. It also cotains the corresponding
+ *  and the plugin have in common. It also contains the corresponding
  *  xml-handling methods.
  */
 class JLickshotProcessorBase
@@ -74,6 +74,11 @@ public:
     
     SampleSynth::LoadResult updateFromXml(const XmlElement* stateXml);
     
+    /** An atomic flag indicating that a preset has been loaded so the GUI
+     *  must update the filenames of the samples. Once checked, the flag is
+     *  set to false, so this must only be checked at one point and the 
+     *  GUI then must be updated if true is returned.
+     */
     bool samplesChanged(){ return samplesChanged_.compareAndSetBool(0, 1); }
     
 protected:

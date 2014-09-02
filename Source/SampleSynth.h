@@ -41,10 +41,17 @@ public:
     
     ~FixedVelocitySound();
     
+    /** Sets the velocity value that this sound shall be played back
+     *  with. This can be used as an individual gain setting.
+     *
+     *  @param velocity A velocity value within [0.0 , 1.0].
+     */
     void setVelocity(float velocity);
     
+    /** Returns the current velocity value. @see setVelocity */
     float getVelocity() const;
     
+    /** Returns the audio file that is used for playback. */
     const File& getAudioFile() const;
     
 private:
@@ -57,9 +64,9 @@ private:
 //==============================================================================
 
 /**
- *  A SamplerVoice class that plays sounds with a fixed velocity. The velocity
- *  used for playback is taken from the FixedVelocitySound objects that are to
- *  be used with this voice.
+ *  A SamplerVoice class that plays sounds with a fixed velocity, ignoring the
+ *  velocity that is sent via MIDI. The velocity used for playback is taken from
+ *  the FixedVelocitySound objects that are to be used with this voice.
  */
 class FixedVelocityVoice    :   public SamplerVoice
 {
@@ -79,7 +86,7 @@ private:
 
 /**
  *  A Synthesiser playing back FixedVelocitySounds using FixedVelocityVoices.
- *  For every note, a different audiofile and veolcity setting can be assigned.
+ *  For every note, a different audiofile and velocity setting can be assigned.
  *
  *  Playback is one-shot-style, meaning once a sample's playback is triggered,
  *  it cannot be stopped again.
@@ -173,6 +180,11 @@ private:
     
     /** Sets a new sound, replacing the sound previuosly at that index. */
     void setSound (int index, const SynthesiserSound::Ptr& newSound);
+    
+    /** Returns the sound set for a note number or nullptr if none is set or
+     *  noteNo is out of range. 
+     */
+    const FixedVelocitySound* getFixedVelocitySound(int noteNo) const;
 
     /**
      *  Dummy sound needed to always have 128 sounds in the synth (which

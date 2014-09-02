@@ -66,11 +66,16 @@ public:
     void sliderValueChanged (Slider* sliderThatWasMoved);
     void buttonClicked (Button* buttonThatWasClicked);
 
+    /** Returns the note number this Component is assigned to. */
     int getNoteNumber() const;
 
+    /** Sets the filename to be displayed. */
     void setFileName(const String& name);
     
+    /** Returns the value of the velocity slider (within [0.0 , 1.0]). */
     float getVelocity() const;
+    
+    /** Sets the value of the velocity slider (within [0.0 , 1.0]). */
     void setVelocity(float velocity);
     
     bool isInterestedInFileDrag (const StringArray& files) override;

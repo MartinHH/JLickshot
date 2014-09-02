@@ -154,34 +154,24 @@ void SampleSynth::clearSamples()
 
 const String& SampleSynth::getFilePath(int noteNo) const
 {
-    if(noteNo < 0 || noteNo >= NUMBER_OF_NOTES){
-        return String::empty;
-    }
+    const FixedVelocitySound* s = getFixedVelocitySound(noteNo);
     
-    SynthesiserSound::Ptr s = sounds[noteNo];
-    FixedVelocitySound* fixedS = dynamic_cast<FixedVelocitySound*>(s.get());
-    
-    if(fixedS == nullptr){
+    if(s == nullptr){
         return String::empty;
     }
 
-    return fixedS->getAudioFile().getFullPathName();
+    return s->getAudioFile().getFullPathName();
 }
 
 const String SampleSynth::getFileName(int noteNo) const
 {
-    if(noteNo < 0 || noteNo >= NUMBER_OF_NOTES){
+    const FixedVelocitySound* s = getFixedVelocitySound(noteNo);
+    
+    if(s == nullptr){
         return String::empty;
     }
     
-    SynthesiserSound::Ptr s = sounds[noteNo];
-    FixedVelocitySound* fixedS = dynamic_cast<FixedVelocitySound*>(s.get());
-    
-    if(fixedS == nullptr){
-        return String::empty;
-    }
-    
-    return fixedS->getAudioFile().getFileName();
+    return s->getAudioFile().getFileName();
 }
 
 bool SampleSynth::setVelocity(int noteNo, float velocity)
@@ -204,28 +194,18 @@ bool SampleSynth::setVelocity(int noteNo, float velocity)
 
 float SampleSynth::getVelocity(int noteNo) const
 {
-    if(noteNo < 0 || noteNo >= NUMBER_OF_NOTES){
+    const FixedVelocitySound* s = getFixedVelocitySound(noteNo);
+    
+    if(s == nullptr){
         return 0.0;
     }
     
-    SynthesiserSound::Ptr s = sounds[noteNo];
-    FixedVelocitySound* fixedS = dynamic_cast<FixedVelocitySound*>(s.get());
-    
-    if(fixedS == nullptr){
-        return 0.0;
-    }
-    
-    return fixedS->getVelocity();
+    return s->getVelocity();
 }
 
 bool SampleSynth::sampleIsLoaded(int noteNo) const
 {
-    if(noteNo < 0 || noteNo >= NUMBER_OF_NOTES){
-        return false;
-    }
-    
-    // if no sample is loaded, a SilentSound is loaded and this cast will fail:
-    return (dynamic_cast<FixedVelocitySound*>(sounds[noteNo].get()) != nullptr);
+    return getFixedVelocitySound(noteNo) != nullptr;
 }
 
 void SampleSynth::noteOff(const int /* midiChannel */, const int /* midiNoteNumber */,
@@ -292,4 +272,14 @@ void SampleSynth::setSound(int index, const SynthesiserSound::Ptr &newSound)
 {
     const ScopedLock sl (lock);
     sounds.set(index, newSound);
+}
+
+const FixedVelocitySound* SampleSynth::getFixedVelocitySound(int noteNo) const
+{
+    if(noteNo < 0 || noteNo >= NUMBER_OF_NOTES){
+        return nullptr;
+    }
+    
+    SynthesiserSound::Ptr s = sounds[noteNo];
+    return dynamic_cast<FixedVelocitySound*>(s.get());
 }

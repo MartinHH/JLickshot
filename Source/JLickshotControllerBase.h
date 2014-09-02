@@ -27,6 +27,9 @@
 #include "MVerbComponent.h"
 #include "JLickshotProcessorBase.h"
 
+/**
+ *  An interface describing the methods a controller must offer to the GUI.
+ */
 class JLickshotControllerBase   :   public SampleChoiceComponent::Listener,
                                     public DelayComponent::Listener,
                                     public MVerbComponent::Listener
