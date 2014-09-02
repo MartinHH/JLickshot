@@ -72,7 +72,9 @@ public:
      */
     XmlElement* addStateXmlElements(XmlElement* xml);
     
-    SampleSynth::LoadResult updateFromXml(const XmlElement* stateXml);
+    SampleSynth::LoadResult updateFromXml(const XmlElement* stateXml,
+                                          bool fromDir = false,
+                                          const File& dir = File::nonexistent);
     
     /** An atomic flag indicating that a preset has been loaded so the GUI
      *  must update the filenames of the samples. Once checked, the flag is

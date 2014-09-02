@@ -172,7 +172,8 @@ public:
                          specified in case success is set to true). */
     };
     
-    LoadResult updateFromXml(XmlElement* stateXml);
+    LoadResult updateFromXml(XmlElement* stateXml, bool fromDir = false,
+                             const File& dir = File::nonexistent);
 
 private:
 

@@ -135,7 +135,9 @@ XmlElement* JLickshotProcessorBase::addStateXmlElements(XmlElement *xml)
     return xml;
 }
 
-SampleSynth::LoadResult JLickshotProcessorBase::updateFromXml(const XmlElement *stateXml)
+SampleSynth::LoadResult JLickshotProcessorBase::updateFromXml(const XmlElement *stateXml,
+                                                              bool fromDir,
+                                                              const File& dir)
 {
     // this should have been cheked by the caller, but anyway:
     if (stateXml == nullptr || !stateXml->hasTagName("JLICKSHOTSETTINGS")) {
@@ -155,7 +157,8 @@ SampleSynth::LoadResult JLickshotProcessorBase::updateFromXml(const XmlElement *
     // clear synth:
     synth_.clearSamples();
     
-    SampleSynth::LoadResult rv = synth_.updateFromXml(stateXml->getChildByName("SAMPLES"));
+    SampleSynth::LoadResult rv = synth_.updateFromXml(stateXml->getChildByName("SAMPLES"),
+                                                      fromDir, dir);
     
     if(rv.success){
         samplesChanged_.set(1);

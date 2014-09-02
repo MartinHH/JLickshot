@@ -231,7 +231,8 @@ XmlElement* SampleSynth::getStateXml() const
     return rv;
 }
 
-SampleSynth::LoadResult SampleSynth::updateFromXml(XmlElement *stateXml)
+SampleSynth::LoadResult SampleSynth::updateFromXml(juce::XmlElement *stateXml,
+                                                   bool fromDir, const File& dir)
 {
     LoadResult rv = LoadResult();
     
@@ -250,8 +251,10 @@ SampleSynth::LoadResult SampleSynth::updateFromXml(XmlElement *stateXml)
                 float velocity =
                     sample->getDoubleAttribute("velocity", getVelocity(noteNo));
                 
+                const File file = fromDir ? dir.getChildFile(path) : File(path);
+                
                 // set sample and count result:
-                if(setSample(noteNo, File(path), velocity)){
+                if(setSample(noteNo, file, velocity)){
                     rv.loaded++;
                 } else {
                     rv.failed++;
