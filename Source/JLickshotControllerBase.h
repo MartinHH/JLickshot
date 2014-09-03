@@ -48,7 +48,7 @@ public:
      *
      *  @see loadState
      */
-    virtual bool saveState(const File& xmlDest) = 0;
+    virtual bool saveState(const File& xmlDest, bool toOneDir = false) = 0;
     
     /** Restores the state of the controller from an XML file generated
      *  using saveState.

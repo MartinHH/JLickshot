@@ -152,26 +152,25 @@ void SampleSynth::clearSamples()
     }
 }
 
-const String& SampleSynth::getFilePath(int noteNo) const
+const File& SampleSynth::getAudioFile(int noteNo) const
 {
     const FixedVelocitySound* s = getFixedVelocitySound(noteNo);
     
     if(s == nullptr){
-        return String::empty;
+        return File::nonexistent;
     }
+    
+    return s->getAudioFile();
+}
 
-    return s->getAudioFile().getFullPathName();
+const String& SampleSynth::getFilePath(int noteNo) const
+{
+    return getAudioFile(noteNo).getFullPathName();
 }
 
 const String SampleSynth::getFileName(int noteNo) const
 {
-    const FixedVelocitySound* s = getFixedVelocitySound(noteNo);
-    
-    if(s == nullptr){
-        return String::empty;
-    }
-    
-    return s->getAudioFile().getFileName();
+    return getAudioFile(noteNo).getFileName();
 }
 
 bool SampleSynth::setVelocity(int noteNo, float velocity)
@@ -214,15 +213,25 @@ void SampleSynth::noteOff(const int /* midiChannel */, const int /* midiNoteNumb
     // for one-shot-behaviour, noteOff is ignored...
 }
 
-XmlElement* SampleSynth::getStateXml() const
+XmlElement* SampleSynth::getStateXml(bool oneDir, const File& dir) const
 {
     XmlElement* rv = new XmlElement("SAMPLES");
 
     for(int i=0; i<NUMBER_OF_NOTES; i++){
         if (sampleIsLoaded(i)) {
             XmlElement* sample = new XmlElement("SAMPLE");
+            
+            const File f = getAudioFile(i);
+            if(oneDir){
+                if(f.getParentDirectory() != dir){
+                    f.copyFileTo(dir);
+                }
+                sample->setAttribute("path", f.getFileName());
+            } else {
+                sample->setAttribute("path", f.getFullPathName());
+            }
+            
             sample->setAttribute("note", i);
-            sample->setAttribute("path", getFilePath(i));
             sample->setAttribute("velocity", getVelocity(i));
             rv->addChildElement(sample);
         }

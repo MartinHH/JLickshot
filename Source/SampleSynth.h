@@ -110,6 +110,8 @@ public:
     /** Unloads all samples. */
     void clearSamples();
     
+    const File& getAudioFile(int noteNo) const;
+    
     /** Returns the path of the audio file assigned to a certain note.
      *
      *  @param noteNo The note number for which the file path shall be returned.
@@ -161,7 +163,8 @@ public:
     void noteOff (const int midiChannel, const int midiNoteNumber,
                   const bool allowTailOff) override;
     
-    XmlElement* getStateXml() const;
+    XmlElement* getStateXml(bool oneDir = false,
+                            const File& dir = File::nonexistent) const;
     
     /** A struct describing the results of a call to updateFromXml. */
     struct LoadResult

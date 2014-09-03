@@ -158,16 +158,22 @@ float MainController::getMasterGain() const
     return aSource_.getMasterGain();
 }
 
-bool MainController::saveState(const File& xmlDest)
+bool MainController::saveState(const File& xmlDest, bool toOneDir)
 {
     // create main xml element:
     XmlElement xml ("JLICKSHOTSETTINGS");
+    
+    xml.setAttribute(translate("one_dir"), toOneDir);
     
     // add state of audio device manager:
     xml.addChildElement(adm_.createStateXml());
     
     // add all other settings:
-    aSource_.addStateXmlElements(&xml);
+    if(toOneDir){
+        aSource_.addStateXmlElements(&xml, toOneDir, xmlDest.getParentDirectory());
+    } else {
+        aSource_.addStateXmlElements(&xml);
+    }
     
     return xml.writeToFile(xmlDest, String::empty); // TODO
 }
@@ -180,10 +186,12 @@ SampleSynth::LoadResult MainController::loadState(const File& xmlSource)
         return SampleSynth::LoadResult();
     }
     
+    const bool fromDir = xml->getBoolAttribute("one_dir", false);
+    
     const XmlElement* admSettings = xml->getChildByName("DEVICESETUP");
     if(admSettings != nullptr){
         adm_.initialise(0, 2, admSettings, true, String::empty, 0);
     }
         
-    return aSource_.updateFromXml(xml);
+    return aSource_.updateFromXml(xml, fromDir, xmlSource.getParentDirectory());
 }

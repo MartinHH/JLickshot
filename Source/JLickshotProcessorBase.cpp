@@ -114,7 +114,9 @@ float JLickshotProcessorBase::getMasterGain() const
     return gain_;
 }
 
-XmlElement* JLickshotProcessorBase::addStateXmlElements(XmlElement *xml)
+XmlElement* JLickshotProcessorBase::addStateXmlElements(XmlElement *xml,
+                                                        bool oneDir,
+                                                        const File& dir)
 {
     // add general settings:
     XmlElement* generalSettings = new XmlElement("GENERAL");
@@ -124,7 +126,7 @@ XmlElement* JLickshotProcessorBase::addStateXmlElements(XmlElement *xml)
     xml->addChildElement(generalSettings);
     
     // add sample settings:
-    xml->addChildElement(synth_.getStateXml());
+    xml->addChildElement(synth_.getStateXml(oneDir, dir));
     
     // add delay setting:
     xml->addChildElement(delay_.getStateXml());

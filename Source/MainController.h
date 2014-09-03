@@ -103,7 +103,7 @@ public:
      *
      *  @see loadState
      */
-    bool saveState(const File& xmlDest);
+    bool saveState(const File& xmlDest, bool toOneDir = false);
     
     /** Restores the state of the controller from an XML file generated
      *  using saveState.

@@ -70,7 +70,8 @@ public:
      *  @return A pointer to the same XmlElement that was passed as
      *      parameter.
      */
-    XmlElement* addStateXmlElements(XmlElement* xml);
+    XmlElement* addStateXmlElements(XmlElement* xml,bool oneDir = false,
+                                    const File& dir = File::nonexistent);
     
     SampleSynth::LoadResult updateFromXml(const XmlElement* stateXml,
                                           bool fromDir = false,
