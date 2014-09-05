@@ -80,7 +80,7 @@ MainContentComponent::MainContentComponent(JLickshotControllerBase* controller,
     laf_ = new LookAndFeel_V3();
     setLookAndFeel(laf_);
     
-    setSize (970, 410);
+    setSize (910, 410);
 }
 
 MainContentComponent::~MainContentComponent()
@@ -97,18 +97,25 @@ void MainContentComponent::paint (Graphics& g)
 
 void MainContentComponent::resized()
 {
+    const int leftColWidth = 460; // TODO: sensible calculation for this
+    
     // starting from top
     if (settingsButton_ == nullptr) {
-        loadButton_->setBounds(10, 5, 215, 24);
-        saveButton_->setBounds(230, 5, 215, 24);
+        const int buttonWidth = (leftColWidth - 90) / 2;
+        loadButton_->setBounds(10, 5, buttonWidth, 24);
+        saveButton_->setBounds(loadButton_->getX() + buttonWidth + 5,
+                               5, buttonWidth, 24);
     } else {
-        loadButton_->setBounds(10, 5, 140, 24);
-        saveButton_->setBounds(155, 5, 140, 24);
-        settingsButton_->setBounds(305, 5, 140, 24);
+        const int buttonWidth = (leftColWidth - 100) / 3;
+        loadButton_->setBounds(10, 5, buttonWidth, 24);
+        saveButton_->setBounds(loadButton_->getX() + buttonWidth + 5,
+                               5, buttonWidth, 24);
+        settingsButton_->setBounds(saveButton_->getX() + buttonWidth + 5,
+                                   5, buttonWidth, 24);
     }
-    gainSlider_->setBounds(455, 5, 60, 24);
-    delayComponent_->setBounds(530, 10, 430, 124);
-    mVerbComponent_->setBounds(530, 10 + delayComponent_->getHeight(),
+    gainSlider_->setBounds(leftColWidth - 70, 5, 65, 24);
+    delayComponent_->setBounds(leftColWidth+10, 10, 430, 124);
+    mVerbComponent_->setBounds(leftColWidth+10, 10 + delayComponent_->getHeight(),
                                430, 214);
     
     // now continuing from bottom:
@@ -116,8 +123,10 @@ void MainContentComponent::resized()
 
     
     // takes up the remaining space on the left:
-    viewport_->setBounds(10, 34, 520,
+    viewport_->setBounds(10, 34, leftColWidth,
                          getHeight() - 34 - 10 - keyboard_->getHeight());
+    // adjust width of contained component:
+    sampleComponent_->setSize(viewport_->getWidth()-18, sampleComponent_->getHeight());
 
 }
 
