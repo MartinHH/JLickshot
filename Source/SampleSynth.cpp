@@ -224,7 +224,8 @@ XmlElement* SampleSynth::getStateXml(bool oneDir, const File& dir) const
             const File f = getAudioFile(i);
             if(oneDir){
                 if(f.getParentDirectory() != dir){
-                    f.copyFileTo(dir);
+                    const File dest = dir.getChildFile(f.getFileName());
+                    f.copyFileTo(dest);
                 }
                 sample->setAttribute("path", f.getFileName());
             } else {
