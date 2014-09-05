@@ -148,6 +148,8 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
             popUpLoadResult(rv);
         }
     } else if(buttonThatWasClicked == saveButton_){
+        bool toDir = askAboutSavingToDir();
+        
         // pop up a file chooser dialog:
         FileChooser fc ("Choose a file to save...",
                         File::getCurrentWorkingDirectory(),
@@ -158,7 +160,7 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
             // file has been chosen:
             File chosenFile = fc.getResult();
             // make controller save its state:
-            controller_->saveState(chosenFile);
+            controller_->saveState(chosenFile, toDir);
         }
     } else if (buttonThatWasClicked == settingsButton_){
         // create an alert window:
@@ -210,4 +212,17 @@ void MainContentComponent::popUpLoadResult(SampleSynth::LoadResult result)
                                          "An error occured loading the setup file."
                                          "ok");
     }
+}
+
+bool MainContentComponent::askAboutSavingToDir()
+{
+    return !AlertWindow::showOkCancelBox (AlertWindow::QuestionIcon,
+                                   "Save a simple preset or all files to one directory?",
+                                   translate("Do you want to save just the preset and keep all files where they are, ot\n")
+                                          + "do you want to save everything (preset and audiofiles) into one directory?\n\n"
+                                          + "(Saving to directory will enable you to move your preset around and even load\n"
+                                          + "it on other machines.)",
+                                   "Just the preset",
+                                   "  Everything   ",
+                                   nullptr);
 }

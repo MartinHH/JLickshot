@@ -54,6 +54,8 @@ private:
     /** Opens a popup window displaying the results of loading a preset. */
     void popUpLoadResult(SampleSynth::LoadResult result);
     
+    bool askAboutSavingToDir();
+    
     ScopedPointer<LookAndFeel> laf_;
     ScopedPointer<AudioDeviceSelectorComponent> aDevSelector_;
     ScopedPointer<SampleCollectionComponent> sampleComponent_;
