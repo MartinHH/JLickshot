@@ -196,8 +196,8 @@ private:
      */
     struct SilentSound   :   SynthesiserSound
     {
-        bool appliesToNote(const int midiNoteNumber){ return false; }
-        bool appliesToChannel (const int midiChannel){ return false; }
+        bool appliesToNote(const int /* midiNoteNumber */){ return false; }
+        bool appliesToChannel (const int /* midiChannel */){ return false; }
     };
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleSynth)
