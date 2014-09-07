@@ -44,8 +44,8 @@ void SimpleDelay::setSampleRate(int sampleRate)
         const ScopedLock sl (lock);
         delayBuffer_.setSize(delayBuffer_.getNumChannels(), maxTime_ * sampleRate);
         sampleRate_ = sampleRate;
-        for(int i=0; i<lp_.size(); i++){
-            lp_[i].setSampleRate(sampleRate);
+        for(std::vector<OnePoleLowpass>::iterator it = lp_.begin(); it != lp_.end(); ++it){
+            it->setSampleRate(sampleRate);
         }
     }
 }
@@ -88,8 +88,8 @@ bool SimpleDelay::getLowpassIsActive() const
 void SimpleDelay::setLowpassFrequency(double frequency)
 {
     const double f = SATURATE(LP_MIN_FREQ, LP_MAX_FREQ, frequency);
-    for (int i=0; i<lp_.size(); i++) {
-        lp_[i].setFrequency(f);
+    for(std::vector<OnePoleLowpass>::iterator it = lp_.begin(); it != lp_.end(); ++it){
+        it->setFrequency(f);
     }
 }
 
