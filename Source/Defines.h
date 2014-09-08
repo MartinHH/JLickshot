@@ -22,7 +22,8 @@
 #define DEFINES_H_INCLUDED
 
 #ifndef NUMBER_OF_NOTES
-#define NUMBER_OF_NOTES 128 /**< How many MIDI notes there are. */
+#define NUMBER_OF_NOTES (1<<7) /**< Number of available MIDI notes (MIDI
+                                    uses 7 Bits). */
 #endif
 
 #ifndef VERSION_STRING
