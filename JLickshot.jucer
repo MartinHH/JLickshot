@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="L8rGK0" name="JLickshot" projectType="guiapp" version="0.1.4"
+<JUCERPROJECT id="L8rGK0" name="JLickshot" projectType="guiapp" version="0.1.5"
               bundleIdentifier="io.github.martinhh.JLickshot" includeBinaryInAppConfig="1"
               jucerVersion="3.1.0">
   <MAINGROUP id="XgPXVM" name="JLickshot">
