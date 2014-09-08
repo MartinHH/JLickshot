@@ -227,10 +227,10 @@ bool MainContentComponent::askAboutSavingToDir()
 {
     return !AlertWindow::showOkCancelBox (AlertWindow::QuestionIcon,
                                    "Save a simple preset or all files to one directory?",
-                                   translate("Do you want to save just the preset and keep all files where they are, ot\n")
+                                   translate("Do you want to save just the preset and keep all files where they are, or\n")
                                           + "do you want to save everything (preset and audiofiles) into one directory?\n\n"
-                                          + "(Saving to directory will enable you to move your preset around and even load\n"
-                                          + "it on other machines.)",
+                                          + "(Saving everything to one directory will enable you to move your preset\n"
+                                          + "around and even load it on other machines.)",
                                    "Just the preset",
                                    "  Everything   ",
                                    nullptr);
