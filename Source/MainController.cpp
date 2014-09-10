@@ -180,7 +180,7 @@ bool MainController::saveState(const File& xmlDest, bool toOneDir)
 
 SampleSynth::LoadResult MainController::loadState(const File& xmlSource)
 {
-    ScopedPointer<const XmlElement> xml = XmlDocument::parse(xmlSource);
+    ScopedPointer<const XmlElement> xml(XmlDocument::parse(xmlSource));
     
     if (xml == nullptr || !xml->hasTagName("JLICKSHOTSETTINGS")) {
         return SampleSynth::LoadResult();
