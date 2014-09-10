@@ -13,7 +13,7 @@ For downloads of the latest pre-compiled runnable binaries, visit the [releases]
 These are the main features of JLickshot:
 
 * plays one audio file per MIDI note
-* samples are played "one-shot"-style (once triggered, the samples plays until its end regardless of the key being released)
+* samples are played "one-shot"-style (once triggered, a sample plays until its end regardless of the key being released)
 * individual gain settings for each note/sample
 * ignores (keystroke) velocity
 * simple delay effect
