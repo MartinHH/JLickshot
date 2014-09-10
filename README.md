@@ -15,6 +15,7 @@ These are the main features of JLickshot:
 * plays one audio file per MIDI note
 * samples are played "one-shot"-style (once triggered, the samples plays until its end regardless of the key being released)
 * individual gain settings for each note/sample
+* ignores (keystroke) velocity
 * simple delay effect
 * reverb effect (based on [MVerb by Martin Eastwood](https://github.com/martineastwood/mverb))
 * master gain
