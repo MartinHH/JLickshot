@@ -29,8 +29,8 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     noteLabel_->setFont (Font (15.00f, Font::plain));
     noteLabel_->setJustificationType (Justification::centredLeft);
     noteLabel_->setEditable (false, false, false);
-    noteLabel_->setColour (TextEditor::textColourId, Colours::black);
-    noteLabel_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    noteLabel_->setColour (Label::textColourId, Colours::black);
+    noteLabel_->setColour (Label::backgroundColourId, Colour (0x00000000));
     noteLabel_->setTooltip(translate("MIDI note number ") + String(noteNumber));
     
     addAndMakeVisible (nameDisplay_ = new TextEditor ("name display"));
