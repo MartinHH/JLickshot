@@ -28,6 +28,3 @@ A few limitations are in place for performance reasons:
 
 * polyphony is limited to eight voices (meaning you can play a maximum of eight samples simultaneously)
 * the maximum length of a sample is 60 seconds -- you can load longer files, but only the first 60 seconds will be played
-## Disclaimer: Don't expect too much
-
-This software was designed in very short time to suit personal needs - don't expect it to be anything else but a tiny (free) tool for a very specific use case.
