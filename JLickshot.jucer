@@ -72,7 +72,7 @@
         <MODULEPATH id="juce_audio_processors" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../Dropbox/Studium/Bachelor/SPAOP/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2013 targetFolder="Builds/VisualStudio2013">
@@ -93,7 +93,7 @@
         <MODULEPATH id="juce_audio_formats" path="../Bachelor/SPAOP/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../Bachelor/SPAOP/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../Bachelor/SPAOP/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../Bachelor/SPAOP/JUCE/modules"/>
       </MODULEPATHS>
     </VS2013>
     <LINUX_MAKE targetFolder="Builds/Linux">
@@ -114,7 +114,7 @@
         <MODULEPATH id="juce_audio_processors" path="../JUCE/modules/"/>
         <MODULEPATH id="juce_audio_formats" path="../JUCE/modules/"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules/"/>
-        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules/"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
