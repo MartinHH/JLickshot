@@ -86,6 +86,7 @@ MainContentComponent::MainContentComponent(JLickshotControllerBase* controller,
 
 MainContentComponent::~MainContentComponent()
 {
+    setLookAndFeel(nullptr);
 }
 
 void MainContentComponent::paint (Graphics& g)
