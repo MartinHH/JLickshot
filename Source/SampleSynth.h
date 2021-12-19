@@ -95,7 +95,7 @@ class SampleSynth   :   public Synthesiser
 {
 public:
     SampleSynth(int numberOfVoices = 4);
-    ~SampleSynth();
+    ~SampleSynth() override;
     
     /** Sets the audiofile to be assigned to be played back for a specified note.
      *
@@ -160,11 +160,13 @@ public:
     /** NoteOff messages are ignored for one-shot playback behaviour.
      *  Hence, this overrides Synthesiser::noteOff.
      */
-    void noteOff (const int midiChannel, const int midiNoteNumber,
+    void noteOff (const int midiChannel,
+                  const int midiNoteNumber,
+                  const float velocity,
                   const bool allowTailOff) override;
     
     XmlElement* getStateXml(bool oneDir = false,
-                            const File& dir = File::nonexistent) const;
+                            const File& dir = File()) const;
     
     /** A struct describing the results of a call to updateFromXml. */
     struct LoadResult
@@ -175,8 +177,9 @@ public:
                          specified in case success is set to true). */
     };
     
-    LoadResult updateFromXml(XmlElement* stateXml, bool fromDir = false,
-                             const File& dir = File::nonexistent);
+    LoadResult updateFromXml(XmlElement* stateXml,
+                             bool fromDir = false,
+                             const File& dir = File());
 
 private:
 

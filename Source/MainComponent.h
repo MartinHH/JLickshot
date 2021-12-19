@@ -32,8 +32,8 @@
  *  a pointer to the main JLickshotControllerBase controller.
  */
 class MainContentComponent   :  public Component,
-                                public SliderListener,
-                                public ButtonListener
+                                public Slider::Listener,
+                                public Button::Listener
 {
 public:
 
@@ -54,7 +54,7 @@ private:
     /** Opens a popup window displaying the results of loading a preset. */
     void popUpLoadResult(SampleSynth::LoadResult result);
     
-    bool askAboutSavingToDir();
+    void launchSaveDialog();
     
     ScopedPointer<LookAndFeel> laf_;
     ScopedPointer<AudioDeviceSelectorComponent> aDevSelector_;
@@ -67,6 +67,7 @@ private:
     ScopedPointer<Slider> gainSlider_;
     ScopedPointer<DelayComponent> delayComponent_;
     ScopedPointer<MVerbComponent> mVerbComponent_;
+    std::unique_ptr<FileChooser> fileCooser_;
     JLickshotControllerBase* controller_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -28,7 +28,7 @@ class OnePoleLowpass
 public:
     OnePoleLowpass():
         a0(1.0), b1(0.0), z1(0.0),freq_(INFINITY), sampleRate_(44100)
-    {};
+    {}
     
     OnePoleLowpass(double freq, int sampleRate):
         z1(0.0), sampleRate_(sampleRate)

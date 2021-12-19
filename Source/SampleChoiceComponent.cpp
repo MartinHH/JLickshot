@@ -110,22 +110,28 @@ void SampleChoiceComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 void SampleChoiceComponent::buttonClicked (Button* buttonThatWasClicked)
 {
     if (buttonThatWasClicked == fileButton_){
-        FileChooser fc ("Choose a file to open...",
-                        File::getCurrentWorkingDirectory(),
-                        "*.mp3; *.wav; *.aif",
-                        true);
+        fileCooser_ = std::make_unique<FileChooser>("Choose a file to open...",
+                                                    File::getCurrentWorkingDirectory(),
+                                                    "*.mp3; *.wav; *.aif",
+                                                    true);
         
-        if (fc.browseForFileToOpen())
+        auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles;
+     
+        fileCooser_->launchAsync(folderChooserFlags, [this] (const FileChooser& chooser)
         {
-            const File file = fc.getResult();
+            File file (chooser.getResult());
             
-            file.getParentDirectory().setAsCurrentWorkingDirectory();
-            
-            Component::BailOutChecker checker(this);
-            listeners_.callChecked(checker,
-                                   &SampleChoiceComponent::Listener::fileChosen,
-                                   this, file);
+            if(!file.getFullPathName().isEmpty()) {
+                file.getParentDirectory().setAsCurrentWorkingDirectory();
+                
+                Component::BailOutChecker checker(this);
+                listeners_.callChecked(checker,
+                                       &SampleChoiceComponent::Listener::fileChosen,
+                                       this, file);
+            }
+     
         }
+        );
     }
 }
 
@@ -142,7 +148,7 @@ void SampleChoiceComponent::setFileName(const juce::String &name)
 
 float SampleChoiceComponent::getVelocity() const
 {
-    return velocitySlider_->getValue();
+    return (float) velocitySlider_->getValue();
 }
 
 void SampleChoiceComponent::setVelocity(float velocity)

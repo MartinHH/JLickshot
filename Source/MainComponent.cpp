@@ -133,7 +133,7 @@ void MainContentComponent::resized()
 void MainContentComponent::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
     if (sliderThatWasMoved == gainSlider_){
-        controller_->getProcessor().setMasterGain(gainSlider_->getValue());
+        controller_->getProcessor().setMasterGain((float) gainSlider_->getValue());
     }
 }
 
@@ -141,50 +141,53 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
 {
     if(buttonThatWasClicked == loadButton_){
         // pop up a file chooser dialog:
-        FileChooser fc ("Choose a file to load...",
-                        File::getCurrentWorkingDirectory(),
-                        "*.xml",
-                        true);
+        fileCooser_ = std::make_unique<FileChooser>("Choose a file to load...",
+                                                    File::getCurrentWorkingDirectory(),
+                                                    "*.xml",
+                                                    true);
+        auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles;
         
-        if(fc.browseForFileToOpen()){
+        fileCooser_->launchAsync(folderChooserFlags, [this] (const FileChooser& chooser)
+        {
             // file has been chosen:
-            File chosenFile = fc.getResult();
-            // make controller load the settings:
-            SampleSynth::LoadResult rv = controller_->loadState(chosenFile);
-            // update the gui to the new state:
-            updateFromController();
-            // show result report:
-            popUpLoadResult(rv);
+            File chosenFile = chooser.getResult();
+            if(!chosenFile.getFullPathName().isEmpty()) {
+                // make controller load the settings:
+                SampleSynth::LoadResult rv = controller_->loadState(chosenFile);
+                // update the gui to the new state:
+                updateFromController();
+                // show result report:
+                popUpLoadResult(rv);
+            }
         }
-    } else if(buttonThatWasClicked == saveButton_){
-        bool toDir = askAboutSavingToDir();
-        
+        );
+
+    } else if (buttonThatWasClicked == saveButton_){
+    
+        // TODO: askAboutSavingToDir() now is async, returns immediately:
+        launchSaveDialog();
+        /*
         // pop up a file chooser dialog:
-        FileChooser fc ("Choose a file to save...",
-                        File::getCurrentWorkingDirectory(),
-                        "*.xml",
-                        true);
+        fileCooser_ = std::make_unique<FileChooser>("Choose a file to save...",
+                                                    File::getCurrentWorkingDirectory(),
+                                                    "*.xml",
+                                                    true);
         
-        if (fc.browseForFileToSave (true)){
+        auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles;
+        
+        fileCooser_->launchAsync(folderChooserFlags, [this, td=toDir] (const FileChooser& chooser)
+        {
             // file has been chosen:
-            File chosenFile = fc.getResult();
-            // make controller save its state:
-            controller_->saveState(chosenFile, toDir);
+            File chosenFile = chooser.getResult();
+            if(!chosenFile.getFullPathName().isEmpty()) {
+                // make controller save its state:
+                controller_->saveState(chosenFile, td);
+            }
         }
+        );*/
     } else if (buttonThatWasClicked == settingsButton_){
-        // create an alert window:
-        AlertWindow w ("Audio Settings",
-                       String::empty,
-                       AlertWindow::NoIcon);
-        aDevSelector_->setSize(300, 250);
-        w.setLookAndFeel(laf_);
-        
-        // add the AudioDeviceSelectorComponent to it:
-        w.addCustomComponent(aDevSelector_);
-        // add a close button
-        w.addButton ("CLOSE", 1, KeyPress (KeyPress::returnKey, 0, 0));
-        // pop it up:
-        w.runModalLoop();
+        aDevSelector_->setSize(500, 500);
+        DialogWindow::showDialog("Audio Settings", aDevSelector_, this, Colours::darkgrey, true, false, false);
     }
 }
 
@@ -213,7 +216,7 @@ void MainContentComponent::popUpLoadResult(SampleSynth::LoadResult result)
                                          + " samples loaded.\n"
                                          + (result.failed ? String(result.failed)
                                             + " samples could not be loaded."
-                                            : String::empty),
+                                            : String()),
                                          "ok");
     } else {
         AlertWindow::showMessageBoxAsync(AlertWindow::WarningIcon,
@@ -223,15 +226,39 @@ void MainContentComponent::popUpLoadResult(SampleSynth::LoadResult result)
     }
 }
 
-bool MainContentComponent::askAboutSavingToDir()
+void MainContentComponent::launchSaveDialog()
 {
-    return !AlertWindow::showOkCancelBox (AlertWindow::QuestionIcon,
-                                   "Save a simple preset or all files to one directory?",
-                                   translate("Do you want to save just the preset and keep all files where they are, or\n")
-                                          + "do you want to save everything (preset and audiofiles) into one directory?\n\n"
-                                          + "(Saving everything to one directory will enable you to move your preset\n"
-                                          + "around and even load it on other machines.)",
-                                   "Just the preset",
-                                   "  Everything   ",
-                                   nullptr);
+    // callback that will launch the filebwrowser after the user has chosen whether to save presets
+    // alone or to also copy the samples
+    ModalComponentManager::Callback* callback = ModalCallbackFunction::create([this] (int toFile)
+        {
+            // pop up a file chooser dialog:
+            fileCooser_ = std::make_unique<FileChooser>("Choose a file to save...",
+                                                        File::getCurrentWorkingDirectory(),
+                                                        "*.xml",
+                                                        true);
+        
+            auto folderChooserFlags = FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles;
+        
+            fileCooser_->launchAsync(folderChooserFlags, [this, tf=toFile] (const FileChooser& chooser)
+            {
+                // file has been chosen:
+                File chosenFile = chooser.getResult();
+                if(!chosenFile.getFullPathName().isEmpty()) {
+                    // make controller save its state:
+                    controller_->saveState(chosenFile, !tf);
+                }
+            });
+            
+        });
+    AlertWindow::showOkCancelBox (AlertWindow::QuestionIcon,
+                                  "Save a simple preset or all files to one directory?",
+                                  translate("Do you want to save just the preset and keep all files where they are, or\n")
+                                    + "do you want to save everything (preset and audiofiles) into one directory?\n\n"
+                                    + "(Saving everything to one directory will enable you to move your preset\n"
+                                    + "around and even load it on other machines.)",
+                                    "Just the preset",
+                                    "  Everything   ",
+                                    nullptr,
+                                    callback);
 }

@@ -156,7 +156,7 @@ const File& SampleSynth::getAudioFile(int noteNo) const
     const FixedVelocitySound* s = getFixedVelocitySound(noteNo);
     
     if(s == nullptr){
-        return File::nonexistent;
+        return File();
     }
     
     return s->getAudioFile();
@@ -206,7 +206,9 @@ bool SampleSynth::sampleIsLoaded(int noteNo) const
     return getFixedVelocitySound(noteNo) != nullptr;
 }
 
-void SampleSynth::noteOff(const int /* midiChannel */, const int /* midiNoteNumber */,
+void SampleSynth::noteOff(const int /* midiChannel */,
+                          const int /* midiNoteNumber */,
+                          const float /* velocity */,
                           const bool /* allowTailOff */)
 {
     // for one-shot-behaviour, noteOff is ignored...
@@ -256,9 +258,9 @@ SampleSynth::LoadResult SampleSynth::updateFromXml(juce::XmlElement *stateXml,
             if (noteNo >=0 && noteNo < NUMBER_OF_NOTES) {
                 
                 // extract file path and velocity:
-                String path = sample->getStringAttribute("path", String::empty);
+                String path = sample->getStringAttribute("path", String());
                 float velocity =
-                    sample->getDoubleAttribute("velocity", getVelocity(noteNo));
+                    (float) sample->getDoubleAttribute("velocity", getVelocity(noteNo));
                 
                 const File file = fromDir ? dir.getChildFile(path) : File(path);
                 

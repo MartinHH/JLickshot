@@ -56,10 +56,10 @@
  *  and to convert slider values to [0.0 , 1.0]-normalized values.
  */
 class JLickshotComponent    :   public Component,
-                                public SliderListener
+                                public Slider::Listener
 {
 public:
-    JLickshotComponent(const String& name = String::empty):
+    JLickshotComponent(const String& name = String()):
         Component(name)
     {}
     
@@ -124,9 +124,9 @@ inline void JLickshotComponent::setDefaultLabelBounds(Label* label, int row, int
 
 inline float JLickshotComponent::normalizeSlider(const Slider *slider)
 {
-    return NORMALIZE(slider->getMinimum(),
-                     slider->getMaximum(),
-                     slider->getValue());
+    return (float) (NORMALIZE(slider->getMinimum(),
+                              slider->getMaximum(),
+                              slider->getValue()));
 }
 
 inline void JLickshotComponent::updateSliderFromNormalized(juce::Slider *slider, float normalized)

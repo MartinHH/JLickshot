@@ -26,7 +26,7 @@
 #include "JLickshotComponent.h"
 
 class DelayComponent  : public JLickshotComponent,
-                        public ButtonListener
+                        public Button::Listener
 {
 public:
     DelayComponent ();

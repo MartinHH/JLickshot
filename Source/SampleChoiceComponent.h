@@ -27,8 +27,8 @@
  *  SampleSynth.
  */
 class SampleChoiceComponent    :    public Component,
-                                    public SliderListener,
-                                    public ButtonListener,
+                                    public Slider::Listener,
+                                    public Button::Listener,
                                     public FileDragAndDropTarget
 {
 public:
@@ -38,7 +38,7 @@ public:
      *      is responsible for.
      */
     SampleChoiceComponent(int noteNumber);
-    ~SampleChoiceComponent();
+    ~SampleChoiceComponent() override;
     
     /** A listener interface for callbacks by this component. */
     class Listener
@@ -60,11 +60,11 @@ public:
     /** Removes a previously-registered listener. */
     void removeListener (Listener* listener);
     
-    void paint (Graphics&);
-    void resized();
+    void paint (Graphics&) override;
+    void resized() override;
     
-    void sliderValueChanged (Slider* sliderThatWasMoved);
-    void buttonClicked (Button* buttonThatWasClicked);
+    void sliderValueChanged (Slider* sliderThatWasMoved) override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
 
     /** Returns the note number this Component is assigned to. */
     int getNoteNumber() const;
@@ -87,7 +87,9 @@ private:
     ScopedPointer<TextEditor> nameDisplay_;
     ScopedPointer<Slider> velocitySlider_;
     ScopedPointer<TextButton> fileButton_;
+    std::unique_ptr<FileChooser> fileCooser_;
     ListenerList <Listener> listeners_;
+
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleChoiceComponent)
 };
