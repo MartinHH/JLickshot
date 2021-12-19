@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Martin Hansen
+ * Copyright 2014-2021 Martin Hansen
  *
  * This file is part of JLickshot.
  *
@@ -22,20 +22,20 @@
 MainController::MainController()
 {
     // initialise audio device manager:
-    adm_.initialise (2, 2, nullptr, true, String::empty, 0);
+    adm_.initialise (2, 2, nullptr, true, String(), nullptr);
 
     // set SampleSynthAudioSource as source of the AudioSourcePlayer:
     aSourcePlayer_.setSource(&aSource_);
     
     // add callbacks to audio device manager:
     adm_.addAudioCallback(&aSourcePlayer_);
-    adm_.addMidiInputCallback(String::empty, aSource_.getMidiCollector());
+    adm_.addMidiInputCallback(String(), aSource_.getMidiCollector());
 }
 
 MainController::~MainController()
 {
     adm_.removeAudioCallback(&aSourcePlayer_);
-    adm_.removeMidiInputCallback(String::empty, aSource_.getMidiCollector());
+    adm_.removeMidiInputCallback(String(), aSource_.getMidiCollector());
 }
 
 AudioDeviceManager& MainController::getAudioDeviceManager()
@@ -166,7 +166,8 @@ bool MainController::saveState(const File& xmlDest, bool toOneDir)
     xml.setAttribute(translate("one_dir"), toOneDir);
     
     // add state of audio device manager:
-    xml.addChildElement(adm_.createStateXml());
+    const std::unique_ptr<XmlElement> stateXml = adm_.createStateXml();
+    xml.addChildElement(stateXml.get());
     
     // add all other settings:
     if(toOneDir){
@@ -175,12 +176,12 @@ bool MainController::saveState(const File& xmlDest, bool toOneDir)
         aSource_.addStateXmlElements(&xml);
     }
     
-    return xml.writeToFile(xmlDest, String::empty); // TODO
+    return xml.writeToFile(xmlDest, String()); // TODO
 }
 
 SampleSynth::LoadResult MainController::loadState(const File& xmlSource)
 {
-    ScopedPointer<const XmlElement> xml(XmlDocument::parse(xmlSource));
+    const std::unique_ptr<XmlElement> xml = XmlDocument::parse(xmlSource);
     
     if (xml == nullptr || !xml->hasTagName("JLICKSHOTSETTINGS")) {
         return SampleSynth::LoadResult();
@@ -190,8 +191,8 @@ SampleSynth::LoadResult MainController::loadState(const File& xmlSource)
     
     const XmlElement* admSettings = xml->getChildByName("DEVICESETUP");
     if(admSettings != nullptr){
-        adm_.initialise(0, 2, admSettings, true, String::empty, 0);
+        adm_.initialise(0, 2, admSettings, true, String(), nullptr);
     }
         
-    return aSource_.updateFromXml(xml, fromDir, xmlSource.getParentDirectory());
+    return aSource_.updateFromXml(xml.get(), fromDir, xmlSource.getParentDirectory());
 }

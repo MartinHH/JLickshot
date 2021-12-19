@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Martin Hansen
+ * Copyright 2014-2021 Martin Hansen
  *
  * This file is part of JLickshot.
  *
@@ -26,7 +26,7 @@
 #include "JLickshotComponent.h"
 
 class DelayComponent  : public JLickshotComponent,
-                        public ButtonListener
+                        public Button::Listener
 {
 public:
     DelayComponent ();

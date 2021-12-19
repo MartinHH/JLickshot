@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Martin Hansen
+ * Copyright 2014-2021 Martin Hansen
  *
  * This file is part of JLickshot.
  *
@@ -70,12 +70,13 @@ public:
      *  @return A pointer to the same XmlElement that was passed as
      *      parameter.
      */
-    XmlElement* addStateXmlElements(XmlElement* xml,bool oneDir = false,
-                                    const File& dir = File::nonexistent);
+    XmlElement* addStateXmlElements(XmlElement* xml,
+                                    bool oneDir = false,
+                                    const File& dir = File());
     
     SampleSynth::LoadResult updateFromXml(const XmlElement* stateXml,
                                           bool fromDir = false,
-                                          const File& dir = File::nonexistent);
+                                          const File& dir = File());
     
     /** An atomic flag indicating that a preset has been loaded so the GUI
      *  must update the filenames of the samples. Once checked, the flag is

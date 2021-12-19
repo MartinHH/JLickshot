@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Martin Hansen
+ * Copyright 2014-2021 Martin Hansen
  *
  * This file is part of JLickshot.
  *
@@ -24,8 +24,8 @@
 #include "JLickshotComponent.h"
 #include "JLickshotProcessorBase.h"
 
-class MVerbComponent    : public JLickshotComponent,
-                          public ButtonListener
+class MVerbComponent    :   public JLickshotComponent,
+                            public Button::Listener
 {
 public:
     MVerbComponent();
@@ -34,7 +34,7 @@ public:
     class Listener
     {
     public:
-        virtual ~Listener(){};
+        virtual ~Listener(){}
         
         virtual void reverbActivationChanged(bool delaySetActive) = 0;
         
