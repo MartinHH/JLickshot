@@ -32,7 +32,7 @@ class SampleSynthAudioSource  : public AudioSource,
 {
 public:
     SampleSynthAudioSource (int noOfVoices = 8);
-    ~SampleSynthAudioSource();
+    ~SampleSynthAudioSource() override;
     
     MidiMessageCollector* getMidiCollector();
     

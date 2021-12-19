@@ -72,7 +72,7 @@ class FixedVelocityVoice    :   public SamplerVoice
 {
 public:
     FixedVelocityVoice();
-    ~FixedVelocityVoice();
+    ~FixedVelocityVoice() override;
     
     bool canPlaySound (SynthesiserSound* sound) override;
     

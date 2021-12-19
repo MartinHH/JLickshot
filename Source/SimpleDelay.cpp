@@ -125,7 +125,7 @@ void SimpleDelay::processBlock(juce::AudioSampleBuffer &buffer)
             channelData[i] += delayData[dIdx];
             const float delayDry = (delayData[dIdx] + in) * feedBack_;
             if (lowPass_) {
-                delayData[dIdx] = lp_[channel].process(delayDry);
+                delayData[dIdx] = (float) lp_[channel].process(delayDry);
             } else {
                 delayData[dIdx] = delayDry;
             }
@@ -151,8 +151,8 @@ XmlElement* SimpleDelay::getStateXml() const
 void SimpleDelay::updateFromXml(XmlElement *stateXml)
 {
     if (stateXml != nullptr && stateXml->hasTagName("DELAYSETTINGS")) {
-        time_ = stateXml->getDoubleAttribute("length", time_);
-        feedBack_ = stateXml->getDoubleAttribute("feedback", feedBack_);
+        time_ = (float) stateXml->getDoubleAttribute("length", time_);
+        feedBack_ = (float) stateXml->getDoubleAttribute("feedback", feedBack_);
         lowPass_ = stateXml->getBoolAttribute("lp_active", lowPass_);
         setLowpassFrequency(stateXml->getDoubleAttribute("lp_freq",
                                                          getLowpassFrequency()));

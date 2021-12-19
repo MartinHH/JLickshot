@@ -29,7 +29,7 @@ MVerbPlus::MVerbPlus()
 	setParameter(PREDELAY, 0.0);
 	setParameter(SIZE, 0.5);
     setParameter(GAIN, 1.0);
-	setParameter(MIX, 0.15);
+	setParameter(MIX, 0.15f);
 	setParameter(EARLYMIX, 0.75);
 }
 
@@ -54,7 +54,7 @@ void MVerbPlus::updateFromXml(const XmlElement *stateXml)
     if (stateXml != nullptr && stateXml->hasTagName("MVERBSETTINGS")) {
         for(int i = 0; i < NUM_PARAMS; i++){
             const String attrName = translate("ATTRIBUTE") + String(i);
-            setParameter(i, stateXml->getDoubleAttribute(attrName, getParameter(i)));
+            setParameter(i, (float) stateXml->getDoubleAttribute(attrName, getParameter(i)));
         }
     }
 }

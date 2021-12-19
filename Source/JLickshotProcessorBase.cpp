@@ -81,7 +81,7 @@ void JLickshotProcessorBase::setSampleRate(double sampleRate)
 {
     synth_.setCurrentPlaybackSampleRate (sampleRate);
     delay_.setSampleRate((int) sampleRate);
-    mVerb_.setSampleRate(sampleRate);
+    mVerb_.setSampleRate((float) sampleRate);
 }
 
 void JLickshotProcessorBase::setDelayIsActive(bool delayIsActive)
@@ -150,7 +150,7 @@ SampleSynth::LoadResult JLickshotProcessorBase::updateFromXml(const XmlElement *
     if(generalSettings != nullptr){
         delayIsActive_ = generalSettings->getBoolAttribute("delay_active", delayIsActive_);
         reverbIsActive_ = generalSettings->getBoolAttribute("reverb_active",reverbIsActive_);
-        gain_ = generalSettings->getDoubleAttribute("gain", gain_);
+        gain_ = (float) generalSettings->getDoubleAttribute("gain", gain_);
     }
     
     delay_.updateFromXml(stateXml->getChildByName("DELAYSETTINGS"));
