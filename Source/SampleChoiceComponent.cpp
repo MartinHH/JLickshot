@@ -23,9 +23,9 @@
 SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     noteNo_(noteNumber)
 {
-    noteLabel_ = new Label ("note label",
+    noteLabel_ = std::make_unique<Label> ("note label",
                             MidiMessage::getMidiNoteName(noteNo_, true, true, 3) + ":");
-    addAndMakeVisible (noteLabel_);
+    addAndMakeVisible (noteLabel_.get());
     noteLabel_->setFont (Font (15.00f, Font::plain));
     noteLabel_->setJustificationType (Justification::centredLeft);
     noteLabel_->setEditable (false, false, false);
@@ -33,7 +33,8 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     noteLabel_->setColour (Label::backgroundColourId, Colour (0x00000000));
     noteLabel_->setTooltip(translate("MIDI note number ") + String(noteNumber));
     
-    addAndMakeVisible (nameDisplay_ = new TextEditor ("name display"));
+    nameDisplay_ = std::make_unique<TextEditor> ("name display");
+    addAndMakeVisible (nameDisplay_.get());
     nameDisplay_->setMultiLine (false);
     nameDisplay_->setReturnKeyStartsNewLine (false);
     nameDisplay_->setReadOnly (true);
@@ -43,12 +44,14 @@ SampleChoiceComponent::SampleChoiceComponent(int noteNumber):
     nameDisplay_->setTooltip(translate("You can drag audio files here"));
     nameDisplay_->setText (translate("empty"));
     
-    addAndMakeVisible (fileButton_ = new TextButton ("file button"));
+    fileButton_ = std::make_unique<TextButton> ("file button");
+    addAndMakeVisible (fileButton_.get());
     fileButton_->setButtonText (translate("Select File"));
     fileButton_->setTooltip(translate("Select an audio file for this slot"));
     fileButton_->addListener (this);
     
-    addAndMakeVisible (velocitySlider_ = new Slider ("velocity slider"));
+    velocitySlider_ = std::make_unique<Slider> ("velocity slider");
+    addAndMakeVisible (velocitySlider_.get());
     velocitySlider_->setRange (0, 1.0, 0.01);
     velocitySlider_->setValue(0.75);
     velocitySlider_->setSliderStyle (Slider::LinearBar);
@@ -99,7 +102,7 @@ void SampleChoiceComponent::resized()
 
 void SampleChoiceComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 {
-    if (sliderThatWasMoved == velocitySlider_){
+    if (sliderThatWasMoved == velocitySlider_.get()){
         Component::BailOutChecker checker(this);
         listeners_.callChecked(checker,
                                &SampleChoiceComponent::Listener::velocityChanged,
@@ -109,7 +112,7 @@ void SampleChoiceComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 
 void SampleChoiceComponent::buttonClicked (Button* buttonThatWasClicked)
 {
-    if (buttonThatWasClicked == fileButton_){
+    if (buttonThatWasClicked == fileButton_.get()){
         fileCooser_ = std::make_unique<FileChooser>("Choose a file to open...",
                                                     File::getCurrentWorkingDirectory(),
                                                     "*.mp3; *.wav; *.aif",

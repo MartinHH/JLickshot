@@ -47,7 +47,7 @@ public:
     void updateFromSynth(const SampleSynth& synth);
     
 private:
-    ScopedPointer<SampleChoiceComponent> choosers_[NUMBER_OF_NOTES];
+    std::unique_ptr<SampleChoiceComponent> choosers_[NUMBER_OF_NOTES];
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SampleCollectionComponent)
 };

@@ -118,7 +118,7 @@ bool SampleSynth::setSample(int noteNo, const juce::File& audioFile, float veloc
     }
     
     // create AudioFormatReader:
-    ScopedPointer<AudioFormatReader> reader(formatManager_.createReaderFor(audioFile));
+    auto reader = std::unique_ptr<AudioFormatReader>(formatManager_.createReaderFor(audioFile));
     
     if (reader == nullptr) {
         return false;

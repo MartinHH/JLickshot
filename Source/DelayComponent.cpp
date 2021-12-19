@@ -21,19 +21,22 @@
 
 DelayComponent::DelayComponent ()
 {
-    addAndMakeVisible(groupComponent_ = new GroupComponent ("parameters group",
-                                                            TRANS("Delay")));
+    groupComponent_ = std::make_unique<GroupComponent>("parameters group",
+                                                       TRANS("Delay"));
+    addAndMakeVisible(groupComponent_.get());
     
-    addAndMakeVisible (activateButton_ = new ToggleButton ("activate button"));
+    activateButton_ = std::make_unique<ToggleButton>("activate button");
+    addAndMakeVisible(activateButton_.get());
     activateButton_->setButtonText (translate("activate"));
     activateButton_->addListener (this);
     
-    addAndMakeVisible (lowpassButton_ = new ToggleButton ("lowpass button"));
+    lowpassButton_ = std::make_unique<ToggleButton> ("lowpass button");
+    addAndMakeVisible(lowpassButton_.get());
     lowpassButton_->setButtonText (translate("lowpass"));
     lowpassButton_->addListener (this);
     
     delayLabel = createAndAddDefaultLabel(translate("delay label"), translate("Delay:"));
-    delaySlider_ = createAndAddDefaultslider(translate("delay slider"), 0, 1.0, 0.001);
+    delaySlider_ = (createAndAddDefaultslider(translate("delay slider"), 0, 1.0, 0.001));
     delaySlider_->setValue(0.5);
 
     feedbackLabel_ = createAndAddDefaultLabel(translate("feedback label"), translate("Feedback:"));
@@ -81,22 +84,22 @@ void DelayComponent::resized()
     activateButton_->setBounds (16, 32, 88, 24);
     lowpassButton_->setBounds (16, 64, 88, 24);
     
-    setDefaultLabelBounds(delayLabel, 0, 1);
-    setDefaultSliderBounds(delaySlider_, 0, 1);
-    setDefaultLabelBounds(feedbackLabel_, 0, 2);
-    setDefaultSliderBounds(feedbackSlider_, 0, 2);
-    setDefaultLabelBounds(frequencyLabel_, 0, 3);
-    setDefaultSliderBounds(frequencySlider_, 0, 3);
+    setDefaultLabelBounds(delayLabel.get(), 0, 1);
+    setDefaultSliderBounds(delaySlider_.get(), 0, 1);
+    setDefaultLabelBounds(feedbackLabel_.get(), 0, 2);
+    setDefaultSliderBounds(feedbackSlider_.get(), 0, 2);
+    setDefaultLabelBounds(frequencyLabel_.get(), 0, 3);
+    setDefaultSliderBounds(frequencySlider_.get(), 0, 3);
 }
 
 void DelayComponent::buttonClicked (Button* buttonThatWasClicked)
 {
-    if (buttonThatWasClicked == activateButton_){
+    if (buttonThatWasClicked == activateButton_.get()){
         Component::BailOutChecker checker(this);
         listeners_.callChecked(checker,
                                &DelayComponent::Listener::delayActivationChanged,
                                activateButton_->getToggleState());
-    } else if (buttonThatWasClicked == lowpassButton_){
+    } else if (buttonThatWasClicked == lowpassButton_.get()){
         Component::BailOutChecker checker(this);
         listeners_.callChecked(checker,
                                &DelayComponent::Listener::lowpassActivatedChanged,
@@ -106,17 +109,17 @@ void DelayComponent::buttonClicked (Button* buttonThatWasClicked)
 
 void DelayComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 {
-    if (sliderThatWasMoved == delaySlider_){
+    if (sliderThatWasMoved == delaySlider_.get()){
         Component::BailOutChecker checker(this);
         listeners_.callChecked(checker,
                                &DelayComponent::Listener::delayTimeChanged,
-                               normalizeSlider(delaySlider_));
-    } else if (sliderThatWasMoved == feedbackSlider_) {
+                               normalizeSlider(delaySlider_.get()));
+    } else if (sliderThatWasMoved == feedbackSlider_.get()) {
         Component::BailOutChecker checker(this);
         listeners_.callChecked(checker,
                                &DelayComponent::Listener::feedbackChanged,
-                               normalizeSlider(feedbackSlider_));
-    } else if (sliderThatWasMoved == frequencySlider_){
+                               normalizeSlider(feedbackSlider_.get()));
+    } else if (sliderThatWasMoved == frequencySlider_.get()){
         Component::BailOutChecker checker(this);
         listeners_.callChecked(checker,
                                &DelayComponent::Listener::lowpassFrequencyChanged,
@@ -129,8 +132,8 @@ void DelayComponent::updateFromProcessor(JLickshotProcessorBase& processor)
     activateButton_->setToggleState(processor.getDelayIsActive(), dontSendNotification);
     
     SimpleDelay& d = processor.getDelayUnit();
-    updateSliderFromNormalized(delaySlider_, d.getRelativeTime());
-    updateSliderFromNormalized(feedbackSlider_, d.getFeedback());
+    updateSliderFromNormalized(delaySlider_.get(), d.getRelativeTime());
+    updateSliderFromNormalized(feedbackSlider_.get(), d.getFeedback());
     
     lowpassButton_->setToggleState(d.getLowpassIsActive(),
                                    dontSendNotification);

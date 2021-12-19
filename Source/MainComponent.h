@@ -56,17 +56,17 @@ private:
     
     void launchSaveDialog();
     
-    ScopedPointer<LookAndFeel> laf_;
-    ScopedPointer<AudioDeviceSelectorComponent> aDevSelector_;
-    ScopedPointer<SampleCollectionComponent> sampleComponent_;
-    ScopedPointer<Viewport> viewport_;
-    ScopedPointer<MidiKeyboardComponent> keyboard_;
-    ScopedPointer<TextButton> loadButton_;
-    ScopedPointer<TextButton> saveButton_;
-    ScopedPointer<TextButton> settingsButton_;
-    ScopedPointer<Slider> gainSlider_;
-    ScopedPointer<DelayComponent> delayComponent_;
-    ScopedPointer<MVerbComponent> mVerbComponent_;
+    std::unique_ptr<LookAndFeel> laf_;
+    std::unique_ptr<AudioDeviceSelectorComponent> aDevSelector_;
+    std::unique_ptr<SampleCollectionComponent> sampleComponent_;
+    std::unique_ptr<Viewport> viewport_;
+    std::unique_ptr<MidiKeyboardComponent> keyboard_;
+    std::unique_ptr<TextButton> loadButton_;
+    std::unique_ptr<TextButton> saveButton_;
+    std::unique_ptr<TextButton> settingsButton_;
+    std::unique_ptr<Slider> gainSlider_;
+    std::unique_ptr<DelayComponent> delayComponent_;
+    std::unique_ptr<MVerbComponent> mVerbComponent_;
     std::unique_ptr<FileChooser> fileCooser_;
     JLickshotControllerBase* controller_;
     

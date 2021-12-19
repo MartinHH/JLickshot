@@ -34,16 +34,16 @@ public:
 
     void initialise (const String& /* commandLine */) override
     {
-        mainController = new MainController();
-        mainWindow = new MainWindow(mainController);
-        toolTipWindow = new TooltipWindow(mainWindow, 2000);
+        mainController = std::make_unique<MainController>();
+        mainWindow = std::make_unique<MainWindow>(mainController.get());
+        toolTipWindow = std::make_unique<TooltipWindow>(mainWindow.get(), 2000);
     }
 
     void shutdown() override
     {
         toolTipWindow = nullptr;
         mainWindow = nullptr;
-        mainController = mainController;
+        mainController = nullptr;
     }
 
     void systemRequestedQuit() override
@@ -83,9 +83,9 @@ public:
     };
 
 private:
-    ScopedPointer<MainController> mainController;
-    ScopedPointer<MainWindow> mainWindow;
-    ScopedPointer<TooltipWindow> toolTipWindow;
+    std::unique_ptr<MainController> mainController;
+    std::unique_ptr<MainWindow> mainWindow;
+    std::unique_ptr<TooltipWindow> toolTipWindow;
 };
 
 //==============================================================================

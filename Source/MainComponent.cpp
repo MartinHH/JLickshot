@@ -24,37 +24,38 @@ MainContentComponent::MainContentComponent(JLickshotControllerBase* controller,
     controller_(controller)
 {
     if(adm != nullptr){
-        aDevSelector_ = new AudioDeviceSelectorComponent(*adm, 0, 0, 0, 2,
-                                                         true, false,
-                                                         true, false);
+        aDevSelector_ = std::make_unique<AudioDeviceSelectorComponent>(*adm, 0, 0, 0, 2,
+                                                                       true, false,
+                                                                       true, false);
         
-        settingsButton_ = new TextButton();
+        settingsButton_ = std::make_unique<TextButton>();
         settingsButton_->setButtonText(translate("SETTINGS"));
         settingsButton_->addListener(this);
         settingsButton_->setTooltip(translate("Audio and Midi setting"));
-        addAndMakeVisible(settingsButton_);
+        addAndMakeVisible(settingsButton_.get());
     }
     
-    sampleComponent_ = new SampleCollectionComponent();
+    sampleComponent_ = std::make_unique<SampleCollectionComponent>();
     sampleComponent_->addListener(controller);
 
-    viewport_ = new Viewport();
-    viewport_->setViewedComponent(sampleComponent_, false);
-    addAndMakeVisible(viewport_);
+    viewport_ = std::make_unique<Viewport>();
+    viewport_->setViewedComponent(sampleComponent_.get(), false);
+    addAndMakeVisible(viewport_.get());
     
-    loadButton_ = new TextButton();
+    loadButton_ = std::make_unique<TextButton>();
     loadButton_->setButtonText(translate("LOAD"));
     loadButton_->addListener(this);
     loadButton_->setTooltip(translate("Load a previously saved setup"));
-    addAndMakeVisible(loadButton_);
+    addAndMakeVisible(loadButton_.get());
     
-    saveButton_ = new TextButton();
+    saveButton_ = std::make_unique<TextButton>();
     saveButton_->setButtonText(translate("SAVE"));
     saveButton_->addListener(this);
     saveButton_->setTooltip(translate("Save a setup"));
-    addAndMakeVisible(saveButton_);
+    addAndMakeVisible(saveButton_.get());
     
-    addAndMakeVisible (gainSlider_ = new Slider ("gain slider"));
+    gainSlider_ = std::make_unique<Slider>("gain slider");
+    addAndMakeVisible(gainSlider_.get());
     gainSlider_->setRange (0, 1.0, 0.01);
     gainSlider_->setValue(0.75);
     gainSlider_->setSliderStyle (Slider::LinearBar);
@@ -63,22 +64,22 @@ MainContentComponent::MainContentComponent(JLickshotControllerBase* controller,
     gainSlider_->setTooltip(translate("Master gain"));
     gainSlider_->addListener (this);
     
-    delayComponent_ = new DelayComponent();
+    delayComponent_ = std::make_unique<DelayComponent>();
     delayComponent_->addListener(controller);
-    addAndMakeVisible(delayComponent_);
+    addAndMakeVisible(delayComponent_.get());
     
-    mVerbComponent_ = new MVerbComponent();
+    mVerbComponent_ = std::make_unique<MVerbComponent>();
     mVerbComponent_->addListener(controller);
-    addAndMakeVisible(mVerbComponent_);
+    addAndMakeVisible(mVerbComponent_.get());
     
-    keyboard_ = new MidiKeyboardComponent(controller->getProcessor().getKeyState(),
-                                          MidiKeyboardComponent::horizontalKeyboard);
-    addAndMakeVisible(keyboard_);
+    keyboard_ = std::make_unique<MidiKeyboardComponent>(controller->getProcessor().getKeyState(),
+                                                        MidiKeyboardComponent::horizontalKeyboard);
+    addAndMakeVisible(keyboard_.get());
     
     updateFromController();
     
-    laf_ = new LookAndFeel_V3();
-    setLookAndFeel(laf_);
+    laf_ = std::make_unique<LookAndFeel_V3>();
+    setLookAndFeel(laf_.get());
     
     setSize (910, 410);
 }
@@ -132,14 +133,14 @@ void MainContentComponent::resized()
 
 void MainContentComponent::sliderValueChanged(juce::Slider *sliderThatWasMoved)
 {
-    if (sliderThatWasMoved == gainSlider_){
+    if (sliderThatWasMoved == gainSlider_.get()){
         controller_->getProcessor().setMasterGain((float) gainSlider_->getValue());
     }
 }
 
 void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
 {
-    if(buttonThatWasClicked == loadButton_){
+    if(buttonThatWasClicked == loadButton_.get()){
         // pop up a file chooser dialog:
         fileCooser_ = std::make_unique<FileChooser>("Choose a file to load...",
                                                     File::getCurrentWorkingDirectory(),
@@ -162,7 +163,7 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
         }
         );
 
-    } else if (buttonThatWasClicked == saveButton_){
+    } else if (buttonThatWasClicked == saveButton_.get()){
     
         // TODO: askAboutSavingToDir() now is async, returns immediately:
         launchSaveDialog();
@@ -185,9 +186,9 @@ void MainContentComponent::buttonClicked (Button* buttonThatWasClicked)
             }
         }
         );*/
-    } else if (buttonThatWasClicked == settingsButton_){
+    } else if (buttonThatWasClicked == settingsButton_.get()){
         aDevSelector_->setSize(500, 500);
-        DialogWindow::showDialog("Audio Settings", aDevSelector_, this, Colours::darkgrey, true, false, false);
+        DialogWindow::showDialog("Audio Settings", aDevSelector_.get(), this, Colours::darkgrey, true, false, false);
     }
 }
 

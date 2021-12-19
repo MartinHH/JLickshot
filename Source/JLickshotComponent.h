@@ -67,10 +67,10 @@ public:
 
 protected:
 
-    Slider* createAndAddDefaultslider(const String& name, double min = 0.0,
-                                      double max = 100.0, double interval = 0.1);
+    std::unique_ptr<Slider> createAndAddDefaultslider(const String& name, double min = 0.0,
+                                                      double max = 100.0, double interval = 0.1);
     
-    Label* createAndAddDefaultLabel(const String& name, const String& text);
+    std::unique_ptr<Label> createAndAddDefaultLabel(const String& name, const String& text);
     
     void setDefaultSliderBounds(Slider* slider, int row, int coloumn);
     
@@ -84,11 +84,11 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JLickshotComponent)
 };
 
-inline Slider* JLickshotComponent::createAndAddDefaultslider(const String &name, double min,
-                                                             double max, double interval)
+inline std::unique_ptr<Slider> JLickshotComponent::createAndAddDefaultslider(const String &name, double min,
+                                                                             double max, double interval)
 {
-    Slider* s = new Slider(name);
-    addAndMakeVisible(s);
+    std::unique_ptr<Slider> s = std::make_unique<Slider>(name);
+    addAndMakeVisible(s.get());
     s->setRange (min, max, interval);
     s->setSliderStyle (Slider::Rotary);
     s->setTextBoxStyle (Slider::TextBoxBelow, false, 50, 20);
@@ -96,10 +96,10 @@ inline Slider* JLickshotComponent::createAndAddDefaultslider(const String &name,
     return s;
 }
 
-inline Label* JLickshotComponent::createAndAddDefaultLabel(const String &name, const String &text)
+inline std::unique_ptr<Label> JLickshotComponent::createAndAddDefaultLabel(const String &name, const String &text)
 {
-    Label* l = new Label(name, text);
-    addAndMakeVisible(l);
+    std::unique_ptr<Label> l = std::make_unique<Label>(name, text);
+    addAndMakeVisible(l.get());
     l->setFont (Font (15.00f, Font::plain));
     l->setJustificationType (Justification::centred);
     l->setEditable (false, false, false);

@@ -83,10 +83,10 @@ public:
     
 private:
     int noteNo_;
-    ScopedPointer<Label> noteLabel_;
-    ScopedPointer<TextEditor> nameDisplay_;
-    ScopedPointer<Slider> velocitySlider_;
-    ScopedPointer<TextButton> fileButton_;
+    std::unique_ptr<Label> noteLabel_;
+    std::unique_ptr<TextEditor> nameDisplay_;
+    std::unique_ptr<Slider> velocitySlider_;
+    std::unique_ptr<TextButton> fileButton_;
     std::unique_ptr<FileChooser> fileCooser_;
     ListenerList <Listener> listeners_;
 

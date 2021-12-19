@@ -62,15 +62,15 @@ public:
     void updateFromProcessor(JLickshotProcessorBase& processor);
     
 private:    
-    ScopedPointer<GroupComponent> groupComponent_;
-    ScopedPointer<ToggleButton> activateButton_;
-    ScopedPointer<Slider> delaySlider_;
-    ScopedPointer<Label> delayLabel;
-    ScopedPointer<Slider> feedbackSlider_;
-    ScopedPointer<Label> feedbackLabel_;
-    ScopedPointer<ToggleButton> lowpassButton_;
-    ScopedPointer<Slider> frequencySlider_;
-    ScopedPointer<Label> frequencyLabel_;
+    std::unique_ptr<GroupComponent> groupComponent_;
+    std::unique_ptr<ToggleButton> activateButton_;
+    std::unique_ptr<Slider> delaySlider_;
+    std::unique_ptr<Label> delayLabel;
+    std::unique_ptr<Slider> feedbackSlider_;
+    std::unique_ptr<Label> feedbackLabel_;
+    std::unique_ptr<ToggleButton> lowpassButton_;
+    std::unique_ptr<Slider> frequencySlider_;
+    std::unique_ptr<Label> frequencyLabel_;
     ListenerList<Listener> listeners_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayComponent)

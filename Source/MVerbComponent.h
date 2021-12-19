@@ -72,26 +72,26 @@ public:
     void updateFromProcessor(JLickshotProcessorBase& processor);
 
 private:
-    ScopedPointer<GroupComponent> groupComponent_;
-    ScopedPointer<ToggleButton> activateButton_;
-    ScopedPointer<Label> gainLabel_;
-    ScopedPointer<Slider> gainSlider_;
-    ScopedPointer<Label> mixLabel_;
-    ScopedPointer<Slider> mixSlider_;
-    ScopedPointer<Label> earlyLateMixLabel_;
-    ScopedPointer<Slider> earlyLateMixSlider_;
-    ScopedPointer<Label> dampingLabel_;
-    ScopedPointer<Slider> dampingSlider_;
-    ScopedPointer<Label> densityLabel_;
-    ScopedPointer<Slider> densitySlider_;
-    ScopedPointer<Label> bandwidthLabel_;
-    ScopedPointer<Slider> bandwidthSlider_;
-    ScopedPointer<Label> predelayLabel_;
-    ScopedPointer<Slider> predelaySlider_;
-    ScopedPointer<Label> sizeLabel_;
-    ScopedPointer<Slider> sizeSlider_;
-    ScopedPointer<Label> decayLabel_;
-    ScopedPointer<Slider> decaySlider_;
+    std::unique_ptr<GroupComponent> groupComponent_;
+    std::unique_ptr<ToggleButton> activateButton_;
+    std::unique_ptr<Label> gainLabel_;
+    std::unique_ptr<Slider> gainSlider_;
+    std::unique_ptr<Label> mixLabel_;
+    std::unique_ptr<Slider> mixSlider_;
+    std::unique_ptr<Label> earlyLateMixLabel_;
+    std::unique_ptr<Slider> earlyLateMixSlider_;
+    std::unique_ptr<Label> dampingLabel_;
+    std::unique_ptr<Slider> dampingSlider_;
+    std::unique_ptr<Label> densityLabel_;
+    std::unique_ptr<Slider> densitySlider_;
+    std::unique_ptr<Label> bandwidthLabel_;
+    std::unique_ptr<Slider> bandwidthSlider_;
+    std::unique_ptr<Label> predelayLabel_;
+    std::unique_ptr<Slider> predelaySlider_;
+    std::unique_ptr<Label> sizeLabel_;
+    std::unique_ptr<Slider> sizeSlider_;
+    std::unique_ptr<Label> decayLabel_;
+    std::unique_ptr<Slider> decaySlider_;
     ListenerList<Listener> listeners_;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MVerbComponent)

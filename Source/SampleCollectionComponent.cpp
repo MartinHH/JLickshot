@@ -23,8 +23,8 @@
 SampleCollectionComponent::SampleCollectionComponent()
 {
     for(int i=0; i<NUMBER_OF_NOTES; i++){
-        choosers_[i] = new SampleChoiceComponent(i);
-        addAndMakeVisible(choosers_[i]);
+        choosers_[i] = std::make_unique<SampleChoiceComponent>(i);
+        addAndMakeVisible(choosers_[i].get());
     }
 
     setSize(500, 26 * NUMBER_OF_NOTES);
