@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Martin Hansen
+ * Copyright 2014-2021 Martin Hansen
  *
  * This file is part of JLickshot.
  *
